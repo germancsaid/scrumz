@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrumz</title>
+
+    <link rel="stylesheet" href="styles/generalStyles.css">
+
+</head>
+
+<body>
+    <h1>One Page app</h1>
+
+    <form id="FormNuevoEvento" action="">
+        <input id="NameEvent" placeholder="NameEvent">
+        <input id="DescriptionEvent" placeholder="DescriptionEvent"></input>
+        <button>Send</button>
+    </form>
+    <ul id="ListaEventos">
+    </ul>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="scripts/client.js" type="module"></script>
+</body>
+
+</html>

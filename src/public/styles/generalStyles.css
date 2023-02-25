@@ -1,0 +1,336 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Montserrat:wght@900&display=swap");
+
+/*===========  GENERAL PARA TODO EL DOM  ==========*/
+
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: "Fira Code", monospace;
+    font-weight: 300;
+    text-decoration: none;
+    /*subrayado de los links*/
+    border: none;
+    border-collapse: collapse;
+    /*para las tablas sin bordes*/
+    /*seleccion de texto desactivada*/
+    user-select: none;
+    -youbkit-touch-callout: none;
+    /*iOS Safari*/
+    -youbkit-user-select: none;
+    /*Chrome 6.0+, Safari 3.1+, Edge y Opera 15*/
+    -moz-user-select: none;
+    /*Firefox*/
+    -ms-user-select: none;
+    /*IE 10+ y Edge*/
+}
+
+*::-webkit-scrollbar,
+.oculto {
+    display: none;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+
+/*==============  Paleta de Colores =================*/
+
+
+/*--------------  fondos y color de letras internas    */
+
+.blanco {
+    background: white;
+    color: black;
+}
+
+.rosa {
+    background: red;
+    color: white;
+}
+
+.rojo {
+    background: rgb(247, 186, 186);
+    color: white;
+}
+
+.orange {
+    background: red;
+    color: white;
+}
+
+.yello {
+    background: red;
+    color: white;
+}
+
+.lechuga {
+    background: rgb(223, 247, 186);
+    color: white;
+}
+
+.verde {
+    background: red;
+    color: white;
+}
+
+.celeste {
+    background: rgb(181, 220, 237);
+    color: white;
+}
+
+.azul {
+    background: red;
+    color: white;
+}
+
+.lila {
+    background: rgb(214, 186, 247);
+    color: white;
+}
+
+.vino {
+    background: red;
+    color: white;
+}
+
+.cafe {
+    background: red;
+    color: white;
+}
+
+.oro {
+    background: red;
+    color: white;
+}
+
+.negro {
+    background: black;
+    color: white;
+}
+
+.plomo {
+    background: rgb(241, 241, 241);
+    color: white;
+}
+
+
+/*--------------  colores y hover */
+
+.blanco:hover {
+    background: white;
+    color: black;
+}
+
+.rosa:hover {
+    background: red;
+    color: white;
+}
+
+.rojo:hover {
+    background: rgb(228, 124, 124);
+    color: white;
+}
+
+.orange:hover {
+    background: red;
+    color: white;
+}
+
+.yello:hover {
+    background: red;
+    color: white;
+}
+
+.lechuga:hover {
+    background: rgb(186, 228, 124);
+    color: white;
+}
+
+.verde:hover {
+    background: red;
+    color: white;
+}
+
+.celeste:hover {
+    background: rgb(37, 150, 190);
+    color: white;
+}
+
+.azul:hover {
+    background: red;
+    color: white;
+}
+
+.lila:hover {
+    background: rgb(150, 124, 228);
+    color: white;
+}
+
+.vino:hover {
+    background: red;
+    color: white;
+}
+
+.cafe:hover {
+    background: red;
+    color: white;
+}
+
+.oro:hover {
+    background: red;
+    color: white;
+}
+
+.negro:hover {
+    background: black;
+    color: white;
+}
+
+.plomo:hover {
+    background: rgb(217, 217, 217);
+    color: white;
+}
+
+
+/*--------------  colores y doble hover en plomo */
+
+
+/*===========  Textos letras o parrafos  ==========*/
+
+.texto-18 {
+    font-size: 18px;
+}
+
+.texto-16 {
+    font-size: 16px;
+}
+
+.font-400 {
+    font-weight: 400;
+}
+
+.font-500 {
+    font-weight: 500;
+}
+
+
+/*==============  Formas y geometrias ==============*/
+
+.oval {
+    width: 150px;
+    height: 30px;
+    border-radius: 30px;
+}
+
+.cuadradoS {
+    width: 40px;
+    height: 40px;
+}
+
+.cuadradoM {
+    width: 40px;
+    height: 40px;
+}
+
+.barra {}
+
+.midline {
+    width: 1px;
+    background: rgba(186, 186, 186, 0.684);
+    height: 100%;
+    margin: 5px;
+}
+
+
+/*==============  Buttons  =======================*/
+
+button {
+    cursor: pointer;
+}
+
+
+/*==============  Inputs   =======================*/
+
+input,
+textarea {
+    outline: none;
+    width: 99%;
+    resize: none;
+}
+
+
+/*==============  Alineaciones  ==================*/
+
+.contenido-horizontal {}
+
+.contenido-derecha {}
+
+.contenido-izquierda {}
+
+.centro-absoluto {
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+
+/*===========  PAGINA BACKLOG  =========*/
+
+
+/*----------- Timeline cronograma ------*/
+
+#timelineProyecto {
+    border-collapse: collapse;
+    margin: 0px 35px 0px 15px;
+}
+
+
+/*===========  PAGINA BOOTASK  =========*/
+
+
+/*===========  PAGINA SPRINT  ==========*/
+
+
+/*===========  PAGINA STREAM  ==========*/
+
+#bodyStream {
+    /*maquetacion para 3 columnas*/
+    display: grid;
+    grid-template-columns: calc(50% - 175px) 350px calc(50% - 175px);
+    margin: 10px 0px 10px 0px;
+}
+
+#cajitaStream {
+    border: solid 1px;
+    border-color: rgb(207, 207, 207);
+    width: auto;
+    height: auto;
+    margin: 0px 5px 0px 2px;
+    padding: 2px;
+}
+
+
+/*=======================================*/
+
+
+/*=======================================*/
+
+
+/*=======================================*/
+
+
+/*=======================================*/
+
+
+/*=======================================*/
+
+
+/*=======================================*/
+
+
+/*=======================================*/
+
+
+/*=======================================*/

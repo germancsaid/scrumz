@@ -23,5 +23,5 @@ window.addEventListener("DOMContentLoaded", () => {
 /**
  * * Actions frontend
  */
-const FormNuevoEvento = document.querySelector("#FormNuevoEvento");
-FormNuevoEvento.addEventListener("submit", c_function_save_event_backlog);
+const FormNewEventBodyGame = document.querySelector("#FormNewEventBodyGame");
+FormNewEventBodyGame.addEventListener("submit", c_function_save_event_backlog);

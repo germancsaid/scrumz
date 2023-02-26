@@ -5,11 +5,143 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scrumz</title>
 
+    <!---->
+    <link rel="shortcut icon" href="./img/logo.png">
+
+    <title>Scrumz</title>
+    <!---->
     <link rel="stylesheet" href="styles/generalStyles.css">
+    
 
 </head>
+
+<body id="bodyGame" onload="clockDinamic()">
+    <!--Three sections of the page
+        -Always section containing three elements
+        -header 
+        -main 
+        -footer
+     -->
+    <section class="content-left">
+        <header>
+            <nav id="containerFiltersPendingEvents-bodyGame-rename" class="containerFilters">
+                <button class="oval negro">Fecha cercana</button>
+                <button class="oval negro">Prioridad</button>
+            </nav>
+        </header>
+        <main>
+            <article id="containerNewEventForm-bodyGame" class="plomo invisible">
+                <form id="FormNewEventBodyGame" action="">
+                    <input id="newNameEventInputBodyGame" class="uppercase font-400 text-18" type="text" placeholder="NEW EVENT PENDING" spellcheck="false"><br>
+                    <input id="newDescriptionEventInputBodyGame" class="text-16" type="text" placeholder="Description" spellcheck="false" style="margin-bottom:20px;">
+                    <button class="hiden">submit</button>
+                    <div class="separador" style="width: 80%;"></div>
+                </form>
+            </article>
+            <ul id="containerEventsListPending" class="scrollHiden-bodyGame">
+                <li id="eventPending" class="content-horizontal plomo invisible">
+                    <button id="btn-delete-eventPending" class="rojo invisible"></button>
+                    <form action="" class="w-100">
+                        <input class="uppercase font-400 text-18" type="text" value="NOMBRE DE TAREA" spellcheck="false">
+                        <textarea class="text-16" name="" id="" cols="30" rows="2" spellcheck="false">Esto es una descripcion pero una tarea importante</textarea>
+                        <button class="hiden">submit</button>
+                        <div class="separador"></div>
+                    </form>
+                    <button id="btn-play-eventPending" class="lechuga invisible"></button>
+                </li>
+            </ul>
+        </main>
+        <footer>
+            <h6 id="" class="footerRightElement text-16 verde-t"><a class="lila-t" href="http://">germantardiop@gmail.com</a> online</h6>
+        </footer>
+    </section>
+    <!-- Content CENTER -->
+    <section id="timeGame-events">
+        <header>
+            <nav id="containerButtonsClockGame" class="center-absolut content-horizontal">
+                <button id="" class="square-M lechuga"></button>
+                <button id="" class="square-M lila"></button>
+                <h3 id="clockGame">11:33:00</h3>
+            </nav>
+            <article id="containerCalendarClockGame" class="content-horizontal">
+                <div id="calendar" class="">
+                    <h1 id="day" class="text-28 font-400">10</h1>
+                    <h5 id="month">Febrero</h5>
+                    <h4 id="weekendDay">Viernes</h4>
+                </div>
+                <div id="containerWorkedHours" class="content-right">
+                    <h5>horas dedicadas hoy:</h5>
+                    <h1 class="text-28 font-400">8.00</h1>
+                </div>
+            </article>
+        </header>
+        <main>
+            <button class="w-100 h-10 plomo"></button>
+            <article class="scrollHiden-bodyGame">
+                <div>
+                    <button class="w-100 h-10 lechuga"></button>
+                </div>
+                <ul class="containerBoxi">
+                    <li id="boxi" class="">
+                        <div class="content-horizontal">
+                            <div style="width: 301px; margin-bottom: 5px;">
+                                <button>#1912341</button>
+                                <button>PROYECTO</button>
+                                <button>Fase 1</button>
+                                <button>media</button>
+                                <button>alta</button>
+                            </div>
+                            <h5 style="width: 40px;">08:00</h5>
+                        </div>
+                        <h1>NOMBRE DE TAREA</h1>
+                        <h4 style="margin-bottom: 5px;">Descripcion de tarea largo con todas las cosas señor</h4>
+                        <div class="content-horizontal">
+                            <h5>2.5|8h</h5>
+                            <h5 id="EndTimeEventPlayed" class="contenido-derecha">11:00</h5>
+                        </div>
+                    </li>
+                    <button class="w-100 h-10 lechuga"></button>
+                </ul>
+            </article>
+        </main>
+        <footer>
+        </footer>
+    </section>
+    <!-- Content RIGHT -->
+    <section class="content-right">
+        <header>
+            <nav id="containerNavPages" class="">
+                <h4><a href="backlog.html">backlog</a> - <a href="asignation.html">asignation</a> - <a href="sprint.html">sprint</a> - <a href="stream.html">stream</a></h4>
+            </nav>
+        </header>
+        <main>
+            <article id="containerTitleSection" class="">
+                <h2>FINALIZADAS</h2>
+            </article>
+            <ul id="contenedorListaTareasFinalizadas" class="scrollHiden-bodyGame">
+                <li class="p-r-35p plomo invisible">
+                    <form class="" action="">
+                        <input class="uppercase text-18 font-400 mt-15p"  type="text" value="NOMBRE DE TAREA" spellcheck="false">
+                        <textarea class="text-16" name="" id="" cols="30" rows="2" spellcheck="false">Esto es una descripcion de una tarea creada</textarea>
+                        <button id="" class="hiden">submit</button>
+                        <div class="separador" style="width: 80%; margin-left:20%;"></div>
+                    </form>
+                </li>
+            </ul>
+        </main>
+        <footer>
+            <h6 class="footerRightElement text-16"><a href="http://">exit</a></h6>
+        </footer>
+    </section>
+    
+    <!--Functions for funtionalities in the app -->
+    <script src="scripts/functionsFront.js"></script>
+
+    <!--Sockets and comunication client with server-->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="scripts/client.js" type="module"></script>
+</body> 
 
 <body>
     <h1>One Page app</h1>
@@ -25,5 +157,4 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="scripts/client.js" type="module"></script>
 </body>
-
 </html>

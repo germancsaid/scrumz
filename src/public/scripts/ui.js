@@ -20,8 +20,8 @@ let savedId = "";
 export const c_function_save_event_backlog = (e) => {
   e.preventDefault();
   c_insertOne_event_backlog(
-    FormNuevoEvento["NameEvent"].value,
-    FormNuevoEvento["DescriptionEvent"].value
+    FormNewEventBodyGame["newNameEventInputBodyGame"].value,
+    FormNewEventBodyGame["newDescriptionEventInputBodyGame"].value
   );
 };
 
@@ -30,37 +30,40 @@ export const c_function_save_event_backlog = (e) => {
  */
 
 // Container to publish old events and new events
-const pending_event_sprint_list = document.querySelector("#ListaEventos");
+const pending_event_sprint_list = document.querySelector("#containerEventsListPending");
 
 // Container to publish old events and new events
 const pending_event_sprint_UI = (event_sprint) => {
-  const div = document.createElement("div");
-  div.innerHTML = `
-    <div>
-        <h1>${event_sprint.NameEvent}</h1>
-        <h2>${event_sprint.DescriptionEvent}</h2>
-        <button class="btn-update" data-id="${event_sprint._id}">update</button>
-        <button class="btn-delete" data-id="${event_sprint._id}">delete</button>
-        <button class="btn-play" data-id="${event_sprint._id}">play</button>
-    </div>
+  const li = document.createElement("li");
+  li.innerHTML = `
+    <li id="eventPending" class="content-horizontal plomo invisible">
+      <button id="btn-delete-eventPending" class="btn-delete-eventPending rojo invisible" data-id="${event_sprint._id}"></button>
+      <form action="" class="w-100">
+          <input class="uppercase font-400 text-18" type="text" value="${event_sprint.NameEvent}" spellcheck="false">
+          <textarea class="text-16" name="" id="" cols="30" rows="2" spellcheck="false">${event_sprint.DescriptionEvent}</textarea>
+          <button class="hiden">submit</button>
+          <div class="separador"></div>
+      </form>
+      <button id="btn-play-eventPending" class="btn-play-eventPending lechuga invisible" data-id="${event_sprint._id}"></button>
+   </li>
     `;
   // Button update button
-  const update_event = div.querySelector(".btn-update");
-  update_event.onclick = (e) => {
-    c_update_event(update_event.dataset.id);
-  };
+  //const update_event = li.querySelector(".btn-update");
+  //update_event.onclick = (e) => {
+  //  c_update_event(update_event.dataset.id);
+  //};
   // Button delete button
-  const delete_event = div.querySelector(".btn-delete");
+  const delete_event = li.querySelector(".btn-delete-eventPending");
   delete_event.onclick = (e) => {
     c_delete_event(delete_event.dataset.id);
   };
   // Button play button
-  const btnPlay = div.querySelector(".btn-play");
+  const btnPlay = li.querySelector(".btn-play-eventPending");
   btnPlay.onclick = (e) => {
     console.log(btnPlay.dataset.id);
   };
 
-  return div;
+  return li;
 };
 
 /**
@@ -79,6 +82,6 @@ export const publish_old_events_backlog = (events_backlog_list) => {
 };
 
 // Function publish new event into sprint from event_backlog from DB
-export const publish_new_event_backlog = (new_event_sprints) => {
-  pending_event_sprint_list.append(pending_event_sprint_UI(new_event_sprints));
+export const publish_new_event_backlog = (new_event_game) => {
+  pending_event_sprint_list.append(pending_event_sprint_UI(new_event_game));
 };

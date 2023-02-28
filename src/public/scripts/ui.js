@@ -4,9 +4,10 @@
 import {
   c_insertOne_event_backlog,
   c_delete_event,
+  
   c_update_event,
 } from "./socketClient.js";
-
+//c_play_event,
 /**
  * *Let
  */
@@ -45,6 +46,7 @@ const pending_event_sprint_UI = (event_sprint) => {
           <div class="separador"></div>
       </form>
       <button id="btn-play-eventPending" class="btn-play-eventPending lechuga invisible" data-id="${event_sprint._id}"></button>
+      <button id="btn-stop-eventPending" class="btn-stop-eventPending rojo" data-id="${event_sprint._id}" style="display:none"></button>
    </li>
     `;
   // Button update button
@@ -58,13 +60,21 @@ const pending_event_sprint_UI = (event_sprint) => {
     c_delete_event(delete_event.dataset.id);
   };
   // Button play button
-  const btnPlay = li.querySelector(".btn-play-eventPending");
-  btnPlay.onclick = (e) => {
-    console.log(btnPlay.dataset.id);
+/*  export const c_function_save_event_backlog = (e) => {
+    e.preventDefault();
+    c_insertOne_event_backlog(
+      FormNewEventBodyGame["newNameEventInputBodyGame"].value,
+      FormNewEventBodyGame["newDescriptionEventInputBodyGame"].value
+    );
+  };
+
+  const play_event = li.querySelector(".btn-play-eventPending");
+  play_event.onclick = (e) => {
+    c_play_event(play_event.dataset.id);
   };
 
   return li;
-};
+};*/
 
 /**
  * *Fuctions frontend

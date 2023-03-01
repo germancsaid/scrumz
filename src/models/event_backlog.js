@@ -14,6 +14,10 @@ const schema = new Schema(
     DescriptionEvent: {
       type: String,
     },
+    StatusEvent: {
+      type: String,
+      default: "pending"
+    },
   },
   {
     timestamps: true,

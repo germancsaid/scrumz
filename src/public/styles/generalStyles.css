@@ -390,7 +390,12 @@ textarea {
     margin: 15px 0px 0px 0px;
     width: 100%;
 }
+#containerTagsEventPending_bodyGame{
+    display: grid;
+    grid-template-columns: 80% 20%;
+    margin: 0px 2px;
 
+}
 /*----------- Section center ------*/
 
 #containerButtonsClockGame button{

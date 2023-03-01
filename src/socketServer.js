@@ -11,8 +11,6 @@ import event_played from "./models/event_played";
  */
 export default (io) => {
   io.on("connection", (socket) => {
-    
-
     /**
      * *Socket connected in the explorer
      */
@@ -20,24 +18,29 @@ export default (io) => {
 
     /**
      * *LOAD INFORMATION TO THE DB
-    */
+     */
 
     /**
      * *Read events_backlog from DB with socket connection
      */
     const s_query_find_event_backlog = async () => {
-      const find_event_backlog = await event_backlog.find().sort({createdAt:1});
+      const find_event_backlog = await event_backlog
+        .find({ StatusEvent: "pending" })
+        .sort({ createdAt: 1 });
+
+        const find_closed_event_backlog = await event_backlog
+        .find({ StatusEvent: "closed" })
+        .sort({ createdAt: 1 });
       // Send data s_query_find_event_backlog to the all clients connected
       /**
        * !io vs socket analysis for this sintax but io is very inefficient load completely the information to the DB
        */
       io.emit("server:s_query_find_event_backlog", find_event_backlog);
       //console.log(find_event_backlog);
+      io.emit("server:s_query_find_closed_event_backlog", find_closed_event_backlog);
+
     };
     s_query_find_event_backlog();
-
-
-
 
     /**
      * *Read data from played DB with socket connection
@@ -48,14 +51,18 @@ export default (io) => {
       let endOfDay = new Date();
       endOfDay.setHours(23, 59, 59, 999);
 
-      console.log(startOfDay)
+      console.log(startOfDay);
       console.log(endOfDay);
-      console.log(Date())
-      console.log(Date())
-      const count_events_played = await event_played.find({createdAt:{$gte: startOfDay, $lt: endOfDay}}).count();
-      console.log(count_events_played)
-      const find_event_played = await event_played.find({createdAt:{$gte: startOfDay, $lt: endOfDay}});
-      console.log(find_event_played)
+      console.log(Date());
+      console.log(Date());
+      const count_events_played = await event_played
+        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay } })
+        .count();
+      console.log(count_events_played);
+      const find_event_played = await event_played.find({
+        createdAt: { $gte: startOfDay, $lt: endOfDay },
+      });
+      console.log(find_event_played);
 
       // Send data s_query_find_event_played to the all clients connected
       /**
@@ -70,7 +77,7 @@ export default (io) => {
 
     /**
      * *INFORMATION UPDATE TO THE DB
-    */
+     */
 
     /**
      * *Receive data from Client for insertOne to DB
@@ -81,7 +88,6 @@ export default (io) => {
       const s_insertOne_event_backlog = await new_event_backlog.save();
       // Send data s_insertOne_event_backlog to the client
       io.emit("server:s_insertOne_event_backlog", s_insertOne_event_backlog);
-
     });
 
     /**
@@ -90,40 +96,49 @@ export default (io) => {
     socket.on("client:c_insertOne_play_event", async (id) => {
       const find_event_backlog = await event_backlog.findById(id);
 
-      let NameEvent = find_event_backlog.NameEvent
-      let DescriptionEvent = find_event_backlog.DescriptionEvent
+      let NameEvent = find_event_backlog.NameEvent;
+      let DescriptionEvent = find_event_backlog.DescriptionEvent;
 
-      const new_event_played = new event_played({NameEvent:NameEvent, DescriptionEvent:DescriptionEvent});
+      const new_event_played = new event_played({
+        NameEvent: NameEvent,
+        DescriptionEvent: DescriptionEvent,
+      });
       const s_insertOne_event_played = await new_event_played.save();
-
 
       io.emit("server:s_insertOne_event_played", s_insertOne_event_played);
 
-      s_query_find_event_played()
-
+      s_query_find_event_played();
     });
 
-
-        /**
+    /**
      * *Receive data for delete event backlog from Client
      */
-        socket.on("client:c_delete_event", async (id) => {
-          // Send data id to the DB for delete
-          await event_backlog.findByIdAndDelete(id);
-          // Load data from DB
-          s_query_find_event_backlog();
-        });
+    socket.on("client:c_delete_event", async (id) => {
+      // Send data id to the DB for delete
+      await event_backlog.findByIdAndDelete(id);
+      // Load data from DB
+      s_query_find_event_backlog();
+    });
 
-              /**
+      /**
+     * *Receive data for close event backlog from Client
+     */
+      socket.on("client:c_close_event", async (id) => {
+        // Send data id to the DB for delete
+        await event_backlog.findByIdAndUpdate(id,{ StatusEvent: "closed"});
+        // Load data from DB
+        s_query_find_event_backlog();
+      });
+
+    /**
      * *Receive data for delete event played from Client
      */
-              socket.on("client:c_delete_event_played", async (id) => {
-                // Send data id to the DB for delete
-                await event_played.findByIdAndDelete(id);
-                // Load data from DB
-                s_query_find_event_played();
-              });
-    
+    socket.on("client:c_delete_event_played", async (id) => {
+      // Send data id to the DB for delete
+      await event_played.findByIdAndDelete(id);
+      // Load data from DB
+      s_query_find_event_played();
+    });
 
     /**
      * *Receive data for update event played from Client

@@ -3,9 +3,9 @@
  */
 const socket = io();
 
-
-
-
+/**
+ * !ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON
+ */
 /**
  * * PARA PUBLICAR EVENTOS PENDIENTES DE events_backlog
  */
@@ -14,6 +14,10 @@ export const c_query_find_event_backlog = (callback) => {
   socket.on("server:s_query_find_event_backlog", callback);
 };
 
+// Receive data s_query_find_event_backlog to the server
+export const c_query_find_closed_event_backlog = (callback) => {
+  socket.on("server:s_query_find_closed_event_backlog", callback);
+};
 
 /**
  * * PARA PUBLICAR EVENTOS EJECUTADOS DE events_played
@@ -61,12 +65,21 @@ export const c_publish_insertOne_event_played = (callback) => {
 };
 
 /**
+ * !EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT
+ */
+
+/**
  * *Buttons
  */
 
 // Delete new events from DB server
 export const c_delete_event = (id) => {
   socket.emit("client:c_delete_event", id);
+};
+
+// Close events from DB server
+export const c_close_event = (id) => {
+  socket.emit("client:c_close_event", id);
 };
 
 // Delete new events from DB server

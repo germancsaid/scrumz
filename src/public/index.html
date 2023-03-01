@@ -9,7 +9,7 @@
     <!---->
     <link rel="shortcut icon" href="./img/logo.png">
 
-    <title>PRUEBA PUSH</title>
+    <title>scrumz</title>
     <!---->
     <link rel="stylesheet" href="styles/generalStyles.css">
     
@@ -62,13 +62,15 @@
             <nav id="containerButtonsClockGame" class="center-absolut content-horizontal">
                 <button id="" class="square-M lechuga"></button>
                 <button id="" class="square-M lila"></button>
-                <h3 id="clockGame">11:33:00</h3>
+                <h3 id="clockGame">00:00:00</h3>
             </nav>
             <article id="containerCalendarClockGame" class="content-horizontal">
                 <div id="calendar" class="">
-                    <h1 id="day" class="text-28 font-400">10</h1>
-                    <h5 id="month">Febrero</h5>
-                    <h4 id="weekendDay">Viernes</h4>
+                    <h1 id="day" class="text-28 font-400">00</h1>
+                    <h5 id="month">Mes</h5>
+                    <h4 id="weekendDay">Dia</h4>
+                    <button class="square-S lila" style="margin-top: 5px; margin-left: 0px;"></button>
+                    <button class="square-S lechuga"></button>
                 </div>
                 <div id="containerWorkedHours" class="content-right">
                     <h5>horas dedicadas hoy:</h5>
@@ -79,10 +81,7 @@
         <main>
             <button class="w-100 h-10 plomo"></button>
             <article class="scrollHiden-bodyGame">
-                <div>
-                    <button class="w-100 h-10 lechuga"></button>
-                </div>
-                <ul class="containerBoxi">
+                <ul id="containerBoxi_listPlayed" class="containerBoxi">
                     <li id="boxi" class="">
                         <div class="content-horizontal">
                             <div style="width: 301px; margin-bottom: 5px;">
@@ -139,21 +138,6 @@
     <script src="scripts/functionsFront.js"></script>
 
     <!--Sockets and comunication client with server-->
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="scripts/client.js" type="module"></script>
-</body> 
-
-<body>
-    <h1>One Page app</h1>
-
-    <form id="FormNuevoEvento" action="">
-        <input id="NameEvent" placeholder="NameEvent">
-        <input id="DescriptionEvent" placeholder="DescriptionEvent"></input>
-        <button>Send</button>
-    </form>
-    <ul id="ListaEventos">
-    </ul>
-
     <script src="/socket.io/socket.io.js"></script>
     <script src="scripts/client.js" type="module"></script>
 </body>

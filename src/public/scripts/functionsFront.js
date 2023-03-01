@@ -1,14 +1,14 @@
 // ================= RELOJ Y CALENDARIO ===================//
 
 function clockDinamic(){
+
+  momentoActual = new Date();
+
+  let hora = momentoActual.getHours()
+  let minuto = momentoActual.getMinutes()
+  let segundo = momentoActual.getSeconds()
+  let dia = momentoActual.getDate()
     
-  momentoActual = new Date()
-  hora = momentoActual.getHours()
-  minuto = momentoActual.getMinutes()
-  segundo = momentoActual.getSeconds()
-
-  dia = momentoActual.getDate()
-
   switch (new Date().getDay()) {
       case 0: diaSemana = "Domingo"; break;
       case 1: diaSemana = "Lunes"; break;

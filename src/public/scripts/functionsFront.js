@@ -59,3 +59,15 @@ function clockDinamic(){
       setTimeout("clockDinamic()",1000)
   }
 };
+
+function modeDarkTheme(){
+    document.getElementById("modeDarkTheme").href = "styles/darkStyles.css";
+    document.getElementById("modeLightTheme").href = "styles/generalStyles.csss";
+    }
+
+function modeLightTheme(){
+    document.getElementById("modeDarkTheme").href = "styles/darkStyles.csss";
+    document.getElementById("modeLightTheme").href = "styles/generalStyles.css";
+
+}  
+  

@@ -1,0 +1,489 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Montserrat:wght@900&display=swap");
+
+/*===========  GENERAL PARA TODO EL DOM  ==========*/
+
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: "Fira Code", monospace;
+    font-weight: 300;
+    text-decoration: none;
+    /*subrayado de los links*/
+    border: none;
+    border-collapse: collapse;
+    /*para las tablas sin bordes*/
+    /*seleccion de texto desactivada*/
+    user-select: none;
+    -youbkit-touch-callout: none;
+    /*iOS Safari*/
+    -youbkit-user-select: none;
+    /*Chrome 6.0+, Safari 3.1+, Edge y Opera 15*/
+    -moz-user-select: none;
+    /*Firefox*/
+    -ms-user-select: none;
+    /*IE 10+ y Edge*/
+}
+
+*::-webkit-scrollbar,
+.hiden { display: none; }
+
+body{
+  background: rgb(42, 45, 51);
+  color: white;
+}
+/*--------- Width ---------*/
+.w-100 { width: 100%; }
+.w-50 { width: 50%; }
+
+/*--------- Height ---------*/
+.h-10 { height: 10px; }
+
+/*--------- Margin ---------*/
+.mt-15p{
+    margin-top: 15px;
+}
+/*--------- Padding ---------*/
+.p-r-35p {
+    padding-right:35px ;
+}
+
+/*--------- Elements ---------*/
+
+li{
+    list-style-type: none;
+}
+
+input[type="text" i] { padding: 1px 2px; }
+
+textarea {padding: 2px;}
+
+/*==============  Paleta de Colores =================*/
+
+
+/*--------------  fondos y color de letras internas    */
+
+.blanco {
+    background: rgb(42, 45, 51);
+    color: white;
+}
+
+.rosa {
+    background: red;
+    color: white;
+}
+
+.rojo {
+    background: rgb(247, 186, 186);
+    color: white;
+}
+
+.orange {
+    background: red;
+    color: white;
+}
+
+.yello {
+    background: rgb(252, 255, 172);
+    color: white;
+}
+
+.lechuga {
+    background: rgb(223, 247, 186);
+    color: white;
+}
+
+.verde {
+    background: red;
+    color: white;
+}
+.verde-t {
+    color: rgb(10, 224, 121);
+}
+
+.celeste {
+    background: rgb(181, 220, 237);
+    color: white;
+}
+
+.azul {
+    background: red;
+    color: white;
+}
+
+.lila {
+    background: rgb(214, 186, 247);
+    color: white;
+}
+.lila-t {
+    color: rgb(214, 186, 247);
+}
+
+.vino {
+    background: red;
+    color: white;
+}
+
+.cafe {
+    background: red;
+    color: white;
+}
+
+.oro {
+    background: red;
+    color: white;
+}
+
+.negro {
+    background: black;
+    color: white;
+}
+.negro-t {
+    color: black;
+}
+
+.plomo {
+  background: rgb(65, 70, 79);
+  color: white;
+}
+
+
+/*--------------  colores y hover ----------*/
+
+.blanco:hover {
+  background: rgb(65, 70, 79);
+  color: white;
+}
+
+.rosa:hover {
+    background: red;
+    color: white;
+}
+
+.rojo:hover {
+    background: rgb(228, 124, 124);
+    color: white;
+}
+
+.orange:hover {
+    background: red;
+    color: white;
+}
+
+.yello:hover {
+    background: red;
+    color: white;
+}
+
+.lechuga:hover {
+    background: rgb(186, 228, 124);
+    color: white;
+}
+
+.verde:hover {
+    background: red;
+    color: white;
+}
+
+.celeste:hover {
+    background: rgb(37, 150, 190);
+    color: white;
+}
+
+.azul:hover {
+    background: red;
+    color: white;
+}
+
+.lila:hover {
+    background: rgb(150, 124, 228);
+    color: white;
+}
+
+.vino:hover {
+    background: red;
+    color: white;
+}
+
+.cafe:hover {
+    background: red;
+    color: white;
+}
+
+.oro:hover {
+    background: red;
+    color: white;
+}
+
+.negro:hover {
+    background: white;
+    color: black;
+}
+
+.plomo:hover {
+    background: rgb(217, 217, 217);
+    color: black;
+}
+
+
+/*--------------  colores y doble hover en plomo */
+.plomo:hover .rojo{
+    background: rgb(247, 186, 186);
+}.plomo:hover .rojo:hover{
+    background: rgb(228, 124, 124);
+}
+
+.plomo:hover .lechuga {
+    background: rgb(223, 247, 186);
+}.plomo:hover .lechuga:hover{
+    background: rgb(186, 228, 124);
+}
+/*-------------- others especials----------------- */
+.invisible { background: rgb(42, 45, 51); color: rgb(42, 45, 51);}
+
+/*===========  Textos letras o parrafos  ==========*/
+
+.text-8 {
+    font-size: 8px;
+}
+
+.text-16 {
+    font-size: 16px;
+}
+
+.text-18 {
+    font-size: 18px;
+}
+
+.text-28{
+    font-size: 28px;
+}
+
+.font-400 {
+    font-weight: 400;
+}
+
+.font-500 {
+    font-weight: 500;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+
+/*==============  Formas y geometrias ==============*/
+
+.oval {
+    width: 150px;
+    height: 30px;
+    border-radius: 30px;
+}
+
+.square-S {
+    width: 20px;
+    height: 20px;
+}
+
+.square-M {
+    width: 40px;
+    height: 40px;
+}
+
+.midline {
+    width: 1px;
+    background: rgba(186, 186, 186, 0.684);
+    height: 100%;
+    margin: 5px;
+}
+/*------------------ Especiales -----------------------------*/
+#btn-delete-eventPending{
+    height: auto;
+    width: 35px;
+    min-width: 35px;
+}
+#btn-play-eventPending{
+    width: 25%;
+    height: auto;
+}
+
+
+/*==============  Buttons  =======================*/
+
+button {
+    cursor: pointer;
+    background: rgb(65, 70, 79);
+    color: white;;
+  }
+
+
+/*==============  Inputs   =======================*/
+
+input,
+textarea {
+    outline: none;
+    width: 99%;
+    resize: none;
+    background: rgb(42, 45, 51);
+    color: rgb(255, 255, 255);
+}
+
+/*==============  Inputs colors =======================*/
+
+.plomo:hover, .plomo:hover input, input:focus, .plomo:hover textarea, textarea:focus {
+  background: rgb(65, 70, 79);
+}
+
+/*==============  Alineaciones  ==================*/
+
+.content-left {text-align: left;}
+
+.content-horizontal { display: flex; }
+
+.content-right { text-align: right; justify-content: right;}
+
+.center-absolut {
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+/*===========  General Elemants properties =========*/
+.containerFilters {margin: 10px 0px 25px 20px;}
+.scrollHiden-bodyGame {
+    height: calc(100vh - 200px);
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}.scrollOcultoHorizontal{
+    overflow: auto;
+    display: inline-block;
+}.footerRightElement{
+    padding: 0px 10px 5px 10px;
+}
+
+/*===========  PAGINA BACKLOG  =========*/
+
+
+/*----------- Timeline cronograma ------*/
+
+#timelineProyecto {
+    border-collapse: collapse;
+    margin: 0px 35px 0px 15px;
+}
+
+
+/*===========  PAGINA BOOTASK  =========*/
+
+
+/*===========  PAGINA GAME  ==========*/
+#bodyGame{
+    /*maquetacion para 3 columnas*/
+    display: grid;
+    grid-template-columns: calc(50% - 175px) 350px calc(50% - 175px);
+    margin: 10px 0px 0px 0px;
+}
+
+/*----------- Section left ------*/
+
+#containerNewEventForm-bodyGame{
+    margin: 35px 0px 10px 0px;
+    padding: 5px 0px 0px 25px;
+}
+.separador{
+    width: auto;
+    height: 1px;
+    background-color: rgba(239, 239, 239, 0.9);
+    margin: 0px 0px 0px 0px;
+}
+#containerEventsListPending input {
+    margin: 15px 0px 0px 0px;
+    width: 100%;
+}
+#containerTagsEventPending_bodyGame{
+    display: grid;
+    grid-template-columns: 80% 20%;
+    margin: 0px 2px;
+
+}
+/*----------- Section center ------*/
+
+#containerButtonsClockGame button{
+    margin: 0px 5px 15px 5px;
+}
+#containerButtonsClockGame h3{
+    margin: 0px 0px 15px 150px;
+}
+#calendar{
+    width: 175px;
+    padding: 5px 5px 0px 10px;
+}
+#containerWorkedHours{
+    width: 175px;
+    padding: 25px 5px 18px 10px;
+}
+#boxi{
+    border: solid 1px;
+    border-color: rgb(207, 207, 207);
+    width: 340px;
+    height: auto;
+    margin: 0px 5px 0px 2px;
+    padding: 2px;
+}
+
+
+/*----------- Section right ------*/
+
+#containerNavPages{
+    padding: 14px 20px 0px 0px;
+}
+.content-right input, .content-right textarea{
+    text-align: right;
+    justify-content: right;
+}
+#containerTitleSection{
+    margin: 55px 0px 33px 0px;
+    padding: 5px 25px 0px 0px;
+}
+
+/*===========  PAGINA STREAM  ==========*/
+
+#bodyStream {
+    /*maquetacion para 3 columnas*/
+    display: grid;
+    grid-template-columns: calc(50% - 175px) 350px calc(50% - 175px);
+    margin: 10px 0px 10px 0px;
+}
+
+#cajitaStream {
+    border: solid 1px;
+    border-color: rgb(207, 207, 207);
+    width: auto;
+    height: auto;
+    margin: 0px 5px 0px 2px;
+    padding: 2px;
+}
+
+
+
+/*=======================================*/
+
+
+/*=======================================*/
+
+
+/*=======================================*/
+
+
+/*=======================================*/
+
+
+/*=======================================*/
+
+
+/*=======================================*/
+
+
+/*=======================================*/
+
+
+/*=======================================*/

@@ -11,8 +11,8 @@
 
     <title>scrumz</title>
     <!---->
-    <link rel="stylesheet" href="styles/generalStyles.css">
-    
+    <link id="modeDarkTheme" rel="stylesheet" href="styles/darkStyles.csss">
+    <link id="modeLightTheme" rel="stylesheet" href="styles/generalStyles.css">
 
 </head>
 
@@ -111,6 +111,10 @@
             </article>
         </main>
         <footer>
+            <nav class="center-absolut" style="margin-top: 1px;">
+                <button onclick="modeDarkTheme()">darkness</button>
+                <button onclick="modeLightTheme()">light</button>
+            </nav>
         </footer>
     </section>
     <!-- Content RIGHT -->

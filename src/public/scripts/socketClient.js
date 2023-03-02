@@ -82,7 +82,7 @@ export const c_close_event = (id) => {
   socket.emit("client:c_close_event", id);
 };
 
-// Delete new events from DB server
+// Delete events played from DB server
 export const c_delete_event_played = (id) => {
   socket.emit("client:c_delete_event_played", id);
 };

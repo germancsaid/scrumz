@@ -28,9 +28,9 @@ export default (io) => {
         .find({ StatusEvent: "pending" })
         .sort({ createdAt: 1 });
 
-        const find_closed_event_backlog = await event_backlog
+      const find_closed_event_backlog = await event_backlog
         .find({ StatusEvent: "closed" })
-        .sort({ createdAt: 1 });
+        .sort({ createdAt: -1 });
       // Send data s_query_find_event_backlog to the all clients connected
       /**
        * !io vs socket analysis for this sintax but io is very inefficient load completely the information to the DB
@@ -38,7 +38,6 @@ export default (io) => {
       io.emit("server:s_query_find_event_backlog", find_event_backlog);
       //console.log(find_event_backlog);
       io.emit("server:s_query_find_closed_event_backlog", find_closed_event_backlog);
-
     };
     s_query_find_event_backlog();
 
@@ -120,15 +119,15 @@ export default (io) => {
       s_query_find_event_backlog();
     });
 
-      /**
+    /**
      * *Receive data for close event backlog from Client
      */
-      socket.on("client:c_close_event", async (id) => {
-        // Send data id to the DB for delete
-        await event_backlog.findByIdAndUpdate(id,{ StatusEvent: "closed"});
-        // Load data from DB
-        s_query_find_event_backlog();
-      });
+    socket.on("client:c_close_event", async (id) => {
+      // Send data id to the DB for delete
+      await event_backlog.findByIdAndUpdate(id, { StatusEvent: "closed" });
+      // Load data from DB
+      s_query_find_event_backlog();
+    });
 
     /**
      * *Receive data for delete event played from Client

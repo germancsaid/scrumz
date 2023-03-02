@@ -143,7 +143,7 @@ textarea {padding: 2px;}
 
 .plomo {
   background: rgb(65, 70, 79);
-  color: white;
+  color: rgb(255, 255, 255);
 }
 
 
@@ -221,7 +221,7 @@ textarea {padding: 2px;}
 
 .plomo:hover {
     background: rgb(217, 217, 217);
-    color: black;
+    color: white;
 }
 
 
@@ -360,7 +360,9 @@ textarea {
 }.footerRightElement{
     padding: 0px 10px 5px 10px;
 }
-
+.link {
+    color: rgb(134, 231, 99);
+}
 /*===========  PAGINA BACKLOG  =========*/
 
 
@@ -444,6 +446,8 @@ textarea {
     margin: 55px 0px 33px 0px;
     padding: 5px 25px 0px 0px;
 }
+
+
 
 /*===========  PAGINA STREAM  ==========*/
 

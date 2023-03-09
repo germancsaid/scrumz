@@ -53,7 +53,7 @@ li{
     list-style-type: none;
 }
 
-input[type="text" i] { padding: 1px 2px; }
+input[type="text" i],input[type="number" i] { padding: 1px 2px; }
 
 textarea {padding: 2px;}
 
@@ -237,6 +237,12 @@ textarea {padding: 2px;}
 }.plomo:hover .lechuga:hover{
     background: rgb(186, 228, 124);
 }
+
+.plomo:hover .lila {
+    background: rgb(214, 186, 247);
+}.plomo:hover .lila:hover{
+    background: rgb(150, 124, 228);
+}
 /*-------------- others especials----------------- */
 .invisible { background: white; color: white;}
 
@@ -289,6 +295,21 @@ textarea {padding: 2px;}
     height: 40px;
 }
 
+.triangle-tricolor {
+    width: 0; 
+    height: 0; 
+    border-left: 18px solid #9fb8ce;
+    border-top: 10px solid #ffffff;
+    border-bottom: 10px solid #ffffff;
+}
+.triangle-tricolor:hover {
+    width: 0; 
+    height: 0; 
+    border-left: 18px solid #d5d5d5;
+    border-top: 10px solid #ffffff;
+    border-bottom: 10px solid #ffffff;
+}
+
 .midline {
     width: 1px;
     background: rgba(186, 186, 186, 0.684);
@@ -319,7 +340,6 @@ button {
 input,
 textarea {
     outline: none;
-    width: 99%;
     resize: none;
 }
 
@@ -344,21 +364,7 @@ textarea {
     align-items: center;
 }
 
-/*===========  General Elemants properties =========*/
-.containerFilters {margin: 10px 0px 25px 20px;}
-.scrollHiden-bodyGame {
-    height: calc(100vh - 200px);
-    overflow-y: scroll;
-    scroll-behavior: smooth;
-}.scrollOcultoHorizontal{
-    overflow: auto;
-    display: inline-block;
-}.footerRightElement{
-    padding: 0px 10px 5px 10px;
-}
-.link {
-    color: rgb(84, 10, 168);
-}
+
 /*===========  PAGINA BACKLOG  =========*/
 
 
@@ -374,10 +380,32 @@ textarea {
 
 
 /*===========  PAGINA GAME  ==========*/
+
+/*----------  General Elemants properties */
+.containerFilters {margin: 10px 0px 25px 20px;}
+.scrollHiden-bodyGame {
+    height: calc(100vh - 200px);
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    
+}.scrollHiden-bodyGameCenter {
+    height: calc(100vh - 220px);
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+.scrollOcultoHorizontal{
+    overflow: auto;
+    display: inline-block;
+}.footerRightElement{
+    padding: 0px 10px 5px 10px;
+}
+.link {
+    color: rgb(84, 10, 168);
+}
 #bodyGame{
     /*maquetacion para 3 columnas*/
     display: grid;
-    grid-template-columns: calc(50% - 175px) 350px calc(50% - 175px);
+    grid-template-columns: calc(50% - 190px) 380px calc(50% - 190px);
     margin: 10px 0px 0px 0px;
 }
 
@@ -448,10 +476,7 @@ textarea {
 /*===========  PAGINA STREAM  ==========*/
 
 #bodyStream {
-    /*maquetacion para 3 columnas*/
-    display: grid;
-    grid-template-columns: calc(50% - 175px) 350px calc(50% - 175px);
-    margin: 10px 0px 10px 0px;
+    
 }
 
 #cajitaStream {

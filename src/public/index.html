@@ -11,147 +11,132 @@
 
     <title>scrumz</title>
     <!---->
-    <link id="modeDarkTheme" rel="stylesheet" href="styles/darkStyles.csss">
+    <link id="modeDarkTheme" rel="stylesheet" href="">
     <link id="modeLightTheme" rel="stylesheet" href="styles/generalStyles.css">
 
 </head>
 
-<body id="bodyGame" onload="clockDinamic()">
-    <!--Three sections of the page
+<body onload="clockDinamic()">
+
+    <div id="bodyGame">
+        <!--Three sections of the page
         -Always section containing three elements
         -header 
         -main 
         -footer
      -->
-    <section class="content-left">
-        <header>
-            <nav id="containerFiltersPendingEvents-bodyGame-rename" class="containerFilters">
-                <button class="oval negro">Fecha cercana</button>
-                <button class="oval negro">Prioridad</button>
-            </nav>
-        </header>
-        <main>
-            <article id="containerNewEventForm-bodyGame" class="plomo invisible">
-                <form id="FormNewEventBodyGame" action="">
-                    <input id="newNameEventInputBodyGame" class="uppercase font-400 text-18" type="text" placeholder="NEW EVENT PENDING" spellcheck="false"><br>
-                    <input id="newDescriptionEventInputBodyGame" class="text-16" type="text" placeholder="Description" spellcheck="false" style="margin-bottom:20px;">
-                    <button class="hiden">submit</button>
-                    <div class="separador" style="width: 80%;"></div>
-                </form>
-            </article>
-            <ul id="containerEventsListPending" class="scrollHiden-bodyGame">
-                <h2 class="font-400 text-18" style="margin-left:30px">Loading...</h2>
-                <li id="eventPending" class="content-horizontal plomo invisible">
-                    <!--
-                    <button id="btn-delete-eventPending" class="rojo invisible"></button>
-                    <form action="" class="w-100">
-                        <input class="uppercase font-400 text-18" type="text" value="NOMBRE DE TAREA" spellcheck="false">
-                        <textarea class="text-16" name="" id="" cols="30" rows="2" spellcheck="false">Esto es una descripcion pero una tarea importante</textarea>
+        <section class="content-left">
+            <header>
+                <nav id="containerFiltersPendingEvents-bodyGame-rename" class="containerFilters">
+                    <button class="oval negro" style="width: 80px;">Today</button>
+                    <button class="oval negro">Type: Recurrent</button>
+                </nav>
+            </header>
+            <main>
+                <article id="containerNewEventForm-bodyGame" class="plomo invisible">
+                    <form id="FormNewEventBodyGame" action="">
+                        <input id="newNameEventInputBodyGame" class="uppercase font-400 text-18" style="width: 70%;" type="text" placeholder="NEW EVENT PENDING" spellcheck="false">
+                        <input id="newAllottedTimeInputBodyGame" class="text-16" style="width: 10%;" type="text" placeholder="Time">
+                        <br>
+                        <input id="newDescriptionEventInputBodyGame" class="text-16" style="width: 80%; margin-bottom: 20px;" type="text" placeholder="Description" spellcheck="false">
                         <button class="hiden">submit</button>
-                        <div class="separador"></div>
+                        <div class="separador" style="width: 80%;"></div>
                     </form>
-                    <button id="btn-play-eventPending" class="lechuga invisible"></button>
-                    -->
-                </li>
-            </ul>
-        </main>
-        <footer>
-            <h6 id="" class="footerRightElement text-16 verde-t"><a class="lila-t" href="http://">germantardiop@gmail.com</a> online</h6>
-        </footer>
-    </section>
-    <!-- Content CENTER -->
-    <section id="timeGame-events">
-        <header>
-            <nav id="containerButtonsClockGame" class="center-absolut content-horizontal">
-                <button id="" class="square-M lechuga"></button>
-                <button id="" class="square-M lila"></button>
-                <h3 id="clockGame">00:00:00</h3>
-            </nav>
-            <article id="containerCalendarClockGame" class="content-horizontal">
-                <div id="calendar" class="">
-                    <h1 id="day" class="text-28 font-400">00</h1>
-                    <h5 id="month">Mes</h5>
-                    <h4 id="weekendDay">Dia</h4>
-                    <button class="square-S lila" style="margin-top: 5px; margin-left: 0px;"></button>
-                    <button class="square-S lechuga"></button>
-                </div>
-                <div id="containerWorkedHours" class="content-right">
-                    <h5>Horas dedicadas hoy:</h5>
-                    <h1 class="text-28 font-400">...</h1>
-                </div>
-            </article>
-        </header>
-        <main>
-            <button class="w-100 h-10 plomo"></button>
-            <article class="scrollHiden-bodyGame">
-                <ul id="containerBoxi_listPlayed" class="containerBoxi">
-                    <h2 class="center-absolut font-400 text-18" style="margin-left:30px">...loaDing...</h2>
-                    <!--
-                    <li id="boxi" class="">
-                        <div class="content-horizontal">
-                            <div style="width: 301px; margin-bottom: 5px;">
-                                <button>#1912341</button>
-                                <button>PROYECTO</button>
-                                <button>Fase 1</button>
-                                <button>media</button>
-                                <button>alta</button>
-                            </div>
-                            <h5 style="width: 40px;">08:00</h5>
-                        </div>
-                        <h1>NOMBRE DE TAREA</h1>
-                        <h4 style="margin-bottom: 5px;">Descripcion de tarea largo con todas las cosas señor</h4>
-                        <div class="content-horizontal">
-                            <h5>2.5|8h</h5>
-                            <h5 id="EndTimeEventPlayed" class="contenido-derecha">11:00</h5>
-                        </div>
+                </article>
+                <ul id="containerEventsListPending" class="scrollHiden-bodyGame">
+                    <h2 class="font-400 text-18" style="margin-left:30px">Loading...</h2>
+                    <li id="eventPending" class="content-horizontal plomo invisible">
+                        <!--
+                        <button id="btn-delete-eventPending" class="rojo invisible"></button>
+                        <form action="" class="w-100">
+                            <input class="uppercase font-400 text-18" type="text" value="NOMBRE DE TAREA" spellcheck="false">
+                            <textarea class="text-16" name="" id="" cols="30" rows="2" spellcheck="false">Esto es una descripcion pero una tarea importante</textarea>
+                            <button class="hiden">submit</button>
+                            <div class="separador"></div>
+                        </form>
+                        <button id="btn-play-eventPending" class="lechuga invisible"></button>
+                        -->
                     </li>
-                    <button class="w-100 h-10 lechuga"></button>
+                </ul>
+            </main>
+            <footer>
+                <h6 id="" class="footerRightElement text-16"><a class="link" href="#">chalo</a> /<a href="#"></a>acb equipo III</h6>
+            </footer>
+        </section>
+        <!-- Content CENTER -->
+        <section id="timeGame-events" style="margin: 0px 15px;">
+            <header>
+                <nav id="containerButtonsClockGame" class="center-absolut content-horizontal">
+                    <button id="" class="square-M lechuga"></button>
+                    <button id="" class="square-M lila"></button>
+                    <h3 id="clockGame">00:00:00</h3>
+                </nav>
+                <article id="containerCalendarClockGame" class="content-horizontal">
+                    <div id="calendar" class="">
+                        <h1 id="day" class="text-28 font-400">00</h1>
+                        <h5 id="month">Mes</h5>
+                        <h4 id="weekendDay">Dia</h4>
+                        <button id="PreviousDay" class="triangle-tricolor" style="margin-top: 5px; margin-left: 0px; transform: rotate(180deg);"></button>
+                        <div></div>
+                        <button id="NextDay" class="triangle-tricolor"></button>
+                    </div>
+                    <div id="containerWorkedHours" class="content-right">
+                        <h5>Horas dedicadas hoy:</h5>
+                        <h1 class="text-28 font-400">...</h1>
+                    </div>
+                </article>
+            </header>
+            <main>
+                <button class="w-100 h-10 plomo"></button>
+                <article class="scrollHiden-bodyGameCenter">
+                    <ul id="containerBoxi_listPlayed" class="containerBoxi">
+                        <h2 class="center-absolut font-400 text-18" style="margin-left:30px">...loaDing...</h2>
+                    </ul>
+                </article>
+            </main>
+            <footer>
+            </footer>
+        </section>
+        <!-- Content RIGHT -->
+        <section class="content-right">
+            <header>
+                <nav id="containerNavPages" class="">
+                    <h4><a class="link" href="backlog.html">backlog</a> - <a class="link" href="asignation.html">asignation</a> - <a class="link" href="index.html/#Stream">sprint</a> - <a class="link" href="/#/Stream">stream</a></h4>
+                </nav>
+            </header>
+            <main>
+                <article id="containerTitleSection" class="">
+                    <h2>FINALIZADAS</h2>
+                </article>
+                <ul id="containerEventsListClosed" class="scrollHiden-bodyGame">
+                    <h2 class="font-400 text-18" style="margin-right:30px">...loadinG</h2>
+                    <!--
+                    <li class="p-r-35p plomo invisible">
+                        <form class="" action="">
+                            <input class="uppercase text-18 font-400 mt-15p"  type="text" value="NOMBRE DE TAREA" spellcheck="false">
+                            <textarea class="text-16" name="" id="" cols="30" rows="2" spellcheck="false">Esto es una descripcion de una tarea creada</textarea>
+                            <button id="" class="hiden">submit</button>
+                            <div class="separador" style="width: 80%; margin-left:20%;"></div>
+                        </form>
+                    </li>
                     -->
                 </ul>
+            </main>
+            <footer>
+                <h6 class="footerRightElement text-16"><button onclick="modeDarkTheme()">darkness</button><button onclick="modeLightTheme()">light</button><a class="link" href="http://">exit</a></h6>
+            </footer>
+            <article id="UserBoxiStream" class="">
             </article>
-        </main>
-        <footer>
-            <nav class="center-absolut" style="margin-top: 1px;">
-                <button onclick="modeDarkTheme()">darkness</button>
-                <button onclick="modeLightTheme()">light</button>
-            </nav>
-        </footer>
-    </section>
-    <!-- Content RIGHT -->
-    <section class="content-right">
-        <header>
-            <nav id="containerNavPages" class="">
-                <h4><a class="link" href="backlog.html">backlog</a> - <a class="link" href="asignation.html">asignation</a> - <a class="link" href="sprint.html">sprint</a> - <a class="link" href="stream.html">stream</a></h4>
-            </nav>
-        </header>
-        <main>
-            <article id="containerTitleSection" class="">
-                <h2>FINALIZADAS</h2>
-            </article>
-            <ul id="containerEventsListClosed" class="scrollHiden-bodyGame">
-                <h2 class="font-400 text-18" style="margin-right:30px">...loadinG</h2>
-                <!--
-                <li class="p-r-35p plomo invisible">
-                    <form class="" action="">
-                        <input class="uppercase text-18 font-400 mt-15p"  type="text" value="NOMBRE DE TAREA" spellcheck="false">
-                        <textarea class="text-16" name="" id="" cols="30" rows="2" spellcheck="false">Esto es una descripcion de una tarea creada</textarea>
-                        <button id="" class="hiden">submit</button>
-                        <div class="separador" style="width: 80%; margin-left:20%;"></div>
-                    </form>
-                </li>
-                -->
-            </ul>
-        </main>
-        <footer>
-            <h6 class="footerRightElement text-16"><a class="link" href="http://">exit</a></h6>
-        </footer>
-    </section>
-    
+
+        </section>
+    </div>
+
+   
     <!--Functions for funtionalities in the app -->
     <script src="scripts/functionsFront.js"></script>
 
     <!--Sockets and comunication client with server-->
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js" type="module"></script>
     <script src="scripts/client.js" type="module"></script>
 </body>
 

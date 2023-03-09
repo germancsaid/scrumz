@@ -4,6 +4,13 @@
 const socket = io();
 
 /**
+ * *Constantes de la app
+ */
+
+
+
+
+/**
  * !ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON
  */
 /**
@@ -14,9 +21,20 @@ export const c_query_find_event_backlog = (callback) => {
   socket.on("server:s_query_find_event_backlog", callback);
 };
 
+/**
+ * * PARA PUBLICAR EVENTOS FINALIZADOS DE events_backlog
+ */
 // Receive data s_query_find_event_backlog to the server
 export const c_query_find_closed_event_backlog = (callback) => {
   socket.on("server:s_query_find_closed_event_backlog", callback);
+};
+
+/**
+ * * PARA PUBLICAR EN STREAM LISTA PLAYERS player
+ */
+// Receive data s_query_find_event_backlog to the server
+export const s_query_find_player = (callback) => {
+  socket.on("server:s_query_find_player", callback);
 };
 
 /**
@@ -33,18 +51,21 @@ export const c_query_find_count_event_played = (callback) => {
   socket.on("server:s_query_find_count_event_played", callback);
 };
 
-
 /**
  * * PARA INSERTAR EVENTOS EN events_backlog
  */
 // Sent events for insertOne to DB server
-export const c_insertOne_event_backlog = (NameEvent, DescriptionEvent) => {
+export const c_insertOne_event_backlog = (
+  NameEvent,
+  DescriptionEvent,
+  AllottedTime,
+) => {
   socket.emit("client:c_insertOne_event_backlog", {
     NameEvent,
     DescriptionEvent,
+    AllottedTime,
   });
 };
-
 
 /**
  * * PARA PUBLICAR NUEVOS EVENTOS EN LA PAGINA
@@ -53,8 +74,6 @@ export const c_insertOne_event_backlog = (NameEvent, DescriptionEvent) => {
 export const c_publish_insertOne_event_backlog = (callback) => {
   socket.on("server:s_insertOne_event_backlog", callback);
 };
-
-
 
 /**
  * * PARA PUBLICAR NUEVOS EVENTOS EJECUTADOS EN LA PAGINA

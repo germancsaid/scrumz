@@ -7,21 +7,19 @@ import { Schema, model } from "mongoose";
 
 const schema = new Schema(
   {
-    NameEvent: {
+    PlayerName: {
       type: String,
       required: true,
     },
-    DescriptionEvent: {
+    NickName: {
       type: String,
     },
-    AllottedTime: {
+    Email: {
       type: String,
-      default: ""
     },
-    StatusEvent: {
+    Password: {
       type: String,
-      default: "pending"
-    },
+    }
   },
   {
     timestamps: true,
@@ -31,4 +29,4 @@ const schema = new Schema(
 /**
  * *Se exporta la coleccion con una 's' al final
  */
-export default model("event_backlog", schema);
+export default model("player", schema);

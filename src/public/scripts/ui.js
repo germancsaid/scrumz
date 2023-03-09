@@ -21,7 +21,8 @@ export const c_function_save_event_backlog = (e) => {
   e.preventDefault();
   c_insertOne_event_backlog(
     FormNewEventBodyGame["newNameEventInputBodyGame"].value,
-    FormNewEventBodyGame["newDescriptionEventInputBodyGame"].value
+    FormNewEventBodyGame["newDescriptionEventInputBodyGame"].value,
+    FormNewEventBodyGame["newAllottedTimeInputBodyGame"].value
   );
   FormNewEventBodyGame.reset()
 };
@@ -48,6 +49,11 @@ const closed_event_sprint_list = document.querySelector(
   "#containerEventsListClosed"
 );
 
+
+// Container to publish old events and new events
+const player_list = document.querySelector(
+  "#UserBoxiStream"
+);
 // Container to publish old events and new events
 const pending_event_sprint_UI = (event_sprint) => {
   const li = document.createElement("li");
@@ -55,17 +61,18 @@ const pending_event_sprint_UI = (event_sprint) => {
     <li id="eventPending" class="content-horizontal plomo invisible">
       <button id="btn-delete-eventPending" class="btn-delete-eventPending rojo invisible" data-id="${event_sprint._id}"></button>
       <form action="" class="FormEventBodyGame w-100">
-          <input class="uppercase font-400 text-18" type="text" value="${event_sprint.NameEvent}" spellcheck="false">
-          <textarea class="text-16" name="" id="" cols="30" rows="2" spellcheck="false">${event_sprint.DescriptionEvent}</textarea>
+          <input class="uppercase font-400 text-18" style="width: 99%;" type="text" value="${event_sprint.NameEvent}" spellcheck="false">
+          <textarea class="text-16" style="width: 99%;" name="" id="" cols="30" rows="2" spellcheck="false">${event_sprint.DescriptionEvent}</textarea>
           <button class="hiden">submit</button>
           <nav id="containerTagsEventPending_bodyGame">
             <div>
-              <button class="">${event_sprint.NameEvent}</button>
+              <button class="">${event_sprint.AllottedTime}h</button>
               <button class="">tag#1</button>
               <button class="">tag#2</button>
+              <button class="">tag#3</button>
             </div>
             <div class="content-right">
-              <button class="btn-close-eventPending rojo invisible" data-id="${event_sprint._id}">close</button>
+              <button class="btn-close-eventPending lila invisible" data-id="${event_sprint._id}">close</button>
             </div>
           </nav>
           <div class="separador"></div>
@@ -154,8 +161,8 @@ const closed_event_sprint_UI = (closed_event_sprint) => {
   li.innerHTML = `
     <li class="p-r-35p plomo invisible">
       <form class="" action="">
-          <input class="uppercase text-18 font-400 mt-15p"  type="text" value="${closed_event_sprint.NameEvent}" spellcheck="false">
-          <textarea class="text-16" name="" id="" cols="30" rows="2" spellcheck="false">${closed_event_sprint.DescriptionEvent}</textarea>
+          <input class="uppercase text-18 font-400 mt-15p" style="width: 80%;" type="text" value="${closed_event_sprint.NameEvent}" spellcheck="false">
+          <textarea class="text-16" style="width: 80%;" name="" id="" cols="30" rows="2" spellcheck="false">${closed_event_sprint.DescriptionEvent}</textarea>
           <button id="" class="hiden">submit</button>
           <div class="separador" style="width: 80%; margin-left:20%;"></div>
       </form>
@@ -163,6 +170,43 @@ const closed_event_sprint_UI = (closed_event_sprint) => {
   `;
 
   return li;
+};
+
+
+
+// Container to publish old events and new events
+const player_UI = (player) => {
+  const div = document.createElement("div");
+  div.innerHTML = `
+  <div id="cajitaStream" class="">
+  <h2>${player._id}</h2>
+  <h1>${player.PlayerName}</h1>
+  <div style="width: 301px; margin-bottom: 5px;">
+      <button class="lila">online</button>
+      <button class="rojo">out</button>
+      <button class="verdelechuga">working</button>
+  </div>
+  <table>
+      <tr>
+          <td>Proyecto :</td>
+          <td>SCRUMZ</td>
+      </tr>
+      <tr>
+          <td>Avance :</td>
+          <td>50%</td>
+      </tr>
+      <tr>
+          <td>Tarea :</td>
+          <td>Desarrollo</td>
+      </tr>
+      <tr>
+          <td>Productividad :</td>
+          <td>2 h</td>
+      </tr>
+  </table>
+</div>  
+  `;
+  return div;
 };
 
 /**
@@ -217,4 +261,14 @@ export const publish_new_event_backlog = (new_event_game) => {
 // Function publish new event into sprint from event_backlog from DB
 export const publish_new_event_played = (new_event_played) => {
   played_event_sprint_list.append(played_event_sprint_UI(new_event_played));
+};
+
+
+
+// Function publish events list from event_backlog from DB
+export const publish_player_stream = (player) => {
+  player_list.innerHTML = "";
+  player.forEach((playe) =>
+  player_list.append(player_UI(playe))
+  );
 };

@@ -59,17 +59,11 @@ export default (io) => {
      */
     const s_query_find_event_played = async () => {
       //Define variables for the filters of the played events
-
       // Today
       let startOfDay = new Date();
       startOfDay.setHours(0, 0, 0, 0);
       let endOfDay = new Date();
       endOfDay.setHours(23, 59, 59, 999);
-
-      console.log("Today is:");
-      console.log(startOfDay);
-      console.log(endOfDay);
-      console.log(Date());
 
       //count events from played
       const count_events_played = await event_played
@@ -89,6 +83,63 @@ export default (io) => {
 
       // Send data count_events_played to the all clients connected
       io.emit("server:s_query_find_count_event_played", count_events_played);
+
+      socket.on("client:c_nextDay_btn", async (date) => {
+        // comment
+        let startOfDay = new Date(date);
+        startOfDay.setHours(0, 0, 0, 0);
+        let endOfDay = new Date(date);
+        endOfDay.setHours(23, 59, 59, 999);
+        console.log(startOfDay + ": " + date + "charlys ")
+
+        //count events from played
+        const count_events_played = await event_played
+          .find({ createdAt: { $gte: startOfDay, $lt: endOfDay } })
+          .count();
+
+        //find events from played
+        const find_event_played = await event_played
+        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay } })
+        .sort({ createdAt: -1 });    
+
+        /**
+         * !io vs socket analysis for this sintax but io is very inefficient load completely the information to the DB
+         */
+        // Send data find_event_played to the all clients connected
+        io.emit("server:s_query_find_event_played", find_event_played);
+
+        // Send data count_events_played to the all clients connected
+        io.emit("server:s_query_find_count_event_played", count_events_played);
+      })
+
+      socket.on("client:c_previousDay_btn", async (date) => {
+        // comment
+        let startOfDay = new Date(date);
+        startOfDay.setHours(0, 0, 0, 0);
+        let endOfDay = new Date(date);
+        endOfDay.setHours(23, 59, 59, 999);
+        console.log(startOfDay + ": " + date + "charlys ")
+
+        //count events from played
+        const count_events_played = await event_played
+          .find({ createdAt: { $gte: startOfDay, $lt: endOfDay } })
+          .count();
+
+        //find events from played
+        const find_event_played = await event_played
+        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay } })
+        .sort({ createdAt: -1 });    
+
+        /**
+         * !io vs socket analysis for this sintax but io is very inefficient load completely the information to the DB
+         */
+        // Send data find_event_played to the all clients connected
+        io.emit("server:s_query_find_event_played", find_event_played);
+
+        // Send data count_events_played to the all clients connected
+        io.emit("server:s_query_find_count_event_played", count_events_played);
+      })
+
     };
 
     // load data in the frontend and ui when new page open or refresh page
@@ -131,11 +182,13 @@ export default (io) => {
 
       let NameEvent = find_event_backlog.NameEvent;
       let DescriptionEvent = find_event_backlog.DescriptionEvent;
+      let AllottedTime = find_event_backlog.AllottedTime;
 
       // Insert one event into the played
       const new_event_played = new event_played({
         NameEvent: NameEvent,
         DescriptionEvent: DescriptionEvent,
+        AllottedTime: AllottedTime,
       });
       const insertOne_event_played = await new_event_played.save();
 

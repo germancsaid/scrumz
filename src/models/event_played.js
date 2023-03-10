@@ -14,6 +14,10 @@ const schema = new Schema(
     DescriptionEvent: {
       type: String,
     },
+    AllottedTime: {
+      type: String,
+      default: ""
+    },
   },
   {
     timestamps: true,

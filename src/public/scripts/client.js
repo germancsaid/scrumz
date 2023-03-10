@@ -6,6 +6,9 @@ import {
   c_publish_insertOne_event_backlog,
   c_publish_insertOne_event_played,
   s_query_find_player,
+
+  NextDay,
+  PreviousDay,
 } from "./socketClient.js";
 import {
   publish_old_events_backlog,
@@ -69,6 +72,8 @@ NextDayBtn.addEventListener("click", () => {
   SelectedMoment = NexDay;
   //console.log(SelectedMoment);
   calendarFormat("day", "month", "weekendDay", SelectedMoment, "", "");
+
+  NextDay(SelectedMoment)
 });
 
 const PreviousDayBtn = document.querySelector("#PreviousDay");
@@ -80,6 +85,8 @@ PreviousDayBtn.addEventListener("click", () => {
   SelectedMoment = PrevDay;
   //console.log(SelectedMoment);
   calendarFormat("day", "month", "weekendDay", SelectedMoment, "", "");
+
+  PreviousDay(SelectedMoment)
 });
 
 /**

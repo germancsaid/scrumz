@@ -106,6 +106,14 @@ export const c_delete_event_played = (id) => {
   socket.emit("client:c_delete_event_played", id);
 };
 
+export const NextDay = (SelectedMoment) => {
+  socket.emit("client:c_nextDay_btn", SelectedMoment);
+};
+
+export const PreviousDay = (SelectedMoment) => {
+  socket.emit("client:c_previousDay_btn", SelectedMoment);
+};
+
 /**
  * * PARA INSERTAR EVENTOS EN events_played
  */

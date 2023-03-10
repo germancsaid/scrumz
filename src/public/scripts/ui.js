@@ -57,29 +57,29 @@ const player_list = document.querySelector(
 // Container to publish old events and new events
 const pending_event_sprint_UI = (event_sprint) => {
   const li = document.createElement("li");
+  li.setAttribute("id", "eventPending");
+  li.classList.add("content-horizontal","plomo","invisible");
   li.innerHTML = `
-    <li id="eventPending" class="content-horizontal plomo invisible">
-      <button id="btn-delete-eventPending" class="btn-delete-eventPending rojo invisible" data-id="${event_sprint._id}"></button>
-      <form action="" class="FormEventBodyGame w-100">
-          <input class="uppercase font-400 text-18" style="width: 99%;" type="text" value="${event_sprint.NameEvent}" spellcheck="false">
-          <textarea class="text-16" style="width: 99%;" name="" id="" cols="30" rows="2" spellcheck="false">${event_sprint.DescriptionEvent}</textarea>
-          <button class="hiden">submit</button>
-          <nav id="containerTagsEventPending_bodyGame">
-            <div>
-              <button class="">${event_sprint.AllottedTime}h</button>
-              <button class="">tag#1</button>
-              <button class="">tag#2</button>
-              <button class="">tag#3</button>
-            </div>
-            <div class="content-right">
-              <button class="btn-close-eventPending lila invisible" data-id="${event_sprint._id}">close</button>
-            </div>
-          </nav>
-          <div class="separador"></div>
-      </form>
-      <button id="btn-play-eventPending" class="btn-play-eventPending lechuga invisible" data-id="${event_sprint._id}"></button>
-      <button id="btn-stop-eventPending" class="btn-stop-eventPending rojo" data-id="${event_sprint._id}" style="display:none"></button>
-   </li>
+    <button id="btn-delete-eventPending" class="btn-delete-eventPending rojo invisible" data-id="${event_sprint._id}"></button>
+    <form action="" class="FormEventBodyGame w-100">
+        <input class="uppercase font-400 text-18" style="width: 99%;" type="text" value="${event_sprint.NameEvent}" spellcheck="false">
+        <textarea class="text-16" style="width: 99%;" name="" id="" cols="30" rows="2" spellcheck="false">${event_sprint.DescriptionEvent}</textarea>
+        <button class="hiden">submit</button>
+        <nav id="containerTagsEventPending_bodyGame">
+          <div>
+            <button class="">${event_sprint.AllottedTime}h</button>
+            <button class="">tag#1</button>
+            <button class="">tag#2</button>
+            <button class="">tag#3</button>
+          </div>
+          <div class="content-right">
+            <button class="btn-close-eventPending lila invisible" data-id="${event_sprint._id}">close</button>
+          </div>
+        </nav>
+        <div class="separador"></div>
+    </form>
+    <button id="btn-play-eventPending" class="btn-play-eventPending lechuga invisible" data-id="${event_sprint._id}"></button>
+    <button id="btn-stop-eventPending" class="btn-stop-eventPending rojo" data-id="${event_sprint._id}" style="display:none"></button>
     `;
 
   // Button delete button
@@ -118,15 +118,13 @@ const quantity_played_event_sprint_UI = (quantity) => {
 // Container to publish old events and new events
 const played_event_sprint_UI = (event_played) => {
   const li = document.createElement("li");
+  li.setAttribute("id", "boxi");
   li.innerHTML = `
-    <li id="boxi" class="">
     <div class="content-horizontal">
         <div style="width: 301px; margin-bottom: 5px;">
-            <button>${event_played._id}</button>
-            <button>PROYECTO</button>
-            <button>ta</button>
-            <button>media</button>
-            <button>alta</button>
+            <button>tag#1</button>
+            <button>tag#2</button>
+            <button>tag#3</button>
         </div>
         <h5 style="width: 40px; margin-left:5px; margin-top:3px;">${event_played.createdAt.substring(
           11,
@@ -136,15 +134,14 @@ const played_event_sprint_UI = (event_played) => {
     <h1 class="uppercase">${event_played.NameEvent}</h1>
     <h4 style="margin-bottom: 5px;">${event_played.DescriptionEvent}</h4>
     <div class="content-horizontal">
-        <h5>2.5|8h</h5>
-        <h5 id="EndTimeEventPlayed" class="contenido-derecha">Number${
+        <h5>${event_played.AllottedTime}h|</h5><!--|8h</h5>-->
+        <!--<h5 id="EndTimeEventPlayed" class="contenido-derecha">${
           event_played.createdAt
-        }</h5>
+        }</h5>-->
     </div>
-  </li>
-  <button class="btn-delete-event w-100 h-10 rojo text-8 negro-t" data-id="${
+    <button class="btn-delete-event w-100 h-10 rojo text-8 negro-t" data-id="${
     event_played._id
-  }">delete</button>
+  }" style="width:20%;">delete</button>
   `;
 
   const delete_event_played = li.querySelector(".btn-delete-event");
@@ -158,15 +155,15 @@ const played_event_sprint_UI = (event_played) => {
 // Container to publish old closed events and new events
 const closed_event_sprint_UI = (closed_event_sprint) => {
   const li = document.createElement("li");
+  li.setAttribute("id", "");
+  li.classList.add("p-r-35p","plomo","invisible");
   li.innerHTML = `
-    <li class="p-r-35p plomo invisible">
-      <form class="" action="">
-          <input class="uppercase text-18 font-400 mt-15p" style="width: 80%;" type="text" value="${closed_event_sprint.NameEvent}" spellcheck="false">
-          <textarea class="text-16" style="width: 80%;" name="" id="" cols="30" rows="2" spellcheck="false">${closed_event_sprint.DescriptionEvent}</textarea>
-          <button id="" class="hiden">submit</button>
-          <div class="separador" style="width: 80%; margin-left:20%;"></div>
+    <form class="" action="">
+        <input class="uppercase text-18 font-400 mt-15p" style="width: 80%;" type="text" value="${closed_event_sprint.NameEvent}" spellcheck="false">
+        <textarea class="text-16" style="width: 80%;" name="" id="" cols="30" rows="2" spellcheck="false">${closed_event_sprint.DescriptionEvent}</textarea>
+        <button id="" class="hiden">submit</button>
+        <div class="separador" style="width: 80%; margin-left:20%;"></div>
       </form>
-    </li>
   `;
 
   return li;

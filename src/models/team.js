@@ -7,19 +7,6 @@ import { Schema, model } from "mongoose";
 
 const schema = new Schema(
   {
-    PlayerName: {
-      type: String,
-      required: true,
-    },
-    NickName: {
-      type: String,
-    },
-    Email: {
-      type: String,
-    },
-    Password: {
-      type: String,
-    },
     TeamName: {
       type: String,
       required: true,
@@ -33,4 +20,4 @@ const schema = new Schema(
 /**
  * *Se exporta la coleccion con una 's' al final
  */
-export default model("player", schema);
+export default model("team", schema);

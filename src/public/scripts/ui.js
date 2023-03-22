@@ -2,6 +2,7 @@
  * *Import constants
  */
 import {
+  c_change_team,
   c_insertOne_event_backlog,
   c_delete_event,
   c_close_event,
@@ -11,6 +12,9 @@ import {
 /**
  * *Let
  */
+//For create News Tareas
+let PlayerSession = "chalo"
+let TeamName = "Acb";
 
 /**
  * *Fuctions backend
@@ -22,14 +26,20 @@ export const c_function_save_event_backlog = (e) => {
   c_insertOne_event_backlog(
     FormNewEventBodyGame["newNameEventInputBodyGame"].value,
     FormNewEventBodyGame["newDescriptionEventInputBodyGame"].value,
-    FormNewEventBodyGame["newAllottedTimeInputBodyGame"].value
+    FormNewEventBodyGame["newAllottedTimeInputBodyGame"].value,
+    TeamName,
   );
-  FormNewEventBodyGame.reset()
+  FormNewEventBodyGame.reset();
 };
 
 /**
  * *Objects
  */
+// Container to publish old events and new events
+const player_session = document.querySelector("#PlayerNameContainer");
+
+// Container to publish old events and new events
+const team_player_session = document.querySelector("#ChosenTeamContainer");
 
 // Container to publish old events and new events
 const pending_event_sprint_list = document.querySelector(
@@ -49,16 +59,43 @@ const closed_event_sprint_list = document.querySelector(
   "#containerEventsListClosed"
 );
 
+// Container to publish old events and new events
+const player_list = document.querySelector("#UserBoxiStream");
 
 // Container to publish old events and new events
-const player_list = document.querySelector(
-  "#UserBoxiStream"
-);
+const player_session_UI = (player) => {
+  const a = document.createElement("a");
+  a.setAttribute("id", "PlayerName");
+  a.setAttribute("href", "#");
+  a.classList.add("link", "font-Major");
+  a.innerHTML = `@${player.PlayerName} -> `;
+
+  return a;
+};
+
+const team_player_session_UI = (team) => {
+  const a = document.createElement("a");
+  a.setAttribute("id", "chosenTeam");
+  a.setAttribute("href", "#");
+  a.classList.add("link", "font-Major");
+  a.innerHTML = `${team.TeamName}`;
+
+  let i = 0;
+    // Button delete button
+    a.onclick = (e) => {
+      i ++
+      c_change_team(i);
+      a.innerHTML = `Scrumz`;
+    };
+
+  return a;
+};
+
 // Container to publish old events and new events
 const pending_event_sprint_UI = (event_sprint) => {
   const li = document.createElement("li");
   li.setAttribute("id", "eventPending");
-  li.classList.add("content-horizontal","plomo","invisible");
+  li.classList.add("content-horizontal", "plomo", "invisible");
   li.innerHTML = `
     <button id="btn-delete-eventPending" class="btn-delete-eventPending rojo invisible" data-id="${event_sprint._id}"></button>
     <form action="" class="FormEventBodyGame w-100">
@@ -140,8 +177,8 @@ const played_event_sprint_UI = (event_played) => {
         }</h5>-->
     </div>
     <button class="btn-delete-event w-100 h-10 rojo text-8 negro-t" data-id="${
-    event_played._id
-  }" style="width:20%;">delete</button>
+      event_played._id
+    }" style="width:20%;">delete</button>
   `;
 
   const delete_event_played = li.querySelector(".btn-delete-event");
@@ -156,7 +193,7 @@ const played_event_sprint_UI = (event_played) => {
 const closed_event_sprint_UI = (closed_event_sprint) => {
   const li = document.createElement("li");
   li.setAttribute("id", "");
-  li.classList.add("p-r-35p","plomo","invisible");
+  li.classList.add("p-r-35p", "plomo", "invisible");
   li.innerHTML = `
     <form class="" action="">
         <input class="uppercase text-18 font-400 mt-15p" style="width: 80%;" type="text" value="${closed_event_sprint.NameEvent}" spellcheck="false">
@@ -168,8 +205,6 @@ const closed_event_sprint_UI = (closed_event_sprint) => {
 
   return li;
 };
-
-
 
 // Container to publish old events and new events
 const player_UI = (player) => {
@@ -210,10 +245,22 @@ const player_UI = (player) => {
  * *Fuctions frontend
  */
 
-/**
- * !SOLO FUNCIONA PARA UN USUARIO SE CORROMPE PARA MAS EL CARGAR EVENTOS YA EXISTENTES EN LA DB
- * ?SOLUCIONADO PERO NO ES EFICIENTE
- */
+// Function publish events played list from event_played from DB
+export const publish_player_session = (Player) => {
+  player_session.innerHTML = "";
+  Player.forEach((player) => 
+  player_session.append(player_session_UI(player))
+  );
+};
+
+// Function publish events played list from event_played from DB
+export const publish_team_player_session = (Team) => {
+  team_player_session.innerHTML = "";
+  Team.forEach((team) => 
+  team_player_session.append(team_player_session_UI(team))
+  );
+};
+
 // Function publish events list from event_backlog from DB
 export const publish_old_events_backlog = (events_backlog_list) => {
   pending_event_sprint_list.innerHTML = "";
@@ -260,12 +307,8 @@ export const publish_new_event_played = (new_event_played) => {
   played_event_sprint_list.append(played_event_sprint_UI(new_event_played));
 };
 
-
-
 // Function publish events list from event_backlog from DB
 export const publish_player_stream = (player) => {
   player_list.innerHTML = "";
-  player.forEach((playe) =>
-  player_list.append(player_UI(playe))
-  );
+  player.forEach((playe) => player_list.append(player_UI(playe)));
 };

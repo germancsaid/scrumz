@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Montserrat:wght@900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Montserrat:wght@900&family=Major+Mono+Display&display=swap");
 
 /*===========  GENERAL PARA TODO EL DOM  ==========*/
 
@@ -27,10 +27,16 @@
 *::-webkit-scrollbar,
 .hiden { display: none; }
 
+.font-Major{
+    font-family: 'Major Mono Display', monospace;
+    font-weight: 600;
+}
+
 body{
     background: white;
     color: black;
-  }
+    overflow: hidden;
+}
 /*--------- Width ---------*/
 .w-100 { width: 100%; }
 .w-50 { width: 50%; }
@@ -46,7 +52,11 @@ body{
 .p-r-35p {
     padding-right:35px ;
 }
-
+.fullView{
+    width: 100%;
+    height: 100vh;
+    padding: 10px 0px 0px 0px;
+}
 /*--------- Elements ---------*/
 
 li{
@@ -56,6 +66,19 @@ li{
 input[type="text" i],input[type="number" i] { padding: 1px 2px; }
 
 textarea {padding: 2px;}
+
+h4{
+    width: 400px;
+}
+
+h4 a.link:hover{
+    font-family: 'Major Mono Display', monospace;
+    font-weight: 600;
+}
+h4 a.link.font-Major:hover{
+    text-transform: uppercase;
+    font-weight: 600;
+}
 
 /*==============  Paleta de Colores =================*/
 
@@ -384,9 +407,10 @@ textarea {
 /*----------  General Elemants properties */
 .containerFilters {margin: 10px 0px 25px 20px;}
 .scrollHiden-bodyGame {
-    height: calc(100vh - 200px);
+    height: calc(100vh - 210px);
     overflow-y: scroll;
     scroll-behavior: smooth;
+    margin-bottom: 12px;
     
 }.scrollHiden-bodyGameCenter {
     height: calc(100vh - 220px);
@@ -406,7 +430,7 @@ textarea {
     /*maquetacion para 3 columnas*/
     display: grid;
     grid-template-columns: calc(50% - 190px) 380px calc(50% - 190px);
-    margin: 10px 0px 0px 0px;
+
 }
 
 /*----------- Section left ------*/

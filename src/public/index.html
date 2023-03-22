@@ -18,7 +18,9 @@
 
 <body onload="clockDinamic()">
 
-    <div id="bodyGame">
+
+
+    <div id="bodyGame" class="fullView">
         <!--Three sections of the page
         -Always section containing three elements
         -header 
@@ -61,7 +63,10 @@
                 </ul>
             </main>
             <footer>
-                <h6 id="" class="footerRightElement text-16"><a class="link" href="#">chalo</a> /<a href="#"></a>acb equipo III</h6>
+                <nav class="content-horizontal">
+                    <h6 id="PlayerNameContainer" class="footerRightElement text-16" style="padding-right: 0px;"><a id="PlayerName" class="link font-Major" href="#">@charlys</a> -></h6>
+                    <h6 id="ChosenTeamContainer" class="footerRightElement text-16" style="padding: 0x;"><a id="chosenTeam" class="link font-Major" href="#"> bitakotako</a></h6>
+                </nav>
             </footer>
         </section>
         <!-- Content CENTER -->
@@ -100,6 +105,7 @@
                 <article class="scrollHiden-bodyGameCenter">
                     <ul id="containerBoxi_listPlayed" class="containerBoxi">
                         <h2 class="center-absolut font-400 text-18" style="margin-left:30px">...loaDing...</h2>
+                        <h2>#Code #Game #Alien #Minimal #Futuriste</h2>
                     </ul>
                 </article>
             </main>
@@ -109,13 +115,16 @@
         <!-- Content RIGHT -->
         <section class="content-right">
             <header>
-                <nav id="containerNavPages" class="">
-                    <h4><a class="link" href="backlog.html">backlog</a> - <a class="link" href="asignation.html">asignation</a> - <a class="link" href="index.html/#Stream">sprint</a> - <a class="link" href="/#/Stream">stream</a></h4>
+                <nav id="containerNavPages" class="content-horizontal content-right">
+                    <h4 style="width: 100px;"><a class="link" href="#/backlog">Backlog</a></h4>
+                    <h4 style="width: 100px;"><a class="link" href="#/bootak">Bootak</a></h4>
+                    <h4 style="width: 100px;"><a class="link font-Major" href="#">TheGame</a></h4>
+                    <h4 style="width: 100px;"><a class="link" href="#/stream">Stream</a></h4>
                 </nav>
             </header>
             <main>
                 <article id="containerTitleSection" class="">
-                    <h2>FINALIZADAS</h2>
+                    <h2 class="font-Major">Finalizadas</h2>
                 </article>
                 <ul id="containerEventsListClosed" class="scrollHiden-bodyGame">
                     <h2 class="font-400 text-18" style="margin-right:30px">...loadinG</h2>
@@ -139,7 +148,51 @@
 
         </section>
     </div>
-
+    <div id="/backlog" class="fullView">
+        <section class="content-right">
+            <header>
+                <nav id="containerNavPages" class="content-horizontal content-right">
+                    <h4 style="width: 100px;"><a class="link font-Major" href="#/backlog">Backlog</a></h4>
+                    <h4 style="width: 100px;"><a class="link" href="#/bootak">Bootak</a></h4>
+                    <h4 style="width: 100px;"><a class="link" href="#">TheGame</a></h4>
+                    <h4 style="width: 100px;"><a class="link" href="#/stream">Stream</a></h4>
+                </nav>
+            </header>
+            <main>
+                <h1>BACKLOG</h1>
+            </main>
+        </section>
+    </div>
+    <div id="/bootak" class="fullView">
+        <section class="content-right">
+            <header>
+                <nav id="containerNavPages" class="content-horizontal content-right">
+                    <h4 style="width: 100px;"><a class="link" href="#/backlog">Backlog</a></h4>
+                    <h4 style="width: 100px;"><a class="link font-Major" href="#/bootak">Bootak</a></h4>
+                    <h4 style="width: 100px;"><a class="link" href="#">TheGame</a></h4>
+                    <h4 style="width: 100px;"><a class="link" href="#/stream">Stream</a></h4>
+                </nav>
+            </header>
+            <main>
+                <h1>BOOTAK</h1>
+            </main>
+        </section>
+    </div>
+    <div id="/stream" class="fullView">
+        <section class="content-right">
+            <header>
+                <nav id="containerNavPages" class="content-horizontal content-right">
+                    <h4 style="width: 100px;"><a class="link" href="#/backlog">Backlog</a></h4>
+                    <h4 style="width: 100px;"><a class="link" href="#/bootak">Bootak</a></h4>
+                    <h4 style="width: 100px;"><a class="link" href="#">TheGame</a></h4>
+                    <h4 style="width: 100px;"><a class="link font-Major" href="#/stream">Stream</a></h4>
+                </nav>
+            </header>
+            <main>
+                <h1>STREAM</h1>
+            </main>
+        </section>
+    </div>
    
     <!--Functions for funtionalities in the app -->
     <script src="scripts/functionsFront.js"></script>

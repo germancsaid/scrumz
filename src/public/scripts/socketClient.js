@@ -3,16 +3,22 @@
  */
 const socket = io();
 
-/**
- * *Constantes de la app
- */
-
-
-
 
 /**
  * !ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON
  */
+/**
+ * * PARA PUBLICAR PLATER SESSION DATA NAME and team
+ */
+// Receive data s_query_find_event_backlog to the server
+export const c_query_find_player_session = (Player) => {
+  socket.on("server:s_query_find_player_session", Player)
+};
+
+export const c_query_find_team_player_session = (Team) => {
+  socket.on("server:s_query_find_team_player_session", Team)
+};
+
 /**
  * * PARA PUBLICAR EVENTOS PENDIENTES DE events_backlog
  */
@@ -43,7 +49,7 @@ export const s_query_find_player = (callback) => {
 
 // Receive data s_query_find_event_played to the server
 export const c_query_find_event_played = (callback) => {
-  socket.on("server:s_query_find_event_played", callback);
+  socket.on("server:s_query_find_event_played",callback);
 };
 
 // Receive data s_query_find_count_event_played to the server
@@ -51,21 +57,6 @@ export const c_query_find_count_event_played = (callback) => {
   socket.on("server:s_query_find_count_event_played", callback);
 };
 
-/**
- * * PARA INSERTAR EVENTOS EN events_backlog
- */
-// Sent events for insertOne to DB server
-export const c_insertOne_event_backlog = (
-  NameEvent,
-  DescriptionEvent,
-  AllottedTime,
-) => {
-  socket.emit("client:c_insertOne_event_backlog", {
-    NameEvent,
-    DescriptionEvent,
-    AllottedTime,
-  });
-};
 
 /**
  * * PARA PUBLICAR NUEVOS EVENTOS EN LA PAGINA
@@ -88,8 +79,31 @@ export const c_publish_insertOne_event_played = (callback) => {
  */
 
 /**
+ * * PARA INSERTAR EVENTOS EN events_backlog
+ */
+// Sent events for insertOne to DB server
+export const c_insertOne_event_backlog = (
+  NameEvent,
+  DescriptionEvent,
+  AllottedTime,
+  TeamName,
+) => {
+  socket.emit("client:c_insertOne_event_backlog", {
+    NameEvent,
+    DescriptionEvent,
+    AllottedTime,
+    TeamName,
+  });
+};
+
+/**
  * *Buttons
  */
+
+// Delete new events from DB server
+export const c_change_team = (i) => {
+  socket.emit("client:c_change_team", i);
+};
 
 // Delete new events from DB server
 export const c_delete_event = (id) => {
@@ -114,6 +128,11 @@ export const PreviousDay = (SelectedMoment) => {
   socket.emit("client:c_previousDay_btn", SelectedMoment);
 };
 
+export const OtherTeam = (ChangeTeam) => {
+  socket.emit("client:c_OtherTeam_btn", ChangeTeam);
+};
+
+
 /**
  * * PARA INSERTAR EVENTOS EN events_played
  */
@@ -121,3 +140,16 @@ export const PreviousDay = (SelectedMoment) => {
 export const c_insertOne_play_event = (id) => {
   socket.emit("client:c_insertOne_play_event", id);
 };
+
+
+
+/**
+ * * CONSTANTES DE LA APP CLIENT PARA ENVIAR AL SERVER
+ */
+export const c_data_time = (date) => {
+  socket.emit('client:c_data_time', date)
+}
+
+export const c_data_player = (date) => {
+  socket.emit('client:c_data_player', date)
+}

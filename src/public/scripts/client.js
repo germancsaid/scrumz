@@ -1,16 +1,28 @@
 import {
+  c_query_find_player_session,
+  c_query_find_team_player_session,
+
   c_query_find_event_backlog,
   c_query_find_closed_event_backlog,
   c_query_find_event_played,
   c_query_find_count_event_played,
+
+
   c_publish_insertOne_event_backlog,
   c_publish_insertOne_event_played,
   s_query_find_player,
 
   NextDay,
   PreviousDay,
+  OtherTeam,
+
+  c_data_time,
+  c_data_player,
 } from "./socketClient.js";
 import {
+  publish_player_session,
+  publish_team_player_session,
+
   publish_old_events_backlog,
   publish_old_closed_events_backlog,
   publish_old_events_played,
@@ -22,12 +34,14 @@ import {
 } from "./ui.js";
 
 /**
- * !SOLO FUNCIONA PARA UN USUARIO SE CORROMPE PARA MAS EL CARGAR EVENTOS YA EXISTENTES EN LA DB
- * ?SOLUCIONADO LO QUE ESTA EN ROJO
+ * *DEFINED DATA FROM CLIENT TO THE SEND TO SERVER
  */
-let SelectedMoment = new Date();
-calendarFormat("day", "month", "weekendDay", SelectedMoment, "", "");
-let DayCounter = 0;
+
+    let SelectedMoment = new Date();
+    calendarFormat(SelectedMoment);
+    c_data_time(SelectedMoment)
+
+
 
 window.addEventListener("DOMContentLoaded", () => {
   // Publish old events
@@ -41,6 +55,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Publish events played
   c_query_find_count_event_played(publish_count_events_played);
+
+  // Publish data player
+  c_query_find_player_session(publish_player_session);
+
+  // Publish data player
+  c_query_find_team_player_session(publish_team_player_session);
+
 
   // Publish new events
   c_publish_insertOne_event_backlog(publish_new_event_backlog);
@@ -64,36 +85,44 @@ FormNewEventBodyGame.addEventListener("submit", c_function_save_event_backlog);
 //days movigations buttons
 const NextDayBtn = document.querySelector("#NextDay");
 NextDayBtn.addEventListener("click", () => {
-  DayCounter++;
 
   const NexDay = new Date(SelectedMoment);
   NexDay.setDate(SelectedMoment.getDate() + 1);
-  //console.log("Selected day is" + DayCounter);
   SelectedMoment = NexDay;
-  //console.log(SelectedMoment);
-  calendarFormat("day", "month", "weekendDay", SelectedMoment, "", "");
-
+  calendarFormat(SelectedMoment);
   NextDay(SelectedMoment)
 });
 
 const PreviousDayBtn = document.querySelector("#PreviousDay");
 PreviousDayBtn.addEventListener("click", () => {
-  DayCounter--;
   const PrevDay = new Date(SelectedMoment);
   PrevDay.setDate(SelectedMoment.getDate() - 1);
-  //console.log("Selected day is" + DayCounter);
   SelectedMoment = PrevDay;
-  //console.log(SelectedMoment);
-  calendarFormat("day", "month", "weekendDay", SelectedMoment, "", "");
-
+  calendarFormat(SelectedMoment);
   PreviousDay(SelectedMoment)
+});
+
+const ChangeTeamBtn = document.querySelector("#chosenTeam");
+let i = 0
+ChangeTeamBtn.addEventListener("click", () => {
+  i++;
+  console.log('hola chialo')
+  OtherTeam(i)
+  console.log(i)
 });
 
 /**
  * * Functions backend
  */
-function calendarFormat(idday, idmonth, idweekendDay, moment, weekDay, month) {
-  switch (moment.getDay()) {
+function calendarFormat(selectedMoment) {
+  let idday = 'day'
+  let idmonth = 'month'
+  let idweekendDay = 'weekendDay'
+
+  let weekDay = ''
+  let month = ''
+
+  switch (selectedMoment.getDay()) {
     case 0:
       weekDay = "Domingo";
       break;
@@ -116,7 +145,7 @@ function calendarFormat(idday, idmonth, idweekendDay, moment, weekDay, month) {
       weekDay = "Sabado";
       break;
   }
-  switch (moment.getMonth()) {
+  switch (selectedMoment.getMonth()) {
     case 0:
       month = "Enero";
       break;
@@ -154,7 +183,7 @@ function calendarFormat(idday, idmonth, idweekendDay, moment, weekDay, month) {
       month = "Diciembre";
       break;
   }
-  document.getElementById(idday).innerHTML = moment.getDate();
+  document.getElementById(idday).innerHTML = selectedMoment.getDate();
   document.getElementById(idmonth).innerHTML = month;
   document.getElementById(idweekendDay).innerHTML = weekDay;
 }

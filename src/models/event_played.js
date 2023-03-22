@@ -18,6 +18,10 @@ const schema = new Schema(
       type: String,
       default: ""
     },
+    TeamName: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

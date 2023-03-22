@@ -22,6 +22,10 @@ const schema = new Schema(
       type: String,
       default: "pending"
     },
+    TeamName: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

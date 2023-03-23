@@ -70,12 +70,17 @@ textarea {padding: 2px;}
 h4{
     width: 400px;
 }
+button.nav{
+    background: none;
+    width: 120px;
+    height: 25px;
+}
 
-h4 a.link:hover{
+button.nav:hover{
     font-family: 'Major Mono Display', monospace;
     font-weight: 600;
 }
-h4 a.link.font-Major:hover{
+button.nav.font-Major:hover,button.nav.font-Major-exit:hover {
     text-transform: uppercase;
     font-weight: 600;
 }
@@ -406,7 +411,13 @@ textarea {
 
 /*----------  General Elemants properties */
 .containerFilters {margin: 10px 0px 25px 20px;}
-.scrollHiden-bodyGame {
+.scrollHiden-bodyGame-left {
+    height: calc(100vh - 230px);
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    margin-bottom: 12px;
+    
+}.scrollHiden-bodyGame {
     height: calc(100vh - 210px);
     overflow-y: scroll;
     scroll-behavior: smooth;
@@ -440,9 +451,6 @@ textarea {
     padding: 5px 0px 0px 25px;
 }
 .separador{
-    width: auto;
-    height: 1px;
-    background-color: rgba(239, 239, 239, 0.9);
     margin: 0px 0px 0px 0px;
 }
 #containerEventsListPending input {

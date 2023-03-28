@@ -3,7 +3,8 @@
  * todo: events backlog
  * todo: events played
  * todo: players
- */
+*/
+
 import event_backlog from "./models/event_backlog";
 import event_played from "./models/event_played";
 import player from "./models/player";
@@ -11,29 +12,30 @@ import team from "./models/team";
 
 /**
  * *SOCKET CONNECTION
- */
+*/
 export default (io) => {
   io.on("connection", (socket) => {
     //  One new socket connected in the explorer in the page
     console.log("Socket new ID", socket.id);
-
+    /*
+    const userId = socket.request.session.passport.user;
+    console.log("User ID:", userId);
+    */
     /** 
      * *VARIABLES DEFINITED INTO THE SERVER
      * todo List of variables
      * * a.
      */
 
-        /** 
+    /** 
      * *VARIABLES DEFINITED INTO THE CLIENT WITH RESPONSE EMIT FROM SERVER
      * todo List of variables
      * * a.
      */
+      
       socket.on("client:c_data_time", async (date) => {
         console.log(date)
       });
-
-      let PlayerSession = "chalo"
-      let ChosenTeam = "Acb"
 
     /**
      * *PAGE THEGAME
@@ -49,13 +51,14 @@ export default (io) => {
      */
     const s_query_find_event_backlog = async () => {
       //find events from backlog
+      
       const find_event_backlog = await event_backlog
-        .find({ StatusEvent: "pending", TeamName: ChosenTeam})
+        .find({ StatusEvent: "pending"})//, TeamName: ChosenTeam})
         .sort({ createdAt: -1 });
 
       //find events from backlog where status event is closed
       const find_closed_event_backlog = await event_backlog
-        .find({ StatusEvent: "closed", TeamName: ChosenTeam})
+        .find({ StatusEvent: "closed"})//, TeamName: ChosenTeam})
         .sort({ createdAt: -1 });
 
       /**
@@ -87,12 +90,12 @@ export default (io) => {
 
       //count events from played
       const count_events_played = await event_played
-        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }, TeamName: ChosenTeam})
+        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})//, TeamName: ChosenTeam})
         .count();
 
       //find events from played
       const find_event_played = await event_played
-      .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }, TeamName: ChosenTeam})
+      .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})//, TeamName: ChosenTeam})
       .sort({ createdAt: -1 });    
 
       /**
@@ -114,12 +117,12 @@ export default (io) => {
 
         //count events from played
         const count_events_played = await event_played
-          .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }, TeamName: ChosenTeam})
+          .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})//, TeamName: ChosenTeam})
           .count();
 
         //find events from played
         const find_event_played = await event_played
-        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }, TeamName: ChosenTeam})
+        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})//, TeamName: ChosenTeam})
         .sort({ createdAt: -1 });    
 
         /**
@@ -142,12 +145,12 @@ export default (io) => {
 
         //count events from played
         const count_events_played = await event_played
-          .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }, TeamName: ChosenTeam})
+          .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})//, TeamName: ChosenTeam})
           .count();
 
         //find events from played
         const find_event_played = await event_played
-        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }, TeamName: ChosenTeam})
+        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})//, TeamName: ChosenTeam})
         .sort({ createdAt: -1 });    
 
         /**
@@ -168,6 +171,7 @@ export default (io) => {
     /**
      * todo 1.3.
      */
+    /*
       const s_query_find_player_session = async () => {
         //find events from backlog
         const find_data_player_session = await player
@@ -178,11 +182,11 @@ export default (io) => {
         const find_data_team_player_session = await team
           .find({TeamName: ChosenTeam})
           //.sort({ createdAt: -1 });
-  
+  *//*
         /**
          * !io vs socket analysis for this sintax but io is very inefficient load completely the information to the DB
          */
-        // Send data find_event_backlog to the all clients connected
+        /*// Send data find_event_backlog to the all clients connected
         io.emit("server:s_query_find_player_session", find_data_player_session)
 
         io.emit("server:s_query_find_team_player_session", find_data_team_player_session)
@@ -191,7 +195,7 @@ export default (io) => {
   
       // load data in the frontend and ui when new page open or refresh page
       s_query_find_player_session();
-
+*/
     /**
      * todo: 2 -> Change information from MONGODB (Querys)
      * * 2.3 Listen signal from client for insert one event into the backlog

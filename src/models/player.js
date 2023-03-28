@@ -9,7 +9,6 @@ const schema = new Schema(
   {
     PlayerName: {
       type: String,
-      required: true,
     },
     NickName: {
       type: String,
@@ -22,7 +21,18 @@ const schema = new Schema(
     },
     TeamName: {
       type: String,
-      required: true,
+    },
+    id: {
+      type: String,
+    },
+    name: {
+      type: String,
+    },
+    email: {
+      type: String,
+    },
+    password: {
+      type: String,
     },
   },
   {

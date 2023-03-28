@@ -40,8 +40,9 @@ import {
     let SelectedMoment = new Date();
     calendarFormat(SelectedMoment);
     c_data_time(SelectedMoment)
-
-
+    
+console.log('chalo')
+console.log(name)
 
 window.addEventListener("DOMContentLoaded", () => {
   // Publish old events

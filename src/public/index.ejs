@@ -9,7 +9,7 @@
     <!---->
     <link rel="shortcut icon" href="./img/logo.png">
 
-    <title>bitakotako</title>
+    <title>Bitakotako</title>
     <!---->
     <link id="modeDarkTheme" rel="stylesheet" href="">
     <link id="modeLightTheme" rel="stylesheet" href="styles/generalStyles.css">
@@ -66,8 +66,8 @@
             </main>
             <footer>
                 <nav class="content-horizontal">
-                    <h6 id="PlayerNameContainer" class="footerRightElement text-16" style="padding-right: 0px;"><a id="PlayerName" class="link font-Major" href="#">@charlys</a> -></h6>
-                    <h6 id="ChosenTeamContainer" class="footerRightElement text-16" style="padding: 0x;"><a id="chosenTeam" class="link font-Major" href="#"> bitakotako</a></h6>
+                    <h6 id="PlayerNameContainer" class="footerRightElement text-16" style="padding-right: 0px;"><a id="PlayerName" class="link font-Major" href="#">@<%= PlayerName %></a> -></h6>
+                    <h6 id="ChosenTeamContainer" class="footerRightElement text-16" style="padding: 0x;"><a id="chosenTeam" class="link font-Major" href="#"> <%= Email %></a></h6>
                 </nav>
             </footer>
         </section>
@@ -146,12 +146,17 @@
                 </ul>
             </main>
             <footer>
-                <h6 class="footerRightElement text-16"><button onclick="modeDarkTheme()">darkness</button><button onclick="modeLightTheme()">light</button>
-                <a href="#"><button class="nav link text-16 font-Major-exit" style="text-align:right;">exit</button></a>
+                <article class="content-horizontal content-right">
+                    <div>
+                        <button onclick="modeDarkTheme()">darkness</button><button onclick="modeLightTheme()">light</button>
+                    </div>
+                    <div>
+                        <form class="footerRightElement" action="/logout?_method=DELETE" method="post">
+                            <button class="nav link text-16 font-Major-exit" style="text-align:right;">exit</button>
+                        </form>
+                    </div>
+                </article>
             </footer>
-            <article id="UserBoxiStream" class="">
-            </article>
-
         </section>
     </div>
     <div id="/backlog" class="fullView">
@@ -196,6 +201,8 @@
             </header>
             <main>
                 <h1>STREAM</h1>
+                <article id="UserBoxiStream" class="">
+                </article>
             </main>
         </section>
     </div>

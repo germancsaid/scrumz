@@ -16,11 +16,17 @@ import team from "./models/team";
 export default (io) => {
   io.on("connection", (socket) => {
     //  One new socket connected in the explorer in the page
-    console.log("Socket new ID", socket.id);
-    /*
-    const userId = socket.request.session.passport.user;
-    console.log("User ID:", userId);
-    */
+    const session = socket.request.session;
+
+    if (session.passport && session.passport.user) {
+      const userId = session.passport.user;
+      console.log(`New connection: User:: ${userId}     SocketId:: ${socket.id}`);
+    } else {
+      console.log(`New connection only with socket id ${socket.id}`);
+    }
+    session.socketId = socket.id;
+    session.save();
+
     /** 
      * *VARIABLES DEFINITED INTO THE SERVER
      * todo List of variables
@@ -32,9 +38,12 @@ export default (io) => {
      * todo List of variables
      * * a.
      */
+
+      const player_id = session.passport.user;
       
-      socket.on("client:c_data_time", async (date) => {
-        console.log(date)
+    
+    socket.on("client:c_data_time", async (date) => {
+        console.log("Date:", date)
       });
 
     /**
@@ -53,25 +62,22 @@ export default (io) => {
       //find events from backlog
       
       const find_event_backlog = await event_backlog
-        .find({ StatusEvent: "pending"})//, TeamName: ChosenTeam})
+        .find({ StatusEvent: "pending", AssignedPlayerID: player_id})
         .sort({ createdAt: -1 });
 
       //find events from backlog where status event is closed
       const find_closed_event_backlog = await event_backlog
-        .find({ StatusEvent: "closed"})//, TeamName: ChosenTeam})
+        .find({ StatusEvent: "closed", AssignedPlayerID: player_id})
         .sort({ createdAt: -1 });
 
       /**
        * !io vs socket analysis for this sintax but io is very inefficient load completely the information to the DB
        */
       // Send data find_event_backlog to the all clients connected
-      io.emit("server:s_query_find_event_backlog", find_event_backlog);
+      io.emit(`server:s_query_find_event_backlog${player_id}`, find_event_backlog);
 
       // Send data find_closed_event_backlog to the all clients connected
-      io.emit(
-        "server:s_query_find_closed_event_backlog",
-        find_closed_event_backlog
-      );
+      io.emit(`server:s_query_find_closed_event_backlog${player_id}`, find_closed_event_backlog);
     };
 
     // load data in the frontend and ui when new page open or refresh page
@@ -90,22 +96,23 @@ export default (io) => {
 
       //count events from played
       const count_events_played = await event_played
-        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})//, TeamName: ChosenTeam})
+        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})
         .count();
 
       //find events from played
       const find_event_played = await event_played
-      .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})//, TeamName: ChosenTeam})
+      .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})
       .sort({ createdAt: -1 });    
 
       /**
        * !io vs socket analysis for this sintax but io is very inefficient load completely the information to the DB
        */
-      // Send data find_event_played to the all clients connected
-      io.emit("server:s_query_find_event_played", find_event_played);
-
+      
       // Send data count_events_played to the all clients connected
-      io.emit("server:s_query_find_count_event_played", count_events_played);
+      io.emit(`server:s_query_find_count_event_played${player_id}`, count_events_played);
+      
+      // Send data find_event_played to the all clients connected
+      io.emit(`server:s_query_find_event_played${player_id}`, find_event_played);
 
       // Send selected data related to chosen date in frontend, DAY+
       socket.on("client:c_nextDay_btn", async (date) => {
@@ -117,8 +124,8 @@ export default (io) => {
 
         //count events from played
         const count_events_played = await event_played
-          .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})//, TeamName: ChosenTeam})
-          .count();
+        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})//, TeamName: ChosenTeam})
+        .count();    
 
         //find events from played
         const find_event_played = await event_played
@@ -129,10 +136,10 @@ export default (io) => {
          * !io vs socket analysis for this sintax but io is very inefficient load completely the information to the DB
          */
         // Send data find_event_played to the all clients connected
-        io.emit("server:s_query_find_event_played", find_event_played);
+        io.emit(`server:s_query_find_event_played${player_id}`, find_event_played);
 
         // Send data count_events_played to the all clients connected
-        io.emit("server:s_query_find_count_event_played", count_events_played);
+        io.emit(`server:s_query_find_count_event_played${player_id}`, count_events_played);
       })
 
       // Send selected data related to chosen date in frontend, DAY-
@@ -145,8 +152,8 @@ export default (io) => {
 
         //count events from played
         const count_events_played = await event_played
-          .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})//, TeamName: ChosenTeam})
-          .count();
+        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})//, TeamName: ChosenTeam})
+        .count();    
 
         //find events from played
         const find_event_played = await event_played
@@ -207,11 +214,27 @@ export default (io) => {
      */
 
     /**
-     * todo 1.3
+     * todo 2.3
      */
     socket.on("client:c_insertOne_event_backlog", async (data) => {
       // Insert one event into the backlog
-      const new_event_backlog = new event_backlog(data);
+      const new_event_backlog_data = await event_backlog(data);
+
+      let NameEvent = new_event_backlog_data.NameEvent;
+      let DescriptionEvent = new_event_backlog_data.DescriptionEvent;
+      let AllottedTime = new_event_backlog_data.AllottedTime;
+      let AssignedPlayerID = new_event_backlog_data.AssignedPlayerID;
+      let TeamName = new_event_backlog_data.TeamName;
+
+      // Insert one event into the played
+      const new_event_backlog = new event_backlog({
+        NameEvent: NameEvent,
+        DescriptionEvent: DescriptionEvent,
+        AllottedTime: AllottedTime,
+        AssignedPlayerID: AssignedPlayerID,
+        TeamName: TeamName,
+      });
+
       /**
        * !Method '.save()' posiblity change command
        */
@@ -225,7 +248,7 @@ export default (io) => {
     });
 
     /**
-     * todo 1.4
+     * todo 2.4
      */
     socket.on("client:c_insertOne_play_event", async (id) => {
       // find events from backlog by id
@@ -234,6 +257,7 @@ export default (io) => {
       let NameEvent = find_event_backlog.NameEvent;
       let DescriptionEvent = find_event_backlog.DescriptionEvent;
       let AllottedTime = find_event_backlog.AllottedTime;
+      let PlayedByPlayerID = find_event_backlog.AssignedPlayerID;
       let TeamName = find_event_backlog.TeamName;
 
       // Insert one event into the played
@@ -241,6 +265,7 @@ export default (io) => {
         NameEvent: NameEvent,
         DescriptionEvent: DescriptionEvent,
         AllottedTime: AllottedTime,
+        PlayedByPlayerID: PlayedByPlayerID,
         TeamName: TeamName,
       });
       const insertOne_event_played = await new_event_played.save();
@@ -307,6 +332,8 @@ export default (io) => {
   });
 
 
+  /*
+
 /**
  * *PAGE STREAM
  * --------------------------------
@@ -316,7 +343,7 @@ export default (io) => {
 
 /**
  * todo 2.1
- */
+ *//*
 const s_query_find_player = async () => {
   const find_player = await player.find().sort({ createdAt: 1 });
   /*
@@ -327,10 +354,10 @@ const s_query_find_player = async () => {
   /**
    * !io vs socket analysis for this sintax but io is very inefficient load completely the information to the DB
    */
-  io.emit("server:s_query_find_player", find_player);
-  /*
+  /*io.emit("server:s_query_find_player", find_player);
+  *//*
       io.emit("server:s_query_find_closed_event_backlog", find_closed_event_backlog);*/
-};
+/*};
 s_query_find_player();
-
+*/
 };

@@ -13,8 +13,10 @@ import {
  * *Let
  */
 //For create News Tareas
-let PlayerSession = "chalo"
-let TeamName = "Acb";
+console.log(userData._id);
+console.log(userData.Email);
+console.log(userData.PlayerName);
+console.log(userData.TeamName);
 
 /**
  * *Fuctions backend
@@ -27,7 +29,8 @@ export const c_function_save_event_backlog = (e) => {
     FormNewEventBodyGame["newNameEventInputBodyGame"].value,
     FormNewEventBodyGame["newDescriptionEventInputBodyGame"].value,
     FormNewEventBodyGame["newAllottedTimeInputBodyGame"].value,
-    TeamName,
+    userData._id,
+    userData.TeamName,
   );
   FormNewEventBodyGame.reset();
 };
@@ -244,7 +247,7 @@ const player_UI = (player) => {
 /**
  * *Fuctions frontend
  */
-
+/*
 // Function publish events played list from event_played from DB
 export const publish_player_session = (Player) => {
   player_session.innerHTML = "";
@@ -260,13 +263,13 @@ export const publish_team_player_session = (Team) => {
   team_player_session.append(team_player_session_UI(team))
   );
 };
-
+*/
 // Function publish events list from event_backlog from DB
 export const publish_old_events_backlog = (events_backlog_list) => {
   pending_event_sprint_list.innerHTML = "";
-  events_backlog_list.forEach((event_sprint) =>
-    pending_event_sprint_list.append(pending_event_sprint_UI(event_sprint))
-  );
+  events_backlog_list
+    .filter((event_sprint) => event_sprint.TeamName === userData.TeamName && event_sprint.AssignedPlayerID === userData._id) // Filtrar eventos por TeamName y AssignedPlayerID
+    .forEach((event_sprint) => pending_event_sprint_list.append(pending_event_sprint_UI(event_sprint)));
 };
 
 // Function publish closed events list from event_backlog from DB
@@ -274,41 +277,52 @@ export const publish_old_closed_events_backlog = (
   closed_events_backlog_list
 ) => {
   closed_event_sprint_list.innerHTML = "";
-  closed_events_backlog_list.forEach((closed_event_sprint) =>
-    closed_event_sprint_list.append(closed_event_sprint_UI(closed_event_sprint))
-  );
+  closed_events_backlog_list
+    .filter((closed_event_sprint) => closed_event_sprint.TeamName === userData.TeamName && closed_event_sprint.AssignedPlayerID === userData._id) // Filtrar eventos por TeamName y AssignedPlayerID
+    .forEach((closed_event_sprint) => closed_event_sprint_list.append(closed_event_sprint_UI(closed_event_sprint)));
 };
 
 // Function publish events played list from event_played from DB
 export const publish_old_events_played = (events_played_list) => {
   played_event_sprint_list.innerHTML = "";
 
-  events_played_list.forEach((event_played) =>
-    played_event_sprint_list.append(played_event_sprint_UI(event_played))
-  );
+  events_played_list
+    .filter((event_played) => event_played.TeamName === userData.TeamName && event_played.PlayedByPlayerID === userData._id) // Filtrar eventos por TeamName y AssignedPlayerID
+    .forEach((event_played) => played_event_sprint_list.append(played_event_sprint_UI(event_played)));
 };
+
 
 // Function publish events played list from event_played from DB
 export const publish_count_events_played = (events_played_count) => {
-  containerWorkedHours.innerHTML = "";
+  if (events_played_count.TeamName === userData.TeamName && events_played_count.PlayedByPlayerID === userData._id) {// Filtrar eventos por TeamName y AssignedPlayerID
+    console.log(events_played_count)
+    containerWorkedHours.innerHTML = "";
+    containerWorkedHours.append(
+      quantity_played_event_sprint_UI(events_played_count)
+      );
+    }
+  };
 
-  containerWorkedHours.append(
-    quantity_played_event_sprint_UI(events_played_count)
-  );
-};
 
 // Function publish new event into sprint from event_backlog from DB
 export const publish_new_event_backlog = (new_event_game) => {
-  pending_event_sprint_list.append(pending_event_sprint_UI(new_event_game));
+  if (new_event_game.TeamName === userData.TeamName && new_event_game.AssignedPlayerID === userData._id) {// Filtrar eventos por TeamName y AssignedPlayerID
+    pending_event_sprint_list.append(pending_event_sprint_UI(new_event_game));
+  }
 };
+
 
 // Function publish new event into sprint from event_backlog from DB
 export const publish_new_event_played = (new_event_played) => {
-  played_event_sprint_list.append(played_event_sprint_UI(new_event_played));
+  if (new_event_played.TeamName === userData.TeamName && new_event_played.PlayedByPlayerID === userData._id) {// Filtrar eventos por TeamName y AssignedPlayerID
+    played_event_sprint_list.append(played_event_sprint_UI(new_event_played));
+  }
 };
 
+/*
 // Function publish events list from event_backlog from DB
 export const publish_player_stream = (player) => {
   player_list.innerHTML = "";
   player.forEach((playe) => player_list.append(player_UI(playe)));
 };
+*/

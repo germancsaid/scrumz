@@ -6,8 +6,8 @@ import session from 'express-session';
 import methodOverride from 'method-override';
 import passport from 'passport';
 
-
 // initializations
+// Crea la aplicación de Express
 const app = express();
 require('./passport/local-auth');
 
@@ -19,32 +19,40 @@ require('./passport/local-auth');
 // middlewares
   app.use(express.urlencoded({ extended: false }))
   app.use(flash())
-  app.use(session({
+
+  // Configura la sesión de Express
+  const sessionMiddleware = session({
     secret: process.env.SESSION_SECRET || 'secretito',
     resave: false,
     saveUninitialized: false
-  }))
+  });
+
+  app.use(sessionMiddleware);
   app.use(passport.initialize())
   app.use(passport.session())
   app.use(methodOverride('_method'))
 
-
-  
 // routes
 app.get('/', checkAuthenticated, (req, res) => {
-  res.render('index.ejs', { _id: req.user._id, Email: req.user.Email, PlayerName: req.user.PlayerName });
-  app.use(function(req, res, next) {
-    if (!req.session) {
-      req.session = {};
-    }
-    next();
-  });
+  const isAuthenticated = !!req.user;
+  if (isAuthenticated) {
+    res.locals.userData = { 
+      _id: req.user._id, 
+      Email: req.user.Email,
+      PlayerName: req.user.PlayerName,
+      TeamName: req.user.TeamName,
+    };
+    res.render('index.ejs', { _id: req.user._id, Email: req.user.Email, PlayerName: req.user.PlayerName, TeamName: req.user.TeamName });
+    console.log(`New login OK, session is ${req.session.id} ${req.user._id}`);
+  } else {
+    console.log("unknown user");
+  }
 })
 
 
-
 app.get('/register', checkNotAuthenticated, (req, res) => {
-  res.render('register.ejs')
+  //cambiaremos aregisster.eks cuando esten habilitados los teams
+  res.render('login.ejs')
 })
 
 app.post('/register', checkNotAuthenticated, passport.authenticate('local-signup', {
@@ -64,12 +72,6 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local-signin', 
   failureFlash: true
 }))
 
-
-/*
-app.get('/profile',isAuthenticated, (req, res, next) => {
-  res.render('profile');
-});
-*/
 
 app.delete('/logout', function(req, res, next) {
   req.logOut(function(err) {
@@ -95,5 +97,5 @@ function checkNotAuthenticated(req, res, next) {
   next()
 }
 
-
+export { sessionMiddleware };
 export default app;

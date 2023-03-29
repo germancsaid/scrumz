@@ -67,9 +67,6 @@ input[type="text" i],input[type="number" i] { padding: 1px 2px; }
 
 textarea {padding: 2px;}
 
-h4{
-    width: 400px;
-}
 button.nav{
     background: none;
     width: 120px;

@@ -2,7 +2,7 @@
  * *Socket connection
  */
 const socket = io();
-
+const player_id = userData._id
 
 /**
  * !ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON
@@ -24,7 +24,7 @@ export const c_query_find_team_player_session = (Team) => {
  */
 // Receive data s_query_find_event_backlog to the server
 export const c_query_find_event_backlog = (callback) => {
-  socket.on("server:s_query_find_event_backlog", callback);
+  socket.on(`server:s_query_find_event_backlog${player_id}`, callback);
 };
 
 /**
@@ -32,7 +32,7 @@ export const c_query_find_event_backlog = (callback) => {
  */
 // Receive data s_query_find_event_backlog to the server
 export const c_query_find_closed_event_backlog = (callback) => {
-  socket.on("server:s_query_find_closed_event_backlog", callback);
+  socket.on(`server:s_query_find_closed_event_backlog${player_id}`, callback);
 };
 
 /**
@@ -49,12 +49,12 @@ export const s_query_find_player = (callback) => {
 
 // Receive data s_query_find_event_played to the server
 export const c_query_find_event_played = (callback) => {
-  socket.on("server:s_query_find_event_played",callback);
+  socket.on(`server:s_query_find_event_played${player_id}`,callback);
 };
 
 // Receive data s_query_find_count_event_played to the server
 export const c_query_find_count_event_played = (callback) => {
-  socket.on("server:s_query_find_count_event_played", callback);
+  socket.on(`server:s_query_find_count_event_played${player_id}`, callback);
 };
 
 
@@ -86,12 +86,14 @@ export const c_insertOne_event_backlog = (
   NameEvent,
   DescriptionEvent,
   AllottedTime,
+  AssignedPlayerID,
   TeamName,
 ) => {
   socket.emit("client:c_insertOne_event_backlog", {
     NameEvent,
     DescriptionEvent,
     AllottedTime,
+    AssignedPlayerID,
     TeamName,
   });
 };

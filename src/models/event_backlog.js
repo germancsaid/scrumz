@@ -22,6 +22,10 @@ const schema = new Schema(
       type: String,
       default: "pending"
     },
+    AssignedPlayerID: {
+      type: String,
+      required: true,
+    },
     TeamName: {
       type: String,
       required: true,

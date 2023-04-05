@@ -7,8 +7,6 @@
 
 import event_backlog from "./models/event_backlog";
 import event_played from "./models/event_played";
-import player from "./models/player";
-import team from "./models/team";
 
 /**
  * *SOCKET CONNECTION
@@ -38,8 +36,10 @@ export default (io) => {
      * todo List of variables
      * * a.
      */
-
-      const player_id = session.passport.user;
+        /**
+     * todo a.
+     */
+    const player_id = session.passport.user;
       
     
     socket.on("client:c_data_time", async (date) => {
@@ -53,6 +53,7 @@ export default (io) => {
      * * 1.1 Query find events from backlog
      * * 1.2 Query find events from played and count
      * * 1.3 Query find player and teams
+     * * 1.4 Query find pomodoro
      */
 
     /**
@@ -65,7 +66,7 @@ export default (io) => {
         .find({ StatusEvent: "pending", AssignedPlayerID: player_id})
         .sort({ createdAt: -1 });
 
-      //find events from backlog where status event is closed
+        //find events from backlog where status event is closed
       const find_closed_event_backlog = await event_backlog
         .find({ StatusEvent: "closed", AssignedPlayerID: player_id})
         .sort({ createdAt: -1 });
@@ -164,12 +165,11 @@ export default (io) => {
          * !io vs socket analysis for this sintax but io is very inefficient load completely the information to the DB
          */
         // Send data find_event_played to the all clients connected
-        io.emit("server:s_query_find_event_played", find_event_played);
+        io.emit(`server:s_query_find_event_played${player_id}`, find_event_played);
 
         // Send data count_events_played to the all clients connected
-        io.emit("server:s_query_find_count_event_played", count_events_played);
+        io.emit(`server:s_query_find_count_event_played${player_id}`, count_events_played);
       })
-
     };
 
     // load data in the frontend and ui when new page open or refresh page
@@ -203,10 +203,26 @@ export default (io) => {
       // load data in the frontend and ui when new page open or refresh page
       s_query_find_player_session();
 */
+
+    /**
+     * todo 1.4.
+     */
+    const s_query_find_pomodoro = async () => {
+      //find events from backlog
+      
+      const find_pomodoro = await event_played.findOne({ 
+        PlayedByPlayerID: player_id
+      }).sort({ createdAt: -1 });
+      // Send data find_event_backlog to the all clients connected
+      io.emit(`server:s_query_find_pomodoro${player_id}`, find_pomodoro);
+    };
+
+    // load data in the frontend and ui when new page open or refresh page
+    s_query_find_pomodoro();
     /**
      * todo: 2 -> Change information from MONGODB (Querys)
      * * 2.3 Listen signal from client for insert one event into the backlog
-     * * 2.4 Listen signal from client for insert one event into the played
+     * * 2.4 Listen signal from client for insert one event into the played and pomodoro
      * * 2.5 Listen signal from client for delete one event from the backlog
      * * 2.6 Listen signal from client for update set closed one event from backlog
      * * 2.7 Listen signal from client for delete one event from played
@@ -239,12 +255,12 @@ export default (io) => {
        * !Method '.save()' posiblity change command
        */
       const insertOne_event_backlog = await new_event_backlog.save();
-
-      // Send data insertOne_event_backlog to the all clients connected
-      io.emit("server:s_insertOne_event_backlog", insertOne_event_backlog);
-
       // Load new data from DB
       s_query_find_event_backlog();
+
+      // Send data insertOne_event_backlog to the all clients connected
+      io.emit(`server:s_insertOne_event_backlog${player_id}`, insertOne_event_backlog);
+
     });
 
     /**
@@ -259,6 +275,13 @@ export default (io) => {
       let AllottedTime = find_event_backlog.AllottedTime;
       let PlayedByPlayerID = find_event_backlog.AssignedPlayerID;
       let TeamName = find_event_backlog.TeamName;
+      let Pomodoro = {
+        Status: "Initiated",
+        CreatedTime: new Date(),
+        FinishTime: null,
+      };
+
+      let ModifiedAt = new Date();
 
       // Insert one event into the played
       const new_event_played = new event_played({
@@ -267,11 +290,17 @@ export default (io) => {
         AllottedTime: AllottedTime,
         PlayedByPlayerID: PlayedByPlayerID,
         TeamName: TeamName,
+        Pomodoro: Pomodoro
       });
-      const insertOne_event_played = await new_event_played.save();
 
+      const insertOne_event_played = await new_event_played.save();
+      
       // Send data insertOne_event_played to the all clients connected
-      io.emit("server:s_insertOne_event_played", insertOne_event_played);
+      //io.emit(`server:s_insertOne_event_played${player_id}`, insertOne_event_played);
+
+      // Send data insertOne_pomodoro to the all clients connected
+      s_query_find_pomodoro();
+      //io.emit(`server:s_insertOne_pomodoro${player_id}`, insertOne_pomodoro);
 
       // Load new data from DB
       s_query_find_event_played();

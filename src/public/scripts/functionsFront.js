@@ -1,5 +1,7 @@
 // ================= RELOJ Y CALENDARIO ===================//
+/*
 function clockDinamic(){
+  
   let time = new Date();
   let hora = time.getHours()
   let minuto = time.getMinutes()
@@ -17,15 +19,14 @@ function clockDinamic(){
       horaImprimible = ceroh + hora + cerom + minuto + ceros + segundo
       document.getElementById("clockGame").innerHTML = horaImprimible
 
-      setTimeout("clockDinamic()",1000)
-      
+      setTimeout(clockDinamic, 1000);
   }else{
       horaImprimible = ceroh + hora + cerom + minuto + ceros + segundo
       document.getElementById("clockGame").innerHTML = horaImprimible
 
-      setTimeout("clockDinamic()",1000)
-  }
-};
+          setTimeout(clockDinamic, 1000);
+      }
+  };*/
 
 function modeDarkTheme(){
     document.getElementById("modeDarkTheme").href = "styles/darkStyles.css";
@@ -35,4 +36,4 @@ function modeDarkTheme(){
 function modeLightTheme(){
     document.getElementById("modeDarkTheme").href = "";
     document.getElementById("modeLightTheme").href = "styles/generalStyles.css";
-}
+};

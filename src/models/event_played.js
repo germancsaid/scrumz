@@ -26,6 +26,17 @@ const schema = new Schema(
       type: String,
       required: true,
     },
+    Pomodoro: {
+      Status: {
+        type: String,
+      },
+      CreatedTime: {
+        type: Date,
+      },
+      FinishTime: {
+        type: Date,
+      }
+    }
   },
   {
     timestamps: true,

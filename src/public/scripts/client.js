@@ -1,37 +1,27 @@
 import {
-  c_query_find_player_session,
-  c_query_find_team_player_session,
-
   c_query_find_event_backlog,
   c_query_find_closed_event_backlog,
   c_query_find_event_played,
   c_query_find_count_event_played,
 
-
-  c_publish_insertOne_event_backlog,
-  c_publish_insertOne_event_played,
-  s_query_find_player,
+  c_query_find_pomodoro,
 
   NextDay,
   PreviousDay,
   OtherTeam,
 
   c_data_time,
-  c_data_player,
 } from "./socketClient.js";
 import {
-  //publish_player_session,
-  //publish_team_player_session,
-
   publish_old_events_backlog,
   publish_old_closed_events_backlog,
   publish_old_events_played,
   publish_count_events_played,
-  c_function_save_event_backlog,
-  publish_new_event_backlog,
-  publish_new_event_played,
 
-  //publish_player_stream,
+  publish_pomodoro,
+
+  c_function_save_event_backlog,
+
 } from "./ui.js";
 
 /**
@@ -55,21 +45,12 @@ window.addEventListener("DOMContentLoaded", () => {
   // Publish events played
   c_query_find_count_event_played(publish_count_events_played);
 
-  // Publish data player
-  //c_query_find_player_session(publish_player_session);
-
-  // Publish data player
-  //c_query_find_team_player_session(publish_team_player_session);
-
-
-  // Publish new events
-  c_publish_insertOne_event_backlog(publish_new_event_backlog);
-
-  c_publish_insertOne_event_played(publish_new_event_played);
-
-  //stream
-  //s_query_find_player(publish_player_stream);
 });
+
+window.addEventListener("DOMContentLoaded", () => {
+  c_query_find_pomodoro(publish_pomodoro);
+});
+
 
 /**
  * * Actions frontend

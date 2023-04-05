@@ -48,6 +48,11 @@ export const s_query_find_player = (callback) => {
  */
 
 // Receive data s_query_find_event_played to the server
+export const c_query_find_pomodoro = (callback) => {
+  socket.on(`server:s_query_find_pomodoro${player_id}`,callback);
+};
+
+// Receive data s_query_find_event_played to the server
 export const c_query_find_event_played = (callback) => {
   socket.on(`server:s_query_find_event_played${player_id}`,callback);
 };
@@ -69,11 +74,16 @@ export const c_publish_insertOne_event_backlog = (callback) => {
 /**
  * * PARA PUBLICAR NUEVOS EVENTOS EJECUTADOS EN LA PAGINA
  */
+/*
 // Publish new events from DB server
 export const c_publish_insertOne_event_played = (callback) => {
   socket.on("server:s_insertOne_event_played", callback);
 };
-
+// Publish new pomodoro
+export const c_publish_insertOne_pomodoro = (callback) => {
+  socket.on(`server:s_insertOne_pomodoro${player_id}`, callback);
+};
+*/
 /**
  * !EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT
  */

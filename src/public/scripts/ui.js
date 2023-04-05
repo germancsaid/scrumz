@@ -12,6 +12,8 @@ import {
 /**
  * *Let
  */
+
+let pomodorotime = 25 * 60
 //For create News Tareas
 console.log(userData._id);
 console.log(userData.Email);
@@ -61,6 +63,9 @@ const played_event_sprint_list = document.querySelector(
 const closed_event_sprint_list = document.querySelector(
   "#containerEventsListClosed"
 );
+
+// Container to publish old events and new events
+const clockGame = document.getElementById("clockGame");
 
 // Container to publish old events and new events
 const player_list = document.querySelector("#UserBoxiStream");
@@ -247,23 +252,6 @@ const player_UI = (player) => {
 /**
  * *Fuctions frontend
  */
-/*
-// Function publish events played list from event_played from DB
-export const publish_player_session = (Player) => {
-  player_session.innerHTML = "";
-  Player.forEach((player) => 
-  player_session.append(player_session_UI(player))
-  );
-};
-
-// Function publish events played list from event_played from DB
-export const publish_team_player_session = (Team) => {
-  team_player_session.innerHTML = "";
-  Team.forEach((team) => 
-  team_player_session.append(team_player_session_UI(team))
-  );
-};
-*/
 // Function publish events list from event_backlog from DB
 export const publish_old_events_backlog = (events_backlog_list) => {
   pending_event_sprint_list.innerHTML = "";
@@ -303,7 +291,8 @@ export const publish_count_events_played = (events_played_count) => {
     }
   };
 
-
+  
+  
 // Function publish new event into sprint from event_backlog from DB
 export const publish_new_event_backlog = (new_event_game) => {
   if (new_event_game.TeamName === userData.TeamName && new_event_game.AssignedPlayerID === userData._id) {// Filtrar eventos por TeamName y AssignedPlayerID
@@ -319,10 +308,51 @@ export const publish_new_event_played = (new_event_played) => {
   }
 };
 
+// Function publish new event into sprint from event_backlog from DB
+export const publish_pomodoro = (pomodoro) => {
+
+  // Filtrar eventos por TeamName y AssignedPlayerID
+  if (pomodoro.TeamName === userData.TeamName && pomodoro.PlayedByPlayerID === userData._id) {
+    
+    const createdAt = new Date(pomodoro.Pomodoro.CreatedTime);
+    const now = new Date();
+
+    const EventTimePomodoro = Math.floor((now - createdAt ) / 1000);
+      
+      const print_pomodoro = () => {
+        let EndTimeToPomodoro = pomodorotime - EventTimePomodoro
+        
+          const print = () => {
+            const minutes = Math.floor(EndTimeToPomodoro / 60).toString().padStart(2, '0');
+            const seconds = (EndTimeToPomodoro % 60).toString().padStart(2, '0');
+            const tiempo = `${minutes}:${seconds}`;
+            console.log(tiempo)
+            
+            if (EndTimeToPomodoro >= 0) {
+              clockGame.innerHTML = tiempo;
+              EndTimeToPomodoro--;
+              if (EndTimeToPomodoro === 60) {
+                const audio = new Audio('./sounds/zen-gong.mp3');
+                audio.play();
+              }
+              setTimeout(print, 1000);
+            } else {
+              clockGame.innerHTML = "25:00";
+            }
 /*
-// Function publish events list from event_backlog from DB
-export const publish_player_stream = (player) => {
-  player_list.innerHTML = "";
-  player.forEach((playe) => player_list.append(player_UI(playe)));
+            } else if (EndTimeToPomodoro === 0) {
+                const audio = new Audio('./sounds/zen-gong.mp3');
+                audio.play();
+                audio.play();
+                audio.play();
+                audio.play();
+            } else if (EndTimeToPomodoro === -1){
+              console.log("fin")
+ 
+          };*/
+        };
+        print();
+      };
+      print_pomodoro();
+  };
 };
-*/

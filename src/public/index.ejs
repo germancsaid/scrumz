@@ -16,17 +16,9 @@
 
 </head>
 
-<body onload="clockDinamic()">
-
-
-
+<body><!--body> onload="clockDinamic();">-->
     <div id="bodyGame" class="fullView">
-        <!--Three sections of the page
-        -Always section containing three elements
-        -header 
-        -main 
-        -footer
-     -->
+        <!-- Content LEFT -->
         <section class="content-left">
             <header>
                 <nav id="containerFiltersPendingEvents-bodyGame-rename" class="containerFilters">
@@ -38,8 +30,8 @@
                 <article id="containerNewEventForm-bodyGame" class="plomo invisible">
                     <form id="FormNewEventBodyGame" action="">
                         <input id="newNameEventInputBodyGame" class="uppercase font-400 text-18" style="width: 64%;" type="text" placeholder="NEW EVENT PENDING" spellcheck="false">
-                        <input id="newAllottedTimeInputBodyGame" class="text-16" style="width: 5%;" type="text" placeholder="hour"> :
-                        <input id="newAllottedTimeInputBodyGamee" class="text-16" style="width: 5%;" type="text" placeholder="min">
+                        <input id="newAllottedTimeInputBodyGame" class="text-16" style="width: 14%;" type="text" placeholder="hour">
+                        <!--: <input id="newAllottedTimeInputBodyGamee" class="text-16" style="width: 5%;" type="text" placeholder="min">-->
                         <br>
                         <input id="newDescriptionEventInputBodyGame" class="text-16" style="width: 80%; margin-bottom: 20px;" type="text" placeholder="Description" spellcheck="false">
                         <button class="hiden">submit</button>
@@ -75,9 +67,9 @@
         <section id="timeGame-events" style="margin: 0px 15px;">
             <header>
                 <nav id="containerButtonsClockGame" class="center-absolut content-horizontal">
-                    <button id="" class="square-M lechuga"></button>
+                    <button id="" class="square-M lechuga" style="color: black;"><div id="pomodoroLechuga"></div><div id="pomodoroLechugaHidden" style="display: none;"></div></button>
                     <button id="" class="square-M lila"></button>
-                    <h3 id="clockGame">00:00:00</h3>
+                    <h3 id="clockGame" class="font-Major">00:00</h3>
                 </nav>
                 <article id="containerCalendarClockGame" class="content-horizontal">
                     <div id="calendar" class="">
@@ -122,9 +114,10 @@
                     <a href="#/bootak"><button class="nav link text-16">Bootak</button></a>
                     <a href="#"><button class="nav link text-16 font-Major">TheGame</button></a>
                     <a href="#/stream"><button class="nav link text-16">Stream</button></a>
+                    <!--
                     <svg width="6" height="26">
                         <line x1="3" y1="0" x2="3" y2="26" stroke="black" stroke-width="2" stroke-dasharray="2 2"/>
-                    </svg>
+                    </svg>-->
                 </nav>
             </header>
             <main>
@@ -217,6 +210,6 @@
     <!--Sockets and comunication client with server-->
     <script src="/socket.io/socket.io.js" type="module"></script>
     <script src="scripts/client.js" type="module"></script>
-</body>
+</!--body>
 
 </html>

@@ -516,6 +516,7 @@ textarea {
 }
 #containerStreamDashboards{
     padding: 0px 0px 0px 20px;
+    width: 100%;
     display: flex;
 }
 #containerStreamDashboards article {

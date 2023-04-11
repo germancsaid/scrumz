@@ -43,6 +43,7 @@ body{
 
 /*--------- Height ---------*/
 .h-10 { height: 10px; }
+.h-17 { height: 17px; }
 
 /*--------- Margin ---------*/
 .mt-15p{
@@ -408,6 +409,7 @@ textarea {
 
 /*----------  General Elemants properties */
 .containerFilters {margin: 10px 0px 25px 20px;}
+
 .scrollHiden-bodyGame-left {
     height: calc(100vh - 230px);
     overflow-y: scroll;
@@ -504,21 +506,50 @@ textarea {
 
 /*===========  PAGINA STREAM  ==========*/
 
-#bodyStream {
+#stream {
+    /*maquetacion para 3 lineas*/
+    display: grid;
+    grid-template-rows: 50px calc(100% - 93px) 40px;
+}
+#containerStreamDashboards{
+    padding: 0px 0px 0px 20px;
+    display: flex;
+}
+#containerStreamDashboards article {
+    margin: 20px 20px 0px 0px;
+}
+#containerStreamDashboards h2{
+    margin-bottom: 30px;
+}
+#containerStreamDashboards th, #containerStreamDashboards td{
+    padding: 7px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+#containerStreamActivity{
+    width: 560px;
+    height: auto;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 2px;
+    border-color: rgba(242, 242, 242, 0.119);
+    -webkit-box-shadow: 6px 7px 12px -6px rgba(0,0,0,0.22);
+    -moz-box-shadow: 6px 7px 12px -6px rgba(0,0,0,0.22);
+    box-shadow: 5px 5px 12px -6px rgba(0,0,0,0.22);
     
 }
-
-#cajitaStream {
-    border: solid 1px;
-    border-color: rgb(207, 207, 207);
-    width: auto;
-    height: auto;
-    margin: 0px 5px 0px 2px;
-    padding: 2px;
+#containerStreamHoursInProjects{
+    width: 200px;
+    height: 130px;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 2px;
+    border-color: rgba(242, 242, 242, 0.119);
+    -webkit-box-shadow: 6px 7px 12px -6px rgba(0,0,0,0.22);
+    -moz-box-shadow: 6px 7px 12px -6px rgba(0,0,0,0.22);
+    box-shadow: 5px 5px 12px -6px rgba(0,0,0,0.22);
+    
 }
-
-
-
 /*=======================================*/
 
 

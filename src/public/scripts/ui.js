@@ -168,13 +168,13 @@ const played_event_sprint_UI = (event_played) => {
     <div class="content-horizontal">
         <div style="width: 301px; margin-bottom: 5px;">
             <button>tag#1</button>
-            <button>tag#2</button>
+            <button>tag#2</button>  
             <button>tag#3</button>
         </div>
-        <h5 style="width: 40px; margin-left:5px; margin-top:3px;">${event_played.createdAt.substring(
-          11,
-          16
-        )}</h5>
+        <h5 style="width: 40px; margin-left:5px; margin-top:3px;">
+        ${new Date(event_played.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+      </h5>
+      
     </div>
     <h1 class="uppercase">${event_played.NameEvent}</h1>
     <h4 style="margin-bottom: 5px;">${event_played.DescriptionEvent}</h4>
@@ -355,4 +355,8 @@ export const publish_pomodoro = (pomodoro) => {
       };
       print_pomodoro();
   };
+};
+
+// Function publish new event into sprint from event_backlog from DB
+export const change_filter_period = (data) => {
 };

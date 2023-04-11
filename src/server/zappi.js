@@ -9,12 +9,12 @@ import passport from 'passport';
 // initializations
 // Crea la aplicación de Express
 const app = express();
-require('./passport/local-auth');
+require('./passport-auth');
 
 // settings
-  app.use(express.static(path.join(__dirname, 'public')));
-  app.set('views', path.join(__dirname, 'public'))
-  app.set('view engine', 'ejs')
+  app.use(express.static(path.join(__dirname, '..', 'public')));
+  app.set('views', path.join(__dirname, '..', 'public'));
+  app.set('view engine', 'ejs');
 
 // middlewares
   app.use(express.urlencoded({ extended: false }))

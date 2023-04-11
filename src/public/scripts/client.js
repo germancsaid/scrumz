@@ -13,6 +13,7 @@ import {
   c_data_time,
 } from "./socketClient.js";
 import {
+  change_filter_period,
   publish_old_events_backlog,
   publish_old_closed_events_backlog,
   publish_old_events_played,
@@ -55,6 +56,30 @@ window.addEventListener("DOMContentLoaded", () => {
 /**
  * * Actions frontend
  */
+
+const filterPeriod = document.querySelector("#filterPeriod");
+filterPeriod.addEventListener("click", () => {
+    const btn = document.getElementById("filterPeriod");
+    if (btn.innerHTML === "All") {
+      btn.innerHTML = "This Week";
+    } else if (btn.innerHTML === "This Week") {
+      btn.innerHTML = "For Today";
+    } else {
+      btn.innerHTML = "All";
+    }
+    change_filter_period(btn.innerHTML)
+});
+
+const filterType = document.querySelector("#filterType");
+filterType.addEventListener("click", () => {
+    const btn = document.getElementById("filterType");
+    if (btn.innerHTML === "Type: Transitory") {
+      btn.innerHTML = "Type: Recurrent";
+    } else {
+      btn.innerHTML = "Type: Transitory";
+    }
+    change_filter_period(btn.innerHTML)
+});
 /**
  * Submit new events
  */
@@ -81,6 +106,7 @@ PreviousDayBtn.addEventListener("click", () => {
   PreviousDay(SelectedMoment)
 });
 
+/*
 const ChangeTeamBtn = document.querySelector("#chosenTeam");
 let i = 0
 ChangeTeamBtn.addEventListener("click", () => {
@@ -89,6 +115,7 @@ ChangeTeamBtn.addEventListener("click", () => {
   OtherTeam(i)
   console.log(i)
 });
+*/
 
 /**
  * * Functions backend

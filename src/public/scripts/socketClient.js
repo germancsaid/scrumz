@@ -37,10 +37,15 @@ export const c_query_find_closed_event_backlog = (callback) => {
 
 /**
  * * PARA PUBLICAR EN STREAM LISTA PLAYERS player
- */
+ *//*
 // Receive data s_query_find_event_backlog to the server
 export const s_query_find_player = (callback) => {
   socket.on("server:s_query_find_player", callback);
+};
+*/
+// Receive data s_query_find_event_played to the server
+export const c_query_find_event_activity = (callback) => {
+  socket.on(`server:s_query_find_event_activity`,callback);
 };
 
 /**

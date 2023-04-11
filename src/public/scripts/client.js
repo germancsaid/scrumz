@@ -4,6 +4,8 @@ import {
   c_query_find_event_played,
   c_query_find_count_event_played,
 
+  c_query_find_event_activity,
+
   c_query_find_pomodoro,
 
   NextDay,
@@ -18,6 +20,8 @@ import {
   publish_old_closed_events_backlog,
   publish_old_events_played,
   publish_count_events_played,
+
+  publish_events_activity,
 
   publish_pomodoro,
 
@@ -46,6 +50,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // Publish events played
   c_query_find_count_event_played(publish_count_events_played);
 
+  c_query_find_event_activity(publish_events_activity)
 });
 
 window.addEventListener("DOMContentLoaded", () => {

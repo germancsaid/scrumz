@@ -304,6 +304,8 @@ export default (io) => {
 
       // Load new data from DB
       s_query_find_event_played();
+      s_query_find_event_activity();
+      
     });
 
     /**
@@ -337,6 +339,7 @@ export default (io) => {
 
       // Load data from DB
       s_query_find_event_played();
+      s_query_find_event_activity();
     });
 
     /**
@@ -358,35 +361,32 @@ export default (io) => {
         //Aqui iran los eventos para cambiar de equipo con un clic
         console.log(i)
       });
-  });
+  
+  
+      /**
+       * *PAGE STREAM
+       * --------------------------------
+       * todo: 2 -> Load information from MONGODB (Querys)
+       * * 2.1 Query find all activity
+       */
+        /**
+         * todo 2.1
+         */
+        const s_query_find_event_activity = async () => {
+    
+          //find events from played
+          const find_event_activity = await event_played
+          .find()
+          .sort({ createdAt: -1 });
+  
+          // Send data find_event_activity to the all clients connected
+          io.emit(`server:s_query_find_event_activity`, find_event_activity);
+        };
+    
+        // load data in the frontend and ui when new page open or refresh page
+        s_query_find_event_activity();
+  
+    });
 
-
-  /*
-
-/**
- * *PAGE STREAM
- * --------------------------------
- * todo: Load information from MONGODB (Querys)
- * * 2.1  Query find user from player
- */
-
-/**
- * todo 2.1
- *//*
-const s_query_find_player = async () => {
-  const find_player = await player.find().sort({ createdAt: 1 });
-  /*
-      const find_closed_event_backlog = await event_backlog
-        .find({ StatusEvent: "closed" })
-        .sort({ createdAt: -1 });*/
-  // Send data s_query_find_event_backlog to the all clients connected
-  /**
-   * !io vs socket analysis for this sintax but io is very inefficient load completely the information to the DB
-   */
-  /*io.emit("server:s_query_find_player", find_player);
-  *//*
-      io.emit("server:s_query_find_closed_event_backlog", find_closed_event_backlog);*/
-/*};
-s_query_find_player();
-*/
+  
 };

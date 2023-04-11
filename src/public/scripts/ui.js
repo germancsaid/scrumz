@@ -360,3 +360,33 @@ export const publish_pomodoro = (pomodoro) => {
 // Function publish new event into sprint from event_backlog from DB
 export const change_filter_period = (data) => {
 };
+
+
+
+/**
+ * *STREAM
+ */
+// Container to publish events played list
+const event_activity_list = document.querySelector(
+  "#event_activity_list"
+);
+
+// Container to publish old events and new events
+const publish_events_activity_UI = (event_played) => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${new Date(event_played.createdAt).toLocaleDateString('en-GB', {day: '2-digit', month: '2-digit'})}·${new Date(event_played.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
+    <td>ctardio</td>
+    <td>${event_played.NameEvent}</td>
+    <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;max-width:246px;">${event_played.DescriptionEvent}</td>
+  `;
+  return tr;
+};
+
+// Function publish events played list from event_played from DB
+export const publish_events_activity = (events_played_list) => {
+  event_activity_list.innerHTML = "";
+  events_played_list
+    .forEach((event_played) => event_activity_list.append(publish_events_activity_UI(event_played)));
+};
+

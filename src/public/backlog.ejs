@@ -22,9 +22,8 @@
         <section class="content-left">
             <header>
                 <nav id="containerFiltersPendingEvents-bodyGame-rename" class="containerFilters">
-                    <button id="filterPeriod" class="oval negro" style="width: 100px;">All Dates</button>
-                    <button id="filterClass" class="oval negro" style="width: 180px;">Class: Transitory</button>
-                    <button id="filterType" class="oval negro" style="width: 180px;">Type: All</button>
+                    <button id="filterPeriod" class="oval negro" style="width: 100px;">All</button>
+                    <button id="filterType" class="oval negro" style="width: 180px;">Type: Transitory</button>
                 </nav>
             </header>
             <main>
@@ -111,9 +110,9 @@
         <section class="content-right">
             <header>
                 <nav id="containerNavPages" class="content-horizontal content-right">
-                    <a href="/backlog"><button class="nav link text-16">Backlog</button></a>
-                    <a href="/bootak"><button class="nav link text-16">Bootak</button></a>
-                    <a href="/"><button class="nav link text-16 font-Major">Play</button></a>
+                    <a href="#/backlog"><button class="nav link text-16">Backlog</button></a>
+                    <a href="#/bootak"><button class="nav link text-16">Bootak</button></a>
+                    <a href="#"><button class="nav link text-16 font-Major">Play</button></a>
                     <a href="/stream"><button class="nav link text-16">Stream</button></a>
                     <!--
                     <svg width="6" height="26">
@@ -153,7 +152,100 @@
             </footer>
         </section>
     </div>
-    
+    <div id="/backlog" class="fullView">
+        <section class="content-right">
+            <header>
+                <nav id="containerNavPages" class="content-horizontal content-right">
+                    <h4 style="width: 100px;"><a class="link font-Major" href="#/backlog">Backlog</a></h4>
+                    <h4 style="width: 100px;"><a class="link" href="#/bootak">Bootak</a></h4>
+                    <h4 style="width: 100px;"><a class="link" href="#">Play</a></h4>
+                    <h4 style="width: 100px;"><a class="link" href="#/stream">Stream</a></h4>
+                </nav>
+            </header>
+            <main>
+                <h1>BACKLOG</h1>
+            </main>
+        </section>
+    </div>
+    <div id="/bootak" class="fullView">
+        <section class="content-right">
+            <header>
+                <nav id="containerNavPages" class="content-horizontal content-right">
+                    <h4 style="width: 100px;"><a class="link" href="#/backlog">Backlog</a></h4>
+                    <h4 style="width: 100px;"><a class="link font-Major" href="#/bootak">Bootak</a></h4>
+                    <h4 style="width: 100px;"><a class="link" href="#">Play</a></h4>
+                    <h4 style="width: 100px;"><a class="link" href="#/stream">Stream</a></h4>
+                </nav>
+            </header>
+            <main>
+                <h1>BOOTAK</h1>
+            </main>
+        </section>
+    </div>
+    <div id="stream" class="fullView">
+        <!--<section id="leftBarStream" class="lechuga"></section>-->
+        <section class="content-right" style="display: flex;">
+                <button onclick="window.location.href='/descargar-excel'" class="plomo" style="margin-right: calc( 100% - 550px); height: 30px;">download</button>
+            <header>
+                <nav id="containerNavPages" class="content-horizontal content-right">
+                    <a href="#/backlog"><button class="nav link text-16">Backlog</button></a>
+                    <a href="#/bootak"><button class="nav link text-16">Bootak</button></a>
+                    <a href="#"><button class="nav link text-16">Play</button></a>
+                    <a href="#/stream"><button class="nav link text-16 font-Major">Stream</button></a>
+                </nav>
+            </header>
+        </section>
+        <section id="containerStreamDashboards">
+            <article id="containerStreamActivity" class="">
+                <header>
+                    <h2 class="font-Major">Eventos Registrados</h2>
+                    <table>
+                        <tr style="padding: 5px;">
+                          <th class="font-400" style="width: 90px;">timestamp</th>
+                          <th class="font-400" style="width: 60px;">player</th>
+                          <th class="font-400" style="width: 95px;">proyecto</th>
+                          <th class="font-400" style="width: 245px;">event</th>
+                        </tr>
+                    </table>
+                </header>
+                <main style="height: calc(100vh - 230px); overflow-y: scroll; scroll-behavior: smooth; margin-bottom: 12px;">
+                    <table id="event_activity_list" class="text-14" > 
+                    </table>
+                </main>
+            </article>
+            <article id="containerStreamHoursInProjects" class="">
+                <h2 class="font-Major">Hours in Project</h2>
+                <h3>100 hours</h3>
+            </article>            
+            <article id="containerStreamHoursInProjects" class="">
+                <h2 class="font-Major">Ratio descanso vs trabajo media</h2>
+                <h3>1/4</h3>
+            </article>
+            <article id="containerStreamHoursInProjects" class="">
+                <h2 class="font-Major">Horas totales trabajadas hoy</h2>
+                <h3>7 hours</h3>
+            </article>
+            <article id="containerStreamHoursInProjects" class="">
+                <h2 class="font-Major">Ratio descanso vs trabajo media</h2>
+                <h3>1/4</h3>
+            </article>
+        </section>
+        <section>
+            <footer>
+                <article class="content-horizontal content-right">
+                    <div>
+                        <button onclick="modeLightTheme()">light</button>
+                    </div>
+                    <div>
+                        <form class="footerRightElement" action="/logout?_method=DELETE" method="post">
+                            <button class="nav link text-16 font-Major-exit" style="text-align:right;">exit</button>
+                        </form>
+                    </div>
+                </article>
+            </footer>
+        </section>
+    </div>
+
     <script>
         window.userData = <%- JSON.stringify(userData) %>;
     </script>

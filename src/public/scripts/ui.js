@@ -375,10 +375,11 @@ const event_activity_list = document.querySelector(
 const publish_events_activity_UI = (event_played) => {
   const tr = document.createElement("tr");
   tr.innerHTML = `
-    <td>${new Date(event_played.createdAt).toLocaleDateString('en-GB', {day: '2-digit', month: '2-digit'})}·${new Date(event_played.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
+    <td>||</td>
+    <td>${new Date(event_played.Date).toLocaleDateString('en-GB', {day: '2-digit', month: '2-digit'})}·${new Date(event_played.Date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
     <td>ctardio</td>
     <td>${event_played.NameEvent}</td>
-    <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;max-width:246px;">${event_played.DescriptionEvent}</td>
+    <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;max-width:246px;">${event_played.status}: ${event_played.DescriptionEvent}</td>
   `;
   return tr;
 };

@@ -15,13 +15,14 @@ export default (io) => {
   io.on("connection", (socket) => {
     //  One new socket connected in the explorer in the page
     const session = socket.request.session;
-
+    /*
     if (session.passport && session.passport.user) {
       const userId = session.passport.user;
-      console.log(`New connection: User:: ${userId}     SocketId:: ${socket.id}`);
+      console.log(`User ID ${userId}`);
+      console.log(`Socket  ${socket.id}`);
     } else {
       console.log(`New connection only with socket id ${socket.id}`);
-    }
+    }*/
     session.socketId = socket.id;
     session.save();
 
@@ -40,11 +41,6 @@ export default (io) => {
      * todo a.
      */
     const player_id = session.passport.user;
-      
-    
-    socket.on("client:c_data_time", async (date) => {
-        console.log("Date:", date)
-      });
 
     /**
      * *PAGE THEGAME
@@ -328,6 +324,8 @@ export default (io) => {
 
       // Load or refresh data from DB
       s_query_find_event_backlog();
+      s_query_find_event_activity();
+
     });
 
     /**
@@ -373,11 +371,29 @@ export default (io) => {
          * todo 2.1
          */
         const s_query_find_event_activity = async () => {
-    
+
+          const find_event_activity = await event_backlog.aggregate([
+            // Filtro para encontrar los eventos cerrados
+            { $match: { StatusEvent: "closed" } },
+
+            // Selección de campos
+            { $project: { Date: "$updatedAt", PlayedByPlayerID: "$AssignedPlayerID", NameEvent: 1, DescriptionEvent: 1, status: { $literal: "Concluido" } } },
+
+            // Unión con los eventos de la colección "event_playeds"
+            { $unionWith: { coll: "event_playeds", pipeline: [] } },
+
+            // Selección de campos
+            { $project: { Date: { $ifNull: [ "$createdAt", "$Date" ] }, PlayedByPlayerID: 1, NameEvent: 1, DescriptionEvent: 1, status: { $ifNull: [ "$status", "Trabajando" ] } } },
+
+            // Ordenamiento por fecha de creación o actualización descendente
+            { $sort: { Date: -1 } }
+          ]).exec();
+          
+    /*
           //find events from played
           const find_event_activity = await event_played
           .find()
-          .sort({ createdAt: -1 });
+          .sort({ createdAt: -1 });*/
   
           // Send data find_event_activity to the all clients connected
           io.emit(`server:s_query_find_event_activity`, find_event_activity);

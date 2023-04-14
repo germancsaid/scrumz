@@ -20,12 +20,35 @@ router.get('/', checkAuthenticated, (req, res) => {
       TeamName: req.user.TeamName,
     };
     res.render('index.ejs', { _id: req.user._id, Email: req.user.Email, PlayerName: req.user.PlayerName, TeamName: req.user.TeamName });
-    console.log(`New login OK, session is ${req.session.id} ${req.user._id}`);
+    /*
+    console.log(`Session ${req.session.id}`);
+    console.log(`User ID ${req.user._id}`);
+    */
   } else {
     // Si no está autenticado, simplemente mostramos un mensaje en la consola
     console.log("unknown user");
   }
 });
+
+// Definimos la ruta para la página de stream
+router.get('/stream', checkAuthenticated, (req, res) => {
+  // Comprobamos si el usuario está autenticado
+  const isAuthenticated = !!req.user;
+  if (isAuthenticated) {
+    // Si está autenticado, establecemos los datos del usuario en la respuesta y renderizamos la vista correspondiente
+    res.locals.userData = { 
+      _id: req.user._id, 
+      Email: req.user.Email,
+      PlayerName: req.user.PlayerName,
+      TeamName: req.user.TeamName,
+    };
+    res.render('stream.ejs', { _id: req.user._id, Email: req.user.Email, PlayerName: req.user.PlayerName, TeamName: req.user.TeamName });
+  } else {
+    // Si no está autenticado, simplemente mostramos un mensaje en la consola
+    console.log("unknown user");
+  }
+});
+
 
 // Definimos la ruta para la página de registro
 router.get('/register', checkNotAuthenticated, (req, res) => {

@@ -515,7 +515,7 @@ textarea {
     grid-template-rows: 50px calc(100% - 93px) 40px;
 }
 #containerStreamDashboards{
-    padding: 0px 0px 0px 20px;
+    padding: 0px 0px 0px 0px;
     width: 100%;
     display: flex;
 }
@@ -529,13 +529,13 @@ textarea {
     padding: 5px 10px 5px 5px;
     text-align: left;
     border-bottom: 1px solid #ddd;
-}#containerStreamDashboards td:hover{
+}#containerStreamDashboards tr:hover{
     background-color: rgb(241, 241, 241);
 }
 #containerStreamActivity{
     width: 560px;
     height: auto;
-    padding: 10px;
+    padding: 10px 10px 10px 0px;
     border: 1px solid;
     border-radius: 2px;
     border-color: rgba(242, 242, 242, 0.119);

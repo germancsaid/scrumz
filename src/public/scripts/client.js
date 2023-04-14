@@ -65,12 +65,23 @@ window.addEventListener("DOMContentLoaded", () => {
 const filterPeriod = document.querySelector("#filterPeriod");
 filterPeriod.addEventListener("click", () => {
     const btn = document.getElementById("filterPeriod");
-    if (btn.innerHTML === "All") {
+    if (btn.innerHTML === "All Dates") {
       btn.innerHTML = "This Week";
     } else if (btn.innerHTML === "This Week") {
       btn.innerHTML = "For Today";
     } else {
-      btn.innerHTML = "All";
+      btn.innerHTML = "All Dates";
+    }
+    change_filter_period(btn.innerHTML)
+});
+
+const filterClass = document.querySelector("#filterClass");
+filterClass.addEventListener("click", () => {
+    const btn = document.getElementById("filterClass");
+    if (btn.innerHTML === "Class: Transitory") {
+      btn.innerHTML = "Class: Recurrent";
+    } else {
+      btn.innerHTML = "Class: Transitory";
     }
     change_filter_period(btn.innerHTML)
 });
@@ -78,10 +89,12 @@ filterPeriod.addEventListener("click", () => {
 const filterType = document.querySelector("#filterType");
 filterType.addEventListener("click", () => {
     const btn = document.getElementById("filterType");
-    if (btn.innerHTML === "Type: Transitory") {
-      btn.innerHTML = "Type: Recurrent";
+    if (btn.innerHTML === "Type: All") {
+      btn.innerHTML = "Type: Tarea";
+    } else if (btn.innerHTML === "Type: Tarea") {
+      btn.innerHTML = "Type: Reunion";
     } else {
-      btn.innerHTML = "Type: Transitory";
+      btn.innerHTML = "Type: All";
     }
     change_filter_period(btn.innerHTML)
 });

@@ -391,3 +391,50 @@ export const publish_events_activity = (events_played_list) => {
     .forEach((event_played) => event_activity_list.append(publish_events_activity_UI(event_played)));
 };
 
+
+
+// Container to publish events played list
+const events_in_projects_list_closed = document.querySelector(
+  "#events_in_projects_list_closed"
+);
+
+// Container to publish old events and new events
+const publish_events_in_projects_closed_UI = (event_closed_count) => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${event_closed_count._id}</td>
+    <td>${event_closed_count.Closed}</td>
+  `;
+  return tr;
+};
+
+// Function publish events played list from event_closed_count from DB
+export const publish_events_in_projects_closed = (events_closed_list) => {
+  events_in_projects_list_closed.innerHTML = "";
+  events_closed_list
+    .forEach((event_closed_count) => events_in_projects_list_closed.append(publish_events_in_projects_closed_UI(event_closed_count)));
+};
+
+
+// Container to publish events played list
+const events_in_projects_list = document.querySelector(
+  "#events_in_projects_list"
+);
+
+// Container to publish old events and new events
+const publish_events_in_projects_UI = (event_closed_count) => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${event_closed_count._id}</td>
+    <td>${event_closed_count.TotalEvents}</td>
+  `;
+  return tr;
+};
+
+// Function publish events played list from event_closed_count from DB
+export const publish_events_in_projects = (events_closed_list) => {
+  events_in_projects_list.innerHTML = "";
+  events_closed_list
+    .forEach((event_closed_count) => events_in_projects_list.append(publish_events_in_projects_UI(event_closed_count)));
+};
+

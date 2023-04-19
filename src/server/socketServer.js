@@ -266,6 +266,7 @@ export default (io) => {
       // find events from backlog by id
       const find_event_backlog = await event_backlog.findById(id);
 
+      let IdEventBacklog = find_event_backlog._id;
       let NameEvent = find_event_backlog.NameEvent;
       let DescriptionEvent = find_event_backlog.DescriptionEvent;
       let AllottedTime = find_event_backlog.AllottedTime;
@@ -281,6 +282,7 @@ export default (io) => {
 
       // Insert one event into the played
       const new_event_played = new event_played({
+        IdEventBacklog: IdEventBacklog,
         NameEvent: NameEvent,
         DescriptionEvent: DescriptionEvent,
         AllottedTime: AllottedTime,
@@ -325,6 +327,7 @@ export default (io) => {
       // Load or refresh data from DB
       s_query_find_event_backlog();
       s_query_find_event_activity();
+      s_query_total_events_in_projects();
 
     });
 
@@ -401,6 +404,49 @@ export default (io) => {
     
         // load data in the frontend and ui when new page open or refresh page
         s_query_find_event_activity();
+
+                /**
+         * todo 2.2
+         */
+                const s_query_total_events_in_projects_closed = async () => {
+
+                  const total_events_in_projects_closed = await event_backlog.aggregate([
+                    
+                    // Primero, hacemos una etapa de coincidencia para encontrar solo los eventos cerrados
+                    { $match: { StatusEvent: 'closed' } },
+                    // Luego, agrupamos los eventos según el campo NameEvent y contamos los eventos cerrados en cada grupo
+                    { $group: { _id: '$NameEvent', Closed: { $sum: 1 } } },
+
+                    { $sort: { _id: 1 } }
+                  ]);
+                  // Send data total_events_in_projects to the all clients connected
+                  io.emit(`server:s_query_total_events_in_projects_closed`, total_events_in_projects_closed);
+                };
+            
+                // load data in the frontend and ui when new page open or refresh page
+                s_query_total_events_in_projects_closed();
+                
+                /**
+                 * 
+         * todo 2.3
+         */
+                const s_query_total_events_in_projects = async () => {
+
+                  const total_events_in_projects = await event_backlog.aggregate([
+                    
+                    // Primero, hacemos una etapa de coincidencia para encontrar solo los eventos cerrados
+                    { $match: {} },
+                    // Luego, agrupamos los eventos según el campo NameEvent y contamos los eventos cerrados en cada grupo
+                    { $group: { _id: '$NameEvent', TotalEvents: { $sum: 1 } } },
+
+                    { $sort: { _id: 1 } }
+                  ]);
+                  // Send data total_events_in_projects to the all clients connected
+                  io.emit(`server:s_query_total_events_in_projects`, total_events_in_projects);
+                };
+            
+                // load data in the frontend and ui when new page open or refresh page
+                s_query_total_events_in_projects();
   
     });
 

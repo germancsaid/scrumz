@@ -48,6 +48,15 @@ export const c_query_find_event_activity = (callback) => {
   socket.on(`server:s_query_find_event_activity`,callback);
 };
 
+// Receive data s_query_find_event_played to the server
+export const c_query_total_events_in_projects = (callback) => {
+  socket.on(`server:s_query_total_events_in_projects`,callback);
+
+};// Receive data s_query_find_event_played to the server
+export const c_query_total_events_in_projects_closed = (callback) => {
+  socket.on(`server:s_query_total_events_in_projects_closed`,callback);
+};
+
 /**
  * * PARA PUBLICAR EVENTOS EJECUTADOS DE events_played
  */
@@ -105,7 +114,7 @@ export const c_insertOne_event_backlog = (
   TeamName,
 ) => {
   socket.emit("client:c_insertOne_event_backlog", {
-    NameEvent,
+    NameEvent: NameEvent.toUpperCase(), // convierte a mayúsculas
     DescriptionEvent,
     AllottedTime,
     AssignedPlayerID,

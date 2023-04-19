@@ -7,6 +7,10 @@ import { Schema, model } from "mongoose";
 
 const schema = new Schema(
   {
+    IdEventBacklog: {
+      type: String,
+      required: true,
+    },
     NameEvent: {
       type: String,
       required: true,

@@ -5,6 +5,8 @@ import {
   c_query_find_count_event_played,
 
   c_query_find_event_activity,
+  c_query_total_events_in_projects,
+  c_query_total_events_in_projects_closed,
 
   c_query_find_pomodoro,
 
@@ -22,6 +24,8 @@ import {
   publish_count_events_played,
 
   publish_events_activity,
+  publish_events_in_projects,
+  publish_events_in_projects_closed,
 
   publish_pomodoro,
 
@@ -51,6 +55,8 @@ window.addEventListener("DOMContentLoaded", () => {
   c_query_find_count_event_played(publish_count_events_played);
 
   c_query_find_event_activity(publish_events_activity)
+  c_query_total_events_in_projects(publish_events_in_projects)
+  c_query_total_events_in_projects_closed(publish_events_in_projects_closed)
 });
 
 window.addEventListener("DOMContentLoaded", () => {

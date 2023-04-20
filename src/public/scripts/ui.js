@@ -2,7 +2,6 @@
  * *Import constants
  */
 import {
-  c_change_team,
   c_insertOne_event_backlog,
   c_delete_event,
   c_close_event,
@@ -40,11 +39,6 @@ export const c_function_save_event_backlog = (e) => {
 /**
  * *Objects
  */
-// Container to publish old events and new events
-const player_session = document.querySelector("#PlayerNameContainer");
-
-// Container to publish old events and new events
-const team_player_session = document.querySelector("#ChosenTeamContainer");
 
 // Container to publish old events and new events
 const pending_event_sprint_list = document.querySelector(
@@ -67,37 +61,6 @@ const closed_event_sprint_list = document.querySelector(
 // Container to publish old events and new events
 const clockGame = document.getElementById("clockGame");
 
-// Container to publish old events and new events
-const player_list = document.querySelector("#UserBoxiStream");
-
-// Container to publish old events and new events
-const player_session_UI = (player) => {
-  const a = document.createElement("a");
-  a.setAttribute("id", "PlayerName");
-  a.setAttribute("href", "#");
-  a.classList.add("link", "font-Major");
-  a.innerHTML = `@${player.PlayerName} -> `;
-
-  return a;
-};
-
-const team_player_session_UI = (team) => {
-  const a = document.createElement("a");
-  a.setAttribute("id", "chosenTeam");
-  a.setAttribute("href", "#");
-  a.classList.add("link", "font-Major");
-  a.innerHTML = `${team.TeamName}`;
-
-  let i = 0;
-    // Button delete button
-    a.onclick = (e) => {
-      i ++
-      c_change_team(i);
-      a.innerHTML = `Scrumz`;
-    };
-
-  return a;
-};
 
 // Container to publish old events and new events
 const pending_event_sprint_UI = (event_sprint) => {
@@ -214,40 +177,6 @@ const closed_event_sprint_UI = (closed_event_sprint) => {
   return li;
 };
 
-// Container to publish old events and new events
-const player_UI = (player) => {
-  const div = document.createElement("div");
-  div.innerHTML = `
-  <div id="cajitaStream" class="">
-  <h2>${player._id}</h2>
-  <h1>${player.PlayerName}</h1>
-  <div style="width: 301px; margin-bottom: 5px;">
-      <button class="lila">online</button>
-      <button class="rojo">out</button>
-      <button class="verdelechuga">working</button>
-  </div>
-  <table>
-      <tr>
-          <td>Proyecto :</td>
-          <td>SCRUMZ</td>
-      </tr>
-      <tr>
-          <td>Avance :</td>
-          <td>50%</td>
-      </tr>
-      <tr>
-          <td>Tarea :</td>
-          <td>Desarrollo</td>
-      </tr>
-      <tr>
-          <td>Productividad :</td>
-          <td>2 h</td>
-      </tr>
-  </table>
-</div>  
-  `;
-  return div;
-};
 
 /**
  * *Fuctions frontend

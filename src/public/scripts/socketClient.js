@@ -5,11 +5,11 @@ const socket = io();
 const player_id = userData._id
 
 /**
- * !ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON
+ * todo ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON ON
  */
 /**
- * * PARA PUBLICAR PLATER SESSION DATA NAME and team
- */
+ * * GENERAL
+*/
 // Receive data s_query_find_event_backlog to the server
 export const c_query_find_player_session = (Player) => {
   socket.on("server:s_query_find_player_session", Player)
@@ -37,12 +37,7 @@ export const c_query_find_closed_event_backlog = (callback) => {
 
 /**
  * * PARA PUBLICAR EN STREAM LISTA PLAYERS player
- *//*
-// Receive data s_query_find_event_backlog to the server
-export const s_query_find_player = (callback) => {
-  socket.on("server:s_query_find_player", callback);
-};
-*/
+ */
 // Receive data s_query_find_event_played to the server
 export const c_query_find_event_activity = (callback) => {
   socket.on(`server:s_query_find_event_activity`,callback);
@@ -88,16 +83,7 @@ export const c_publish_insertOne_event_backlog = (callback) => {
 /**
  * * PARA PUBLICAR NUEVOS EVENTOS EJECUTADOS EN LA PAGINA
  */
-/*
-// Publish new events from DB server
-export const c_publish_insertOne_event_played = (callback) => {
-  socket.on("server:s_insertOne_event_played", callback);
-};
-// Publish new pomodoro
-export const c_publish_insertOne_pomodoro = (callback) => {
-  socket.on(`server:s_insertOne_pomodoro${player_id}`, callback);
-};
-*/
+
 /**
  * !EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT EMIT
  */
@@ -126,10 +112,6 @@ export const c_insertOne_event_backlog = (
  * *Buttons
  */
 
-// Delete new events from DB server
-export const c_change_team = (i) => {
-  socket.emit("client:c_change_team", i);
-};
 
 // Delete new events from DB server
 export const c_delete_event = (id) => {

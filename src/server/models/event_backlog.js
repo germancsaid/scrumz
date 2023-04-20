@@ -30,6 +30,9 @@ const schema = new Schema(
       type: String,
       required: true,
     },
+    Tags: {
+      type: Array,
+    },
   },
   {
     timestamps: true,

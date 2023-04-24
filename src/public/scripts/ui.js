@@ -168,7 +168,6 @@ export const change_filter_type = (filter) => {
     .forEach((event_sprint) => pending_event_sprint_list.append(pending_event_sprint_UI(event_sprint)));
 };
 
-
 // Container to publish old events and new events
 const closed_event_sprint_list = document.querySelector(
   "#containerEventsListClosed"

@@ -8,9 +8,12 @@ import {
   c_delete_event_played,
   c_insertOne_play_event,
 } from "./socketClient.js";
+
 /**
  * *Let
  */
+let eventsBacklogList = {}
+let eventsPlayedList = {}
 
 let pomodorotime = 25 * 60
 //For create News Tareas
@@ -37,31 +40,26 @@ export const c_function_save_event_backlog = (e) => {
 };
 
 /**
- * *Objects
+ * * PLAY
  */
 
 // Container to publish old events and new events
 const pending_event_sprint_list = document.querySelector(
   "#containerEventsListPending"
 );
+// Function publish events list from event_backlog from DB
+export const publish_old_events_backlog = (data_events_backlog) => {
+  pending_event_sprint_list.innerHTML = "";
+  eventsBacklogList = data_events_backlog
 
-// Container to publish events played list
-const containerWorkedHours = document.querySelector("#containerWorkedHours");
-
-// Container to publish events played list
-const played_event_sprint_list = document.querySelector(
-  "#containerBoxi_listPlayed"
-);
-
-// Container to publish old events and new events
-const closed_event_sprint_list = document.querySelector(
-  "#containerEventsListClosed"
-);
-
-// Container to publish old events and new events
-const clockGame = document.getElementById("clockGame");
-
-
+  data_events_backlog
+    .filter((event_sprint) => 
+      event_sprint.TeamName === userData.TeamName && 
+      event_sprint.AssignedPlayerID === userData._id &&
+      event_sprint.StatusEvent === 'pending') // Filtrar eventos por TeamName, AssignedPlayerID y status
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .forEach((event_sprint) => pending_event_sprint_list.append(pending_event_sprint_UI(event_sprint)));
+};
 // Container to publish old events and new events
 const pending_event_sprint_UI = (event_sprint) => {
   const li = document.createElement("li");
@@ -111,18 +109,115 @@ const pending_event_sprint_UI = (event_sprint) => {
 
   return li;
 };
+// Function publish new event into sprint from event_backlog from DB
+export const change_filter_period = (filter) => {
+  if (filter === "All Dates") {
 
-// Container to publish old events and new events
-const quantity_played_event_sprint_UI = (quantity) => {
-  const div = document.createElement("div");
-  div.innerHTML = `
-    <h5>Trabajadas hoy:</h5>
-    <h1 class="text-28 font-400">${quantity}</h1>
-  `;
+    filter = "This Week";
+  } else if (filter === "This Week") {
+    filter = "For Today";
+  } else {
+    filter = "All Dates";
+  }
+  pending_event_sprint_list.innerHTML = "";
 
-  return div;
+  eventsBacklogList
+    .filter((event_sprint) => 
+      event_sprint.TeamName === userData.TeamName && 
+      event_sprint.AssignedPlayerID === userData._id &&
+      event_sprint.StatusEvent === 'pending') // Filtrar eventos por TeamName, AssignedPlayerID y status
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .forEach((event_sprint) => pending_event_sprint_list.append(pending_event_sprint_UI(event_sprint)));
 };
 
+// Container to publish old events and new events
+const closed_event_sprint_list = document.querySelector(
+  "#containerEventsListClosed"
+);
+// Function publish closed events list from event_backlog from DB
+export const publish_old_closed_events_backlog = (data_events_backlog) => {
+  closed_event_sprint_list.innerHTML = "";
+  data_events_backlog
+  .filter((events_backlog) => 
+    events_backlog.TeamName === userData.TeamName && 
+    events_backlog.AssignedPlayerID === userData._id &&
+    events_backlog.StatusEvent === 'closed') // Filtrar eventos por TeamName, AssignedPlayerID y status
+    .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)) // Ordenar eventos por updateAt en orden descendente
+  .forEach((events_backlog) => closed_event_sprint_list.append(closed_event_sprint_UI(events_backlog)));
+};
+// Container to publish old closed events and new events
+const closed_event_sprint_UI = (closed_event_sprint) => {
+  const li = document.createElement("li");
+  li.setAttribute("id", "");
+  li.classList.add("p-r-35p", "plomo", "invisible");
+  li.innerHTML = `
+    <form class="" action="">
+        <input class="uppercase text-18 font-400 mt-15p" style="width: 80%;" type="text" value="${closed_event_sprint.NameEvent}" spellcheck="false">
+        <textarea class="text-16" style="width: 80%;" name="" id="" cols="30" rows="2" spellcheck="false">${closed_event_sprint.DescriptionEvent}</textarea>
+        <button id="" class="hiden">submit</button>
+        <div class="separador" style="width: 80%; margin-left:20%;"></div>
+      </form>
+  `;
+
+  return li;
+};
+
+
+// Container to publish events played list
+const played_event_sprint_list = document.querySelector(
+  "#containerBoxi_listPlayed"
+);
+// Function publish events played list from event_played from DB
+export const publish_old_events_played = (events_played_list) => {
+  played_event_sprint_list.innerHTML = "";
+  const startOfDay = new Date();
+  startOfDay.setHours(0, 0, 0, 0);
+  const endOfDay = new Date();
+  endOfDay.setHours(23, 59, 59, 999);
+
+  eventsPlayedList = events_played_list; //si trae datos
+
+  events_played_list
+    .filter((event_played) => 
+      event_played.TeamName === userData.TeamName && 
+      event_played.PlayedByPlayerID === userData._id &&
+      new Date(event_played.createdAt) >= startOfDay &&
+      new Date(event_played.createdAt) <= endOfDay
+    ) // Filtrar eventos por TeamName, AssignedPlayerID y fecha seleccionada
+    .forEach((event_played) => played_event_sprint_list.append(played_event_sprint_UI(event_played)));
+};
+export const NextDay = (SelectedMoment) => {
+  played_event_sprint_list.innerHTML = "";
+  const startOfDay = new Date(SelectedMoment);
+  startOfDay.setHours(0, 0, 0, 0);
+  const endOfDay = new Date(SelectedMoment);
+  endOfDay.setHours(23, 59, 59, 999);
+
+  eventsPlayedList
+  .filter((event_played) => 
+    event_played.TeamName === userData.TeamName && 
+    event_played.PlayedByPlayerID === userData._id &&
+    new Date(event_played.createdAt) >= startOfDay &&
+    new Date(event_played.createdAt) <= endOfDay
+  ) // Filtrar eventos por TeamName, AssignedPlayerID y fecha seleccionada
+  .forEach((event_played) => played_event_sprint_list.append(played_event_sprint_UI(event_played)));
+};
+export const PreviousDay = (SelectedMoment) => {
+  played_event_sprint_list.innerHTML = "";
+  const startOfDay = new Date(SelectedMoment);
+  startOfDay.setHours(0, 0, 0, 0);
+  const endOfDay = new Date(SelectedMoment);
+  endOfDay.setHours(23, 59, 59, 999);
+
+  eventsPlayedList
+  .filter((event_played) => 
+    event_played.TeamName === userData.TeamName && 
+    event_played.PlayedByPlayerID === userData._id &&
+    new Date(event_played.createdAt) >= startOfDay &&
+    new Date(event_played.createdAt) <= endOfDay
+  ) // Filtrar eventos por TeamName, AssignedPlayerID y fecha seleccionada
+  .forEach((event_played) => played_event_sprint_list.append(played_event_sprint_UI(event_played)));
+};
 // Container to publish old events and new events
 const played_event_sprint_UI = (event_played) => {
   const li = document.createElement("li");
@@ -151,95 +246,39 @@ const played_event_sprint_UI = (event_played) => {
       event_played._id
     }" style="width:20%;">delete</button>
   `;
-
   const delete_event_played = li.querySelector(".btn-delete-event");
   delete_event_played.onclick = (e) => {
     c_delete_event_played(delete_event_played.dataset.id);
   };
-
-  return li;
-};
-
-// Container to publish old closed events and new events
-const closed_event_sprint_UI = (closed_event_sprint) => {
-  const li = document.createElement("li");
-  li.setAttribute("id", "");
-  li.classList.add("p-r-35p", "plomo", "invisible");
-  li.innerHTML = `
-    <form class="" action="">
-        <input class="uppercase text-18 font-400 mt-15p" style="width: 80%;" type="text" value="${closed_event_sprint.NameEvent}" spellcheck="false">
-        <textarea class="text-16" style="width: 80%;" name="" id="" cols="30" rows="2" spellcheck="false">${closed_event_sprint.DescriptionEvent}</textarea>
-        <button id="" class="hiden">submit</button>
-        <div class="separador" style="width: 80%; margin-left:20%;"></div>
-      </form>
-  `;
-
   return li;
 };
 
 
-/**
- * *Fuctions frontend
- */
-// Function publish events list from event_backlog from DB
-export const publish_old_events_backlog = (events_backlog_list) => {
-  pending_event_sprint_list.innerHTML = "";
-  events_backlog_list
-    .filter((event_sprint) => event_sprint.TeamName === userData.TeamName && event_sprint.AssignedPlayerID === userData._id) // Filtrar eventos por TeamName y AssignedPlayerID
-    .forEach((event_sprint) => pending_event_sprint_list.append(pending_event_sprint_UI(event_sprint)));
-};
-
-// Function publish closed events list from event_backlog from DB
-export const publish_old_closed_events_backlog = (
-  closed_events_backlog_list
-) => {
-  closed_event_sprint_list.innerHTML = "";
-  closed_events_backlog_list
-    .filter((closed_event_sprint) => closed_event_sprint.TeamName === userData.TeamName && closed_event_sprint.AssignedPlayerID === userData._id) // Filtrar eventos por TeamName y AssignedPlayerID
-    .forEach((closed_event_sprint) => closed_event_sprint_list.append(closed_event_sprint_UI(closed_event_sprint)));
-};
-
-// Function publish events played list from event_played from DB
-export const publish_old_events_played = (events_played_list) => {
-  played_event_sprint_list.innerHTML = "";
-
-  events_played_list
-    .filter((event_played) => event_played.TeamName === userData.TeamName && event_played.PlayedByPlayerID === userData._id) // Filtrar eventos por TeamName y AssignedPlayerID
-    .forEach((event_played) => played_event_sprint_list.append(played_event_sprint_UI(event_played)));
-};
-
-
+// Container to publish events played list
+const containerWorkedHours = document.querySelector("#containerWorkedHours");
 // Function publish events played list from event_played from DB
 export const publish_count_events_played = (events_played_count) => {
-  if (events_played_count.TeamName === userData.TeamName && events_played_count.PlayedByPlayerID === userData._id) {// Filtrar eventos por TeamName y AssignedPlayerID
-    console.log(events_played_count)
-    containerWorkedHours.innerHTML = "";
-    containerWorkedHours.append(
-      quantity_played_event_sprint_UI(events_played_count)
-      );
-    }
-  };
-
-  
-  
-// Function publish new event into sprint from event_backlog from DB
-export const publish_new_event_backlog = (new_event_game) => {
-  if (new_event_game.TeamName === userData.TeamName && new_event_game.AssignedPlayerID === userData._id) {// Filtrar eventos por TeamName y AssignedPlayerID
-    pending_event_sprint_list.append(pending_event_sprint_UI(new_event_game));
-  }
+};
+// Container to publish old events and new events
+const quantity_played_event_sprint_UI = (quantity) => {
+  const div = document.createElement("div");
+  div.innerHTML = `
+    <h5>Trabajadas hoy:</h5>
+    <h1 class="text-28 font-400">${quantity}</h1>
+  `;
+  return div;
 };
 
+/**
+ * * PLAY Objects
+ */
 
-// Function publish new event into sprint from event_backlog from DB
-export const publish_new_event_played = (new_event_played) => {
-  if (new_event_played.TeamName === userData.TeamName && new_event_played.PlayedByPlayerID === userData._id) {// Filtrar eventos por TeamName y AssignedPlayerID
-    played_event_sprint_list.append(played_event_sprint_UI(new_event_played));
-  }
-};
+
+// Container to publish old events and new events
+const clockGame = document.getElementById("clockGame");
 
 // Function publish new event into sprint from event_backlog from DB
 export const publish_pomodoro = (pomodoro) => {
-
   // Filtrar eventos por TeamName y AssignedPlayerID
   if (pomodoro.TeamName === userData.TeamName && pomodoro.PlayedByPlayerID === userData._id) {
     
@@ -286,20 +325,16 @@ export const publish_pomodoro = (pomodoro) => {
   };
 };
 
-// Function publish new event into sprint from event_backlog from DB
-export const change_filter_period = (data) => {
-};
 
 
 
 /**
- * *STREAM
+ * * STREAM
  */
 // Container to publish events played list
 const event_activity_list = document.querySelector(
   "#event_activity_list"
 );
-
 // Container to publish old events and new events
 const publish_events_activity_UI = (event_played) => {
   const tr = document.createElement("tr");
@@ -312,7 +347,6 @@ const publish_events_activity_UI = (event_played) => {
   `;
   return tr;
 };
-
 // Function publish events played list from event_played from DB
 export const publish_events_activity = (events_played_list) => {
   event_activity_list.innerHTML = "";
@@ -321,12 +355,10 @@ export const publish_events_activity = (events_played_list) => {
 };
 
 
-
 // Container to publish events played list
 const events_in_projects_list_closed = document.querySelector(
   "#events_in_projects_list_closed"
 );
-
 // Container to publish old events and new events
 const publish_events_in_projects_closed_UI = (event_closed_count) => {
   const tr = document.createElement("tr");
@@ -336,20 +368,22 @@ const publish_events_in_projects_closed_UI = (event_closed_count) => {
   `;
   return tr;
 };
-
 // Function publish events played list from event_closed_count from DB
 export const publish_events_in_projects_closed = (events_closed_list) => {
   events_in_projects_list_closed.innerHTML = "";
   events_closed_list
     .forEach((event_closed_count) => events_in_projects_list_closed.append(publish_events_in_projects_closed_UI(event_closed_count)));
 };
-
-
 // Container to publish events played list
 const events_in_projects_list = document.querySelector(
   "#events_in_projects_list"
 );
-
+// Function publish events played list from event_closed_count from DB
+export const publish_events_in_projects = (events_closed_list) => {
+  events_in_projects_list.innerHTML = "";
+  events_closed_list
+    .forEach((event_closed_count) => events_in_projects_list.append(publish_events_in_projects_UI(event_closed_count)));
+};
 // Container to publish old events and new events
 const publish_events_in_projects_UI = (event_closed_count) => {
   const tr = document.createElement("tr");
@@ -359,11 +393,3 @@ const publish_events_in_projects_UI = (event_closed_count) => {
   `;
   return tr;
 };
-
-// Function publish events played list from event_closed_count from DB
-export const publish_events_in_projects = (events_closed_list) => {
-  events_in_projects_list.innerHTML = "";
-  events_closed_list
-    .forEach((event_closed_count) => events_in_projects_list.append(publish_events_in_projects_UI(event_closed_count)));
-};
-

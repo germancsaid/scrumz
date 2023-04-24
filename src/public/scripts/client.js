@@ -1,15 +1,9 @@
 import {
   //play
   c_query_find_event_backlog,
-  c_query_find_closed_event_backlog,
   c_query_find_event_played,
-  c_query_find_count_event_played,
-  c_query_find_pomodoro,
-  
-    NextDay,
-    PreviousDay,
-    c_data_time,
 
+  c_query_find_pomodoro,
   //stream
   c_query_find_event_activity,
   c_query_total_events_in_projects,
@@ -17,56 +11,43 @@ import {
 } from "./socketClient.js";
 import {
   //play
-  change_filter_period,
-  publish_old_events_backlog,
+  c_function_save_event_backlog,
+  publish_old_events_backlog, change_filter_period, change_filter_class, change_filter_type,
+
   publish_old_closed_events_backlog,
-  publish_old_events_played,
+  
+  publish_old_events_played, NextDay, PreviousDay, 
+  
   publish_count_events_played,
   
+  publish_pomodoro,
   //stream
   publish_events_activity,
   publish_events_in_projects,
   publish_events_in_projects_closed,
-
-  publish_pomodoro,
-
-  c_function_save_event_backlog,
-
 } from "./ui.js";
-
 /**
  * *DEFINED DATA FROM CLIENT TO THE SEND TO SERVER
  */
+  let SelectedMoment = new Date();
+  calendarFormat(SelectedMoment);
 
-    let SelectedMoment = new Date();
-    calendarFormat(SelectedMoment);
-    c_data_time(SelectedMoment)
-    
 window.addEventListener("DOMContentLoaded", () => {
-  // Publish old events
   c_query_find_event_backlog(publish_old_events_backlog);
-
-  // Publish closed events
-  c_query_find_closed_event_backlog(publish_old_closed_events_backlog);
-
-  // Publish events played
+  c_query_find_event_backlog(publish_old_closed_events_backlog);
   c_query_find_event_played(publish_old_events_played);
-
-  // Publish events played
-  c_query_find_count_event_played(publish_count_events_played);
+  c_query_find_event_played(publish_count_events_played);
 
   c_query_find_event_activity(publish_events_activity)
   c_query_total_events_in_projects(publish_events_in_projects)
   c_query_total_events_in_projects_closed(publish_events_in_projects_closed)
 });
-
 window.addEventListener("DOMContentLoaded", () => {
   c_query_find_pomodoro(publish_pomodoro);
 });
 
-
 /**
- * * Actions frontend
+ * * Filters PLAY
  */
 
 const filterPeriod = document.querySelector("#filterPeriod");
@@ -90,7 +71,7 @@ filterClass.addEventListener("click", () => {
     } else {
       btn.innerHTML = "Class: Transitory";
     }
-    change_filter_period(btn.innerHTML)
+    change_filter_class(btn.innerHTML)
 });
 
 const filterType = document.querySelector("#filterType");
@@ -103,24 +84,28 @@ filterType.addEventListener("click", () => {
     } else {
       btn.innerHTML = "Type: All";
     }
-    change_filter_period(btn.innerHTML)
+    change_filter_type(btn.innerHTML)
 });
+
+
 /**
- * Submit new events
+ * * New event PLAY
  */
 const FormNewEventBodyGame = document.querySelector("#FormNewEventBodyGame");
 FormNewEventBodyGame.addEventListener("submit", c_function_save_event_backlog);
 
-//days movigations buttons
+/**
+ * * Date nav buttons
+ */
 const NextDayBtn = document.querySelector("#NextDay");
 NextDayBtn.addEventListener("click", () => {
-
   const NexDay = new Date(SelectedMoment);
   NexDay.setDate(SelectedMoment.getDate() + 1);
   SelectedMoment = NexDay;
   calendarFormat(SelectedMoment);
-  NextDay(SelectedMoment)
+  NextDay(SelectedMoment); // Llamar NextDay como una función
 });
+
 
 const PreviousDayBtn = document.querySelector("#PreviousDay");
 PreviousDayBtn.addEventListener("click", () => {
@@ -128,23 +113,9 @@ PreviousDayBtn.addEventListener("click", () => {
   PrevDay.setDate(SelectedMoment.getDate() - 1);
   SelectedMoment = PrevDay;
   calendarFormat(SelectedMoment);
-  PreviousDay(SelectedMoment)
+  PreviousDay(SelectedMoment); // Llamar NextDay como una función
 });
 
-/*
-const ChangeTeamBtn = document.querySelector("#chosenTeam");
-let i = 0
-ChangeTeamBtn.addEventListener("click", () => {
-  i++;
-  console.log('hola chialo')
-  OtherTeam(i)
-  console.log(i)
-});
-*/
-
-/**
- * * Functions backend
- */
 function calendarFormat(selectedMoment) {
   let idday = 'day'
   let idmonth = 'month'

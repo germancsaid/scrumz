@@ -121,27 +121,18 @@ router.get('/auth/signin',
       scopes: scopes.split(','),
       redirectUri: process.env.OAUTH_REDIRECT_URI || 'http://localhost:8081/auth/callback'
     };
-    console.log(1)
-
     try {
       const authUrl = await req.app.locals
         .msalClient.getAuthCodeUrl(urlParameters);
       res.redirect(authUrl);
-    console.log(2)
-
     }
     catch (error) {
       console.log(`Error: ${error}`);
-    console.log(3)
-
       req.flash('error_msg', {
         message: 'Error getting auth URL',
         debug: JSON.stringify(error, Object.getOwnPropertyNames(error))
       });
-    console.log(4)
-
-      res.redirect('/perfil');
-      
+    res.redirect('/perfil');
     }
   }
 );
@@ -149,27 +140,19 @@ router.get('/auth/signin',
 router.get('/auth/callback',
   async function(req, res) {
     const scopes = process.env.OAUTH_SCOPES || 'https://graph.microsoft.com/.default';
-    console.log('5')
     const tokenRequest = {
       code: req.query.code,
       scopes: scopes.split(','),
       redirectUri: process.env.OAUTH_REDIRECT_URI
     };
-    console.log('6')
-
     try {
       const response = await req.app.locals.msalClient.acquireTokenByCode(tokenRequest);
-      console.log('7')
-
       // Save the user's homeAccountId in their session
       req.session.userId = response.account.homeAccountId;
-      console.log('8')
-
       const user = await graph.getUserDetails(
         req.app.locals.msalClient,
         req.session.userId
       );
-      console.log('9')
       // Add the user to user storage
       if (!req.app.locals.users) {
         req.app.locals.users = {};
@@ -179,25 +162,17 @@ router.get('/auth/callback',
         email: user.mail || user.userPrincipalName,
         timeZone: user.mailboxSettings.timeZone
       };
-      console.log('10')
       console.log(req.app.locals.users[req.session.userId])
-
-
     } catch(error) {
-      console.log(11)
       req.flash('error_msg', {
         message: 'Error completing authentication',
         debug: JSON.stringify(error, Object.getOwnPropertyNames(error))
       });
       console.log(error)
     }
-    console.log(12)
     res.redirect('/perfil')
-    console.log(13)
   }
 );
-
-
 
 // Definimos la ruta para cerrar sesión
 router.delete('/logout', function(req, res, next) {

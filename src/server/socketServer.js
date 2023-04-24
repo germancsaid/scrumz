@@ -13,7 +13,7 @@ import event_played from "./models/event_played";
 */
 export default (io) => {
   io.on("connection", (socket) => {
-  /** 
+  /** note
    * *VARIABLES DEFINITED INTO THE SERVER
    * todo List of variables
    * * a.
@@ -23,7 +23,7 @@ export default (io) => {
     session.socketId = socket.id;
     session.save();
     const player_id = session.passport.user;
-  /**
+  /** note
    * *PAGE PLAY
    * --------------------------------
    * todo: 1 -> Load information from MONGODB (Querys)
@@ -31,113 +31,31 @@ export default (io) => {
    * * 1.2 Query find events from played
    * * 1.3 Query find player and teams
    */
-
-    /**
+    /** note
     * todo 1.1.
     */
     const s_query_find_event_backlog = async () => {
-
       //find events from backlog
       const find_event_backlog = await event_backlog
-        .find({ StatusEvent: "pending", AssignedPlayerID: player_id})
-        .sort({ createdAt: -1 });
-
-        //find events from backlog where status event is closed
-      const find_closed_event_backlog = await event_backlog
-        .find({ StatusEvent: "closed", AssignedPlayerID: player_id})
-        .sort({ createdAt: -1 });
-
-        // Send data find_event_backlog to the all clients connected
+        .find({ AssignedPlayerID: player_id})
+      // Send data find_event_backlog to the all clients connected
       io.emit(`server:s_query_find_event_backlog${player_id}`, find_event_backlog);
-
-      // Send data find_closed_event_backlog to the all clients connected
-      io.emit(`server:s_query_find_closed_event_backlog${player_id}`, find_closed_event_backlog);
     };
     // load data in the frontend and ui when new page open or refresh page
     s_query_find_event_backlog();
 
-    /**
+    /** note
     * todo 1.2.
     */
     const s_query_find_event_played = async () => {
-      //Define variables for the filters of the played events
-      // Today
-      let startOfDay = new Date();
-      startOfDay.setHours(0, 0, 0, 0);
-      let endOfDay = new Date();
-      endOfDay.setHours(23, 59, 59, 999);
-
-      //count events from played
-      const count_events_played = await event_played
-        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})
-        .count();
 
       //find events from played
       const find_event_played = await event_played
-      .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})
+      .find({ PlayedByPlayerID: player_id })
       .sort({ createdAt: -1 });    
      
-      // Send data count_events_played to the all clients connected
-      io.emit(`server:s_query_find_count_event_played${player_id}`, count_events_played);
-      
       // Send data find_event_played to the all clients connected
       io.emit(`server:s_query_find_event_played${player_id}`, find_event_played);
-
-      // Send selected data related to chosen date in frontend, DAY+
-      socket.on("client:c_nextDay_btn", async (date) => {
-        // comment
-        let startOfDay = new Date(date);
-        startOfDay.setHours(0, 0, 0, 0);
-        let endOfDay = new Date(date);
-        endOfDay.setHours(23, 59, 59, 999);
-
-        //count events from played
-        const count_events_played = await event_played
-        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})//, TeamName: ChosenTeam})
-        .count();    
-
-        //find events from played
-        const find_event_played = await event_played
-        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})//, TeamName: ChosenTeam})
-        .sort({ createdAt: -1 });    
-
-        /**
-         * !io vs socket analysis for this sintax but io is very inefficient load completely the information to the DB
-         */
-        // Send data find_event_played to the all clients connected
-        io.emit(`server:s_query_find_event_played${player_id}`, find_event_played);
-
-        // Send data count_events_played to the all clients connected
-        io.emit(`server:s_query_find_count_event_played${player_id}`, count_events_played);
-      })
-
-      // Send selected data related to chosen date in frontend, DAY-
-      socket.on("client:c_previousDay_btn", async (date) => {
-        // comment
-        let startOfDay = new Date(date);
-        startOfDay.setHours(0, 0, 0, 0);
-        let endOfDay = new Date(date);
-        endOfDay.setHours(23, 59, 59, 999);
-
-        //count events from played
-        const count_events_played = await event_played
-        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})//, TeamName: ChosenTeam})
-        .count();    
-
-        //find events from played
-        const find_event_played = await event_played
-        .find({ createdAt: { $gte: startOfDay, $lt: endOfDay }})//, TeamName: ChosenTeam})
-        .sort({ createdAt: -1 });    
-
-        /**
-         * !io vs socket analysis for this sintax but io is very inefficient load completely the information to the DB
-         */
-        // Send data find_event_played to the all clients connected
-        io.emit(`server:s_query_find_event_played${player_id}`, find_event_played);
-
-        // Send data count_events_played to the all clients connected
-        io.emit(`server:s_query_find_count_event_played${player_id}`, count_events_played);
-      })
     };
     // load data in the frontend and ui when new page open or refresh page
     s_query_find_event_played();
@@ -218,7 +136,6 @@ export default (io) => {
 
       const insertOne_event_played = await new_event_played.save();
       
-      s_query_find_pomodoro();
       s_query_find_event_played();
       s_query_find_event_activity();
       

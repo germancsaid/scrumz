@@ -128,7 +128,46 @@ export const change_filter_period = (filter) => {
       event_sprint.StatusEvent === 'pending') // Filtrar eventos por TeamName, AssignedPlayerID y status
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .forEach((event_sprint) => pending_event_sprint_list.append(pending_event_sprint_UI(event_sprint)));
+};// Function publish new event into sprint from event_backlog from DB
+export const change_filter_class = (filter) => {
+  if (filter === "All Dates") {
+
+    filter = "This Week";
+  } else if (filter === "This Week") {
+    filter = "For Today";
+  } else {
+    filter = "All Dates";
+  }
+  pending_event_sprint_list.innerHTML = "";
+
+  eventsBacklogList
+    .filter((event_sprint) => 
+      event_sprint.TeamName === userData.TeamName && 
+      event_sprint.AssignedPlayerID === userData._id &&
+      event_sprint.StatusEvent === 'pending') // Filtrar eventos por TeamName, AssignedPlayerID y status
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .forEach((event_sprint) => pending_event_sprint_list.append(pending_event_sprint_UI(event_sprint)));
+};// Function publish new event into sprint from event_backlog from DB
+export const change_filter_type = (filter) => {
+  if (filter === "All Dates") {
+
+    filter = "This Week";
+  } else if (filter === "This Week") {
+    filter = "For Today";
+  } else {
+    filter = "All Dates";
+  }
+  pending_event_sprint_list.innerHTML = "";
+
+  eventsBacklogList
+    .filter((event_sprint) => 
+      event_sprint.TeamName === userData.TeamName && 
+      event_sprint.AssignedPlayerID === userData._id &&
+      event_sprint.StatusEvent === 'pending') // Filtrar eventos por TeamName, AssignedPlayerID y status
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .forEach((event_sprint) => pending_event_sprint_list.append(pending_event_sprint_UI(event_sprint)));
 };
+
 
 // Container to publish old events and new events
 const closed_event_sprint_list = document.querySelector(

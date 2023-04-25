@@ -566,6 +566,17 @@ textarea {
     -moz-box-shadow: 6px 7px 12px -6px rgba(0,0,0,0.22);
     box-shadow: 5px 5px 12px -6px rgba(0,0,0,0.22);
     
+}#containerStreamHoursInProjects{
+    width: 300px;
+    height: 260px;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 2px;
+    border-color: rgba(242, 242, 242, 0.119);
+    -webkit-box-shadow: 6px 7px 12px -6px rgba(0,0,0,0.22);
+    -moz-box-shadow: 6px 7px 12px -6px rgba(0,0,0,0.22);
+    box-shadow: 5px 5px 12px -6px rgba(0,0,0,0.22);
+    
 }
 /*=======================================*/
 

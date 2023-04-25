@@ -25,6 +25,7 @@ import {
   publish_events_activity,
   publish_events_in_projects,
   publish_events_in_projects_closed,
+  publish_hours_in_projects_list,
 } from "./ui.js";
 /**
  * *DEFINED DATA FROM CLIENT TO THE SEND TO SERVER
@@ -32,89 +33,89 @@ import {
   let SelectedMoment = new Date();
   calendarFormat(SelectedMoment);
 
-window.addEventListener("DOMContentLoaded", () => {
-  c_query_find_event_backlog(publish_old_events_backlog);
-  c_query_find_event_backlog(publish_old_closed_events_backlog);
-  c_query_find_event_played(publish_old_events_played);
-  c_query_find_event_played(publish_count_events_played);
 
-  c_query_find_event_activity(publish_events_activity)
-  c_query_total_events_in_projects(publish_events_in_projects)
-  c_query_total_events_in_projects_closed(publish_events_in_projects_closed)
-});
-window.addEventListener("DOMContentLoaded", () => {
-  c_query_find_pomodoro(publish_pomodoro);
-});
+  if (window.location.pathname === "/") {
+    window.addEventListener("DOMContentLoaded", () => {
+      c_query_find_event_backlog(publish_old_events_backlog);
+      c_query_find_event_backlog(publish_old_closed_events_backlog);
+      c_query_find_event_played(publish_old_events_played);
+      c_query_find_event_played(publish_count_events_played);
+    });
+    window.addEventListener("DOMContentLoaded", () => {
+      c_query_find_pomodoro(publish_pomodoro);
+    });
+  } else if (window.location.pathname === "/stream") {
+    window.addEventListener("DOMContentLoaded", () => {
+      c_query_find_event_activity(publish_events_activity)
+      c_query_find_event_played(publish_hours_in_projects_list)
+      c_query_total_events_in_projects(publish_events_in_projects)
+      c_query_total_events_in_projects_closed(publish_events_in_projects_closed)
+    });
+  }
 
 /**
  * * Filters PLAY
  */
-
-const filterPeriod = document.querySelector("#filterPeriod");
-filterPeriod.addEventListener("click", () => {
-    const btn = document.getElementById("filterPeriod");
-    if (btn.innerHTML === "All Dates") {
-      btn.innerHTML = "This Week";
-    } else if (btn.innerHTML === "This Week") {
-      btn.innerHTML = "For Today";
-    } else {
-      btn.innerHTML = "All Dates";
-    }
-    change_filter_period(btn.innerHTML)
-});
-
-const filterClass = document.querySelector("#filterClass");
-filterClass.addEventListener("click", () => {
-    const btn = document.getElementById("filterClass");
-    if (btn.innerHTML === "Class: Transitory") {
-      btn.innerHTML = "Class: Recurrent";
-    } else {
-      btn.innerHTML = "Class: Transitory";
-    }
-    change_filter_class(btn.innerHTML)
-});
-
-const filterType = document.querySelector("#filterType");
-filterType.addEventListener("click", () => {
-    const btn = document.getElementById("filterType");
-    if (btn.innerHTML === "Type: All") {
-      btn.innerHTML = "Type: Tarea";
-    } else if (btn.innerHTML === "Type: Tarea") {
-      btn.innerHTML = "Type: Reunion";
-    } else {
-      btn.innerHTML = "Type: All";
-    }
-    change_filter_type(btn.innerHTML)
-});
-
-
-/**
- * * New event PLAY
- */
-const FormNewEventBodyGame = document.querySelector("#FormNewEventBodyGame");
-FormNewEventBodyGame.addEventListener("submit", c_function_save_event_backlog);
-
-/**
- * * Date nav buttons
- */
-const NextDayBtn = document.querySelector("#NextDay");
-NextDayBtn.addEventListener("click", () => {
-  const NexDay = new Date(SelectedMoment);
-  NexDay.setDate(SelectedMoment.getDate() + 1);
-  SelectedMoment = NexDay;
-  calendarFormat(SelectedMoment);
-  NextDay(SelectedMoment); // Llamar NextDay como una función
-});
-
-
-const PreviousDayBtn = document.querySelector("#PreviousDay");
-PreviousDayBtn.addEventListener("click", () => {
-  const PrevDay = new Date(SelectedMoment);
-  PrevDay.setDate(SelectedMoment.getDate() - 1);
-  SelectedMoment = PrevDay;
-  calendarFormat(SelectedMoment);
-  PreviousDay(SelectedMoment); // Llamar NextDay como una función
-});
+if (window.location.pathname === "/") {
+  const filterPeriod = document.querySelector("#filterPeriod");
+  filterPeriod.addEventListener("click", () => {
+      const btn = document.getElementById("filterPeriod");
+      if (btn.innerHTML === "All Dates") {
+        btn.innerHTML = "This Week";
+      } else if (btn.innerHTML === "This Week") {
+        btn.innerHTML = "For Today";
+      } else {
+        btn.innerHTML = "All Dates";
+      }
+      change_filter_period(btn.innerHTML)
+  });
+  const filterClass = document.querySelector("#filterClass");
+  filterClass.addEventListener("click", () => {
+      const btn = document.getElementById("filterClass");
+      if (btn.innerHTML === "Class: Transitory") {
+        btn.innerHTML = "Class: Recurrent";
+      } else {
+        btn.innerHTML = "Class: Transitory";
+      }
+      change_filter_class(btn.innerHTML)
+  });
+  const filterType = document.querySelector("#filterType");
+  filterType.addEventListener("click", () => {
+      const btn = document.getElementById("filterType");
+      if (btn.innerHTML === "Type: All") {
+        btn.innerHTML = "Type: Tarea";
+      } else if (btn.innerHTML === "Type: Tarea") {
+        btn.innerHTML = "Type: Reunion";
+      } else {
+        btn.innerHTML = "Type: All";
+      }
+      change_filter_type(btn.innerHTML)
+  });
+  /**
+   * * New event PLAY
+   */
+  const FormNewEventBodyGame = document.querySelector("#FormNewEventBodyGame");
+  FormNewEventBodyGame.addEventListener("submit", c_function_save_event_backlog);
+  /**
+   * * Date nav buttons
+   */
+  const NextDayBtn = document.querySelector("#NextDay");
+  NextDayBtn.addEventListener("click", () => {
+    const NexDay = new Date(SelectedMoment);
+    NexDay.setDate(SelectedMoment.getDate() + 1);
+    SelectedMoment = NexDay;
+    calendarFormat(SelectedMoment);
+    NextDay(SelectedMoment); // Llamar NextDay como una función
+  });
+  const PreviousDayBtn = document.querySelector("#PreviousDay");
+  PreviousDayBtn.addEventListener("click", () => {
+    const PrevDay = new Date(SelectedMoment);
+    PrevDay.setDate(SelectedMoment.getDate() - 1);
+    SelectedMoment = PrevDay;
+    calendarFormat(SelectedMoment);
+    PreviousDay(SelectedMoment); // Llamar NextDay como una función
+  });
+}
 
 function calendarFormat(selectedMoment) {
   let idday = 'day'
